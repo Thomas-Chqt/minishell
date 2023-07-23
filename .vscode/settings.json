@@ -1,0 +1,35 @@
+{
+	"C_Cpp.default.includePath": [
+		"includes"
+	],
+	"autoSnippet.snippets": [
+		{
+			"pattern": "**/*.c",
+			"snippet": "New source file (minishell)"
+		},
+	],
+	"files.associations": {
+		"*.h": "c",
+		"numbers": "c",
+		"random": "c",
+		"*.tcc": "c",
+		"cmath": "c",
+		"__hash_table": "c",
+		"__tuple": "c",
+		"array": "c",
+		"type_traits": "c",
+		"limits": "c",
+		"ratio": "c",
+		"tuple": "c",
+		"variant": "c",
+		"chrono": "c",
+		"compare": "c",
+		"cstddef": "c",
+		"functional": "c",
+		"utility": "c"
+	},
+	"files.exclude": {
+		"minishell": true,
+		"minishell_debug": true
+	}
+}
