@@ -6,12 +6,14 @@
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 22:54:17 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/07/23 23:25:37 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/07/24 02:43:28 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef EXTERNAL_FUNCTIONS_H
 # define EXTERNAL_FUNCTIONS_H
+
+# include <sys/errno.h>
 
 # ifdef MEMCHECK
 
@@ -21,6 +23,7 @@ int		system(const char *command);
 # endif // MEMCHECK
 
 char	*readline(const char *prompt);
+
 // rl_clear_history
 // rl_on_new_line,
 // rl_replace_line
@@ -28,7 +31,9 @@ char	*readline(const char *prompt);
 // add_history,
 // printf
 // malloc
+
 void	free(void *ptr);
+
 // write
 // access
 // open
@@ -51,7 +56,9 @@ void	free(void *ptr);
 // lstat
 // fstat
 // unlink
-// execve,
+
+int		execve(const char *path, char *const argv[], char *const envp[]);
+
 // dup
 // dup2
 // pipe
@@ -64,7 +71,9 @@ void	free(void *ptr);
 // ttyname
 // ttyslot
 // ioctl,
-// getenv
+
+char	*getenv(const char *name);
+
 // tcsetattr
 // tcgetattr
 // tgetent
