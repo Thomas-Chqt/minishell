@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 20:57:27 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/07/27 17:43:37 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/07/29 17:09:53 by sotanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ int	main(int argc, char *argv[], char *envp[])
 
 	if (init_env(envp) != 0)
 		return (1);
-
 	cmd = NULL;
 	while (1)
 	{
@@ -54,8 +53,9 @@ int	main(int argc, char *argv[], char *envp[])
 			continue ;
 		}
 		splited_str[0] = ft_substr(cmd, 0, ft_strchr(cmd, '=') - cmd);
-		splited_str[1] = ft_strdup(ft_strchr(cmd, '=') + 1);	
-		if (splited_str[0] == NULL || splited_str[1] == NULL || set_env(splited_str[0], splited_str[1]) != 0)
+		splited_str[1] = ft_strdup(ft_strchr(cmd, '=') + 1);
+		if (splited_str[0] == NULL || splited_str[1] == NULL
+			|| set_env(splited_str[0], splited_str[1]) != 0)
 		{
 			free(splited_str[0]);
 			free(splited_str[1]);
