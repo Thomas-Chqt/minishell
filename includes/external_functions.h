@@ -6,7 +6,7 @@
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 22:54:17 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/07/24 02:43:28 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/07/29 14:50:30 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ char	*readline(const char *prompt);
 // rl_redisplay
 // add_history,
 // printf
-// malloc
 
+void	*malloc(size_t size);
 void	free(void *ptr);
 
 // write

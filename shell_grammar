@@ -1,14 +1,17 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   shell_grammar                                      :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/28 19:17:52 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/07/28 19:18:03 by tchoquet         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
+#* ************************************************************************** */
+#*                                                                            */
+#*                                                        :::      ::::::::   */
+#*   shell_grammar                                      :+:      :+:    :+:   */
+#*                                                    +:+ +:+         +:+     */
+#*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
+#*                                                +#+#+#+#+#+   +#+           */
+#*   Created: 2023/07/28 19:17:52 by tchoquet          #+#    #+#             */
+#*   Updated: 2023/07/28 19:18:03 by tchoquet         ###   ########.fr       */
+#*                                                                            */
+#* ************************************************************************** */
+
+
+
 
 
 #----------------------------------------------------------------------------
@@ -16,21 +19,31 @@
 #----------------------------------------------------------------------------
 
 #                 DLESS    DGREAT    LESS    GREAT    PIPE   TEXT
-#                 '<<'      '>>'      '<'     '>'     '|'     ''              
+#                 '<<'      '>>'      '<'     '>'     '|'                   
+
+
+
+
 
 #----------------------------------------------------------------------------
 #                                The Grammar                                  
 #----------------------------------------------------------------------------
 
 
-# <full_command>	-> 	  <job> PIPE <full_command>
-#						| <job>
-#
-# <job>				->	  <simple_command> LESS <filename>
-#						| <simple_command> GREAT <filename>
+# <full_command>	-> 	  <simple_command> PIPE <full_command>
 #						| <simple_command>
-
-#<simple_command>	->	<pathname> <token_list>
-
-#<token_list>		->		<token> <token_list>
-#						| (EMPTY)
+#
+# <simple_command>	->	  <token_list> <io_list>
+#						| <io_list> <token_list> 
+#						| <token_list>
+#
+# <io_list>			->	  <io_file> <io_list>
+#						| <io_file>
+#
+# <io_file>			->	  LESS TEXT
+#						| GREAT TEXT
+#						| DLESS TEXT
+#						| DGREAT TEXT
+#
+# <token_list>		->	  TEXT <token_list>
+#						| TEXT
