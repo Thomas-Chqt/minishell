@@ -6,7 +6,7 @@
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 20:57:27 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/07/24 02:45:41 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/07/27 21:44:54 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,10 @@ static void	destructor(void)
 	char	*pid;
 	char	*cmd;
 
-	// print_reporjt();
+	print_report();
 	pid = ft_itoa(getpid());
 	cmd = ft_strjoin("leaks -q ", pid);
-	// system((const char *)cmd);
+	system((const char *)cmd);
 	free(pid);
 	free(cmd);
 }
@@ -32,16 +32,15 @@ static void	destructor(void)
 
 int	main(int argc, char *argv[], char *envp[])
 {
-	char *env[] = {"PATH=Bite", NULL};
-	execve("print_env", NULL, env);
-	return (errno);
+	char	*cmd;
+
+	while (1)
+	{
+		cmd = readline("minishell > ");
+		if (ft_strncmp(cmd, "exit", 4) == 0)
+			break ;
+		free(cmd);
+	}
+	free(cmd);
+	return (0);
 }
-
-// int	main(int argc, char *argv[], char *envp[])
-// {
-// 	for (size_t i = 0; envp[i] != NULL; i++)
-// 		ft_printf("%s\n", envp[i]);
-// 	ft_printf("\n\n%s\n", getenv("PATH"));
-
-// 	return (0);
-// }

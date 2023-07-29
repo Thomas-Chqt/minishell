@@ -30,6 +30,7 @@
 	},
 	"files.exclude": {
 		"minishell": true,
-		"minishell_debug": true
+		"minishell_debug": true,
+		"shell_grammar": true
 	}
 }
