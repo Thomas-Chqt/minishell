@@ -33,8 +33,8 @@
 # <full_command>	-> 	  <simple_command> PIPE <full_command>
 #						| <simple_command>
 #
-# <simple_command>	->	  <token_list> <io_list>
-#						| <io_list> <token_list> 
+# <simple_command>	->	  <io_list> <token_list> 
+#						| <token_list> <io_list>
 #						| <token_list>
 #
 # <io_list>			->	  <io_file> <io_list>
