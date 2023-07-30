@@ -6,7 +6,7 @@
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 20:57:27 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/07/30 18:52:18 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/07/30 20:28:30 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,10 @@ void	print_token(void *data)
 int	main(int argc, char *argv[], char *envp[])
 {
 	char		*cmd;
-	t_toklist	*toklist;
+	t_toklist	*toklist = NULL;
+	t_toklist	*toklist_bacup;
 	int			error;
+	char		error_msg[100];
 
 	if (init_env(envp) != 0)
 		return (1);
@@ -79,8 +81,12 @@ int	main(int argc, char *argv[], char *envp[])
 		free(cmd);
 		if (error == 0)
 		{
-			ft_lstiter((t_list *)toklist, &print_token);
-			ft_printf("\n");
+			toklist_bacup = toklist;
+			if (chek_full_cmd(&toklist, error_msg) == 0)
+				ft_printf("OK\n");
+			else
+				ft_printf("%s\n", error_msg);
+			toklist = toklist_bacup;
 		}
 		if (error == 1)
 		{
