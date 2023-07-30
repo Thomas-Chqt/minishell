@@ -1,16 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cool_feature.c                                     :+:      :+:    :+:   */
+/*   ft_exec_print_error.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/29 17:15:09 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/07/29 17:15:31 by sotanaka         ###   ########.fr       */
+/*   Created: 2023/06/28 14:50:34 by sotanaka          #+#    #+#             */
+/*   Updated: 2023/07/30 17:14:17 by sotanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int cool_feature()
+#include "exec.h"
+
+int	ft_mes_error(char *message)
 {
-	return (0);
+	ft_putstr_fd (message, 2);
+	return (EXIT_FAILURE);
+}
+
+int	ft_print_perror(char *original_message)
+{
+	perror(original_message);
+	return (EXIT_FAILURE);
 }

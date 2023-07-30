@@ -3,22 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 20:57:41 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/07/27 16:07:17 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/07/30 17:12:07 by sotanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+# include <libft.h>
+# include "external_functions.h"
+
 # ifdef MEMCHECK
 #  include <memory_leak_detector.h>
 # endif // MEMCHECK
-
-# include <libft.h>
-# include "external_functions.h"
 
 int		init_env(char *envp[]);
 int		set_env(const char *key, const char *val);

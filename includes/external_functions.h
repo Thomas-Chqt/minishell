@@ -3,17 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   external_functions.h                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 22:54:17 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/07/24 02:43:28 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/07/30 18:10:16 by sotanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef EXTERNAL_FUNCTIONS_H
 # define EXTERNAL_FUNCTIONS_H
 
-# include <sys/errno.h>
+# define EXIT_FAILURE 1
+# define EXIT_SUCCESS 0
+
+#define F_OK 0     
+#define X_OK (1<<0)
+#define W_OK (1<<1)
+#define R_OK (1<<2)
+
+# include <errno.h>
+# include <stddef.h>
 
 # ifdef MEMCHECK
 
@@ -21,6 +30,8 @@ int		getpid(void);
 int		system(const char *command);
 
 # endif // MEMCHECK
+
+typedef int t_pid;
 
 char	*readline(const char *prompt);
 
@@ -30,16 +41,18 @@ char	*readline(const char *prompt);
 // rl_redisplay
 // add_history,
 // printf
-// malloc
 
+void	*malloc(size_t size);
 void	free(void *ptr);
 
 // write
-// access
+
+int		access(const char *path, int permision);
+
 // open
 // read,
 // close
-// fork
+t_pid	fork(void);
 // wait
 // waitpid
 // wait3
@@ -66,7 +79,7 @@ int		execve(const char *path, char *const argv[], char *const envp[]);
 // readdir
 // closedir,
 // strerror
-// perror
+void	perror(const char *s);
 // isatty
 // ttyname
 // ttyslot
