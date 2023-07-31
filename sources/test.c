@@ -1,13 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   test.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 22:45:40 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/07/23 23:26:02 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/07/31 18:50:05 by sotanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+// #include <unistd.h>
+// #include <stdio.h>
+
+// int main()
+// {
+// 	char	pwd[255];
+
+// 	getcwd(pwd, 255);
+// 	printf("%s\n", pwd);
+// }

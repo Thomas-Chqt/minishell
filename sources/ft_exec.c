@@ -6,12 +6,11 @@
 /*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/30 13:32:49 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/07/30 19:43:27 by sotanaka         ###   ########.fr       */
+/*   Updated: 2023/07/31 19:32:56 by sotanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
-#include <unistd.h>
 
 // int	ft_exec(char *path, char *prog, char **cmd_opts); not adopt. i think its increase process.
 int	ft_exec(char *cmd, char **cmd_opts, char **envp)
@@ -30,11 +29,10 @@ int	ft_exec(char *cmd, char **cmd_opts, char **envp)
 //end
 	pid = fork();
 	if (pid == 0){
-
 		if (execve(dexec.cmd_path, cmd_opts, envp) == -1)
 		{
-			if (errno != EACCES && errno != ENOENT)
-				exit(ft_print_perror(dexec.cmd_path));
+			cmd_cant_use(dexec.cmd_path, &dexec, CMD_SIMPLE);
+			exit(ft_print_perror(dexec.cmd_path));
 		}
 	}
 
@@ -49,5 +47,7 @@ int main(int ac, char **av, char **envp)
 		ft_exec(av[1], NULL, envp);
 	if (ac == 3)
 		ft_exec(av[1], ft_split(av[2], ' '), envp);
+	if (ac == 1)
+		ft_printf("argument is no entry\n");
 }
 //end

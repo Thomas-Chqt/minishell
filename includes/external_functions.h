@@ -6,15 +6,17 @@
 /*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 22:54:17 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/07/30 18:10:16 by sotanaka         ###   ########.fr       */
+/*   Updated: 2023/07/31 19:24:58 by sotanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef EXTERNAL_FUNCTIONS_H
 # define EXTERNAL_FUNCTIONS_H
 
-# define EXIT_FAILURE 1
 # define EXIT_SUCCESS 0
+# define EXIT_FAILURE 1
+# define CMD_SIMPLE 2
+# define CMD_NOTFOUND 3
 
 #define F_OK 0     
 #define X_OK (1<<0)
@@ -62,8 +64,8 @@ t_pid	fork(void);
 // sigemptyset
 // sigaddset
 // kill
-// exit,
-// getcwd
+void	exit(int status);
+char	*getcwd(char *buf, size_t size);
 // chdir
 // stat
 // lstat
@@ -74,7 +76,7 @@ int		execve(const char *path, char *const argv[], char *const envp[]);
 
 // dup
 // dup2
-// pipe
+int		pipe(int pipefd[2]);
 // opendir
 // readdir
 // closedir,
