@@ -6,7 +6,7 @@
 /*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 22:45:40 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/01 15:37:17 by sotanaka         ###   ########.fr       */
+/*   Updated: 2023/08/02 13:31:10 by sotanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@
 
 int main()
 {
-	char	pwd[255];
+	char	*pwd;
 
-	getcwd(pwd, 255);
+	pwd = getcwd(NULL, 0);
 	printf("%s\n", pwd);
 	open("aaaa", O_RDONLY);
 	perror("open");

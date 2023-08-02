@@ -6,14 +6,14 @@
 /*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/30 13:32:49 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/08/01 19:25:45 by sotanaka         ###   ########.fr       */
+/*   Updated: 2023/08/02 14:23:59 by sotanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 
 // int	ft_exec(char *path, char *prog, char **cmd_opts); not adopt. i think its increase process.
-int	ft_exec(char *cmd, char **cmd_opts, char **envp)
+int	ft_exec(char *path, char *prog, char **cmd_opts)
 {
 	t_dexec	dexec;
 	t_pid	pid;
@@ -21,6 +21,7 @@ int	ft_exec(char *cmd, char **cmd_opts, char **envp)
 	pid = fork();
 	if (pid == 0)
 	{
+		
 		ft_get_envpaths(envp, &dexec);
 		ft_open_redirection(/*cmd_opts, &dexec*/);
 		ft_get_cmdpath(cmd, &dexec);
@@ -44,11 +45,15 @@ return (0);
 //comment out start
 int main(int ac, char **av, char **envp)
 {
+	if (init_env(envp) != 0)
+		return (1);
 	if (ac == 2)
 		ft_exec(av[1], NULL, envp);
 	if (ac == 3)
 		ft_exec(av[1], ft_split(av[2], ' '), envp);
 	if (ac == 1)
 		ft_printf("argument is no entry\n");
+	clean_env();
+	return (0);
 }
 //end

@@ -6,7 +6,7 @@
 /*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 14:50:40 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/08/02 13:22:54 by sotanaka         ###   ########.fr       */
+/*   Updated: 2023/08/02 13:39:39 by sotanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,28 +18,46 @@ static int	make_potential_fullpath(t_dexec *dexec, char *envpath, char *cmd)
 
 	pre_path = ft_strjoin(envpath, "/");
 	if (pre_path == NULL)
-		return (ft_free_exec(dexec->matrix_envpath, NULL, NULL, 1));
+		exit (ft_mes_error("Error. Fail allocate memory.\n"));
 	dexec->cmd_path = ft_strjoin(pre_path, cmd);
 	if (dexec->cmd_path == NULL)
-		return (ft_free_exec(dexec->matrix_envpath, NULL, pre_path, 1));
+		exit (ft_mes_error("Error. Fail allocate memory.\n"));
 	free(pre_path);
 	return (0);
 }
 
+static int	path_is_envp(char *cmd, t_dexec *dexec)
+{
+	size_t	i;
+	int		flag;
+
+	while (dexec->matrix_envpath[i] != NULL)
+	{
+		if (make_potential_fullpath(dexec, dexec->matrix_envpath[i++], cmd) != 0)
+			return (1);
+		flag = check_cmdpath(dexec);
+		if (flag == 0 || flag == 1)
+			return (flag);
+		free(dexec->cmd_path);
+	}
+	return (1);
+}
+
 static int	path_is_current(char *cmd, t_dexec *dexec)
 {
-	char	path_pwd[255];
+	char	*path_pwd;
 	char	*pre_path;
 	int		flag;
 
-	if (getcwd(path_pwd, 255) == NULL)
+	path_pwd = getcwd(NULL, 0);
+	if (path_pwd == NULL)
 	{
 		perror("(f)getcwd: ");
-		return (ft_free_exec(NULL, NULL, path_pwd, 0));
+		exit (1);
 	}
 	dexec->cmd_path = ft_strjoin(path_pwd, &cmd[1]);
 	if (dexec->cmd_path == NULL)
-		return (ft_free_exec(dexec->matrix_envpath, NULL, path_pwd, 1));
+		exit (1);
 	flag = check_cmdpath(dexec);
 	if (errno == ENOENT)
 		exit(cmd_cant_use(cmd, dexec, CMD_SIMPLE));
@@ -71,7 +89,7 @@ path_is_relative(char *cmd, t_dexec *dexec)
 	if (path_pwd == NULL)
 	{
 		perror("(f)getcwd: ");
-		return (ft_free_exec(NULL, NULL, path_pwd, 0));
+		return (1);
 	}
 	dexec->cmd_path = ft_strjoin(path_pwd, "/");
 	if (dexec->cmd_path == NULL)
@@ -86,23 +104,6 @@ path_is_relative(char *cmd, t_dexec *dexec)
 	if (flag == 0 || flag == 1)
 		return (flag);
 	return (0);
-}
-
-static int	path_is_envp(char *cmd, t_dexec *dexec)
-{
-	size_t	i;
-	int		flag;
-
-	while (dexec->matrix_envpath[i] != NULL)
-	{
-		if (make_potential_fullpath(dexec, dexec->matrix_envpath[i++], cmd) != 0)
-			return (1);
-		flag = check_cmdpath(dexec);
-		if (flag == 0 || flag == 1)
-			return (flag);
-		free(dexec->cmd_path);
-	}
-	return (1);
 }
 
 int	ft_get_cmdpath(char *cmd, t_dexec *dexec)
