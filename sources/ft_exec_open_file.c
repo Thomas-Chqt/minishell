@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_exec_open_redirect.c                            :+:      :+:    :+:   */
+/*   ft_exec_open_file.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 18:57:15 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/08/02 12:09:24 by sotanaka         ###   ########.fr       */
+/*   Updated: 2023/08/02 22:08:39 by sotanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@ int	ft_open_file(char *file_redirect, int flag_redirect)
 {
 	int	fd;
 
-	if (flag_redirect == 1)
+	if (flag_redirect == GREAT)
 		fd = open(file_redirect, O_WRONLY | O_CREAT | O_TRUNC);
-	else if (flag_redirect == 2)
+	else if (flag_redirect == DGREAT)
 		fd = open(file_redirect, O_WRONLY | O_CREAT | O_APPEND);
 	else
 		fd = open(file_redirect, O_RDONLY);
@@ -29,9 +29,4 @@ int	ft_open_file(char *file_redirect, int flag_redirect)
 		exit (EX_FILE_OPEN_ERR);
 	}
 	return (fd);
-}
-
-int	ft_open_redirection(char *file_redirect, int *fd_redirect)
-{
-	
 }

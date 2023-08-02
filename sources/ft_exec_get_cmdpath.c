@@ -6,7 +6,7 @@
 /*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 14:50:40 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/08/02 13:39:39 by sotanaka         ###   ########.fr       */
+/*   Updated: 2023/08/02 18:15:38 by sotanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,95 +34,36 @@ static int	path_is_envp(char *cmd, t_dexec *dexec)
 	while (dexec->matrix_envpath[i] != NULL)
 	{
 		if (make_potential_fullpath(dexec, dexec->matrix_envpath[i++], cmd) != 0)
-			return (1);
-		flag = check_cmdpath(dexec);
-		if (flag == 0 || flag == 1)
-			return (flag);
+			exit (1);
+		flag = check_cmdpath(dexec->cmd_path, ACCESS_FOK);
+		if (flag == 0)
+			return (0);
 		free(dexec->cmd_path);
 	}
 	return (1);
 }
 
-static int	path_is_current(char *cmd, t_dexec *dexec)
+char	*ft_get_cmdpath(char *path, char *prog, t_dexec *dexec)
 {
-	char	*path_pwd;
-	char	*pre_path;
-	int		flag;
+	int		result;
 
-	path_pwd = getcwd(NULL, 0);
-	if (path_pwd == NULL)
-	{
-		perror("(f)getcwd: ");
-		exit (1);
-	}
-	dexec->cmd_path = ft_strjoin(path_pwd, &cmd[1]);
+	if (ft_strncmp(path, "./", 2) == 0)
+		dexec->cmd_path = ft_strjoin(path[1], prog);
+	else if (path != NULL)
+		dexec->cmd_path = ft_strjoin(path, prog);
 	if (dexec->cmd_path == NULL)
-		exit (1);
-	flag = check_cmdpath(dexec);
-	if (errno == ENOENT)
-		exit(cmd_cant_use(cmd, dexec, CMD_SIMPLE));
-	if (flag == 0 || flag == 1)
-		return (flag);
-	return (0);
-}
-
-static int	path_is_absolute(char *cmd, t_dexec *dexec)
-{
-	int		flag;
-
-	dexec->cmd_path = ft_strdup(cmd);
-	if (dexec->cmd_path == NULL)
-		return (ft_free_exec(dexec->matrix_envpath, NULL, NULL, 0));
-	flag = check_cmdpath(dexec);
-	if (flag == 0 || flag == 1)
-		return (flag);
-	free(dexec->cmd_path);
-	return (flag);
-}
-
-path_is_relative(char *cmd, t_dexec *dexec)
-{
-	char	*path_pwd;
-	int		flag;
-
-	path_pwd = getcwd(NULL, 0);
-	if (path_pwd == NULL)
+		exit(ft_mes_error("Error. Fail allocate memory.\n"));
+	if (path == NULL)
 	{
-		perror("(f)getcwd: ");
-		return (1);
+		if (path_is_envp(prog, dexec) == 1)
+			cmd_cant_use(prog, CMD_NOTFOUND);
 	}
-	dexec->cmd_path = ft_strjoin(path_pwd, "/");
-	if (dexec->cmd_path == NULL)
-		return (ft_free_exec(dexec->matrix_envpath, NULL, path_pwd, 1));
-	free(path_pwd);
-	path_pwd = ft_strjoin(dexec->cmd_path, cmd);
-	if (path_pwd == NULL)
-		return (ft_free_exec(dexec->matrix_envpath, NULL, dexec->cmd_path, 1));
-	free(dexec->cmd_path);
-	dexec->cmd_path = path_pwd;
-	flag = check_cmdpath(dexec);
-	if (flag == 0 || flag == 1)
-		return (flag);
-	return (0);
-}
-
-int	ft_get_cmdpath(char *cmd, t_dexec *dexec)
-{
-	int	result;
-
-	if (ft_strncmp(cmd, "/", 1) == 0)
-	{
-		result = path_is_absolute(cmd, dexec);
-		if (result == 0 || result == 1)
-			return (result);
-	}
-	else if (ft_strncmp(cmd, "./", 2) == 0)
-		result = path_is_current(cmd, dexec);
-	else if (ft_strchr(cmd, '/') != NULL)
-		result = path_is_relative(cmd, dexec);
-	else
-		result = path_is_envp(cmd, dexec);
-	if (result == 0)
-		return (result);
-	return (cmd_cant_use(cmd, dexec, CMD_NOTFOUND));
+	result = check_cmdpath(dexec->cmd_path, ACCESS_FOK);
+	if (result == 1)
+		cmd_cant_use(prog, CMD_NOTFOUND);
+	result = check_cmdpath(dexec->cmd_path, ACCESS_XOK);
+	if (result == 1)
+		cmd_cant_use(prog, CMD_PERM_DENIED);
+	result = check_cmdpath(dexec->cmd_path, STAT_ISDIR);
+	return (dexec->cmd_path);
 }

@@ -6,7 +6,7 @@
 /*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 22:45:40 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/02 13:31:10 by sotanaka         ###   ########.fr       */
+/*   Updated: 2023/08/02 18:04:26 by sotanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 #include <stdio.h>
 #include <fcntl.h>
 
-int main()
-{
-	char	*pwd;
+// int main()
+// {
+// 	char	*pwd;
 
-	pwd = getcwd(NULL, 0);
-	printf("%s\n", pwd);
-	open("aaaa", O_RDONLY);
-	perror("open");
-}
+// 	pwd = getcwd(NULL, 0);
+// 	printf("%s\n", pwd);
+// 	open("aaaa", O_RDONLY);
+// 	perror("open");
+// }

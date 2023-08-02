@@ -6,7 +6,7 @@
 /*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 22:54:17 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/02 17:18:19 by sotanaka         ###   ########.fr       */
+/*   Updated: 2023/08/02 17:53:49 by sotanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	free(void *ptr);
 
 int		access(const char *path, int permision);
 
-int		open(const char *pathname, int flags);
+// int		open(const char *pathname, int flags);
 // read,
 // close
 t_pid	fork(void);
