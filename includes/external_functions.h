@@ -6,7 +6,7 @@
 /*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 22:54:17 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/01 19:09:06 by sotanaka         ###   ########.fr       */
+/*   Updated: 2023/08/02 14:41:59 by sotanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,9 @@ char	*readline(const char *prompt);
 // rl_on_new_line,
 // rl_replace_line
 // rl_redisplay
-// add_history,
+
+int		add_history(const char *str);
+
 // printf
 
 void	*malloc(size_t size);

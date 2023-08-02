@@ -6,7 +6,7 @@
 /*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 20:57:27 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/07/30 16:59:48 by sotanaka         ###   ########.fr       */
+/*   Updated: 2023/08/02 14:43:12 by sotanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,42 +30,74 @@ static void	destructor(void)
 
 #endif // MEMCHECK
 
-// int	main(int argc, char *argv[], char *envp[])
-// {
-// 	char	*cmd;
-// 	char	*var;
-// 	char	*splited_str[2];
+void	print_token(void *data)
+{
+	t_token	*token;
 
-// 	if (init_env(envp) != 0)
-// 		return (1);
-// 	cmd = NULL;
-// 	while (1)
-// 	{
-// 		cmd = readline("minishell > ");
-// 		if (ft_strncmp(cmd, "exit", 4) == 0)
-// 			break ;
-// 		if (ft_strchr(cmd, '=') == NULL)
-// 		{
-// 			var = get_env((const char *)cmd);
-// 			ft_printf("%s\n", var);
-// 			free(var);
-// 			free(cmd);
-// 			continue ;
-// 		}
-// 		splited_str[0] = ft_substr(cmd, 0, ft_strchr(cmd, '=') - cmd);
-// 		splited_str[1] = ft_strdup(ft_strchr(cmd, '=') + 1);
-// 		if (splited_str[0] == NULL || splited_str[1] == NULL
-// 			|| set_env(splited_str[0], splited_str[1]) != 0)
-// 		{
-// 			free(splited_str[0]);
-// 			free(splited_str[1]);
-// 			break ;
-// 		}
-// 		free(splited_str[0]);
-// 		free(splited_str[1]);
-// 		free(cmd);
-// 	}
-// 	free(cmd);
-// 	clean_env();
-// 	return (0);
-// }
+	token = (t_token *)data;
+	ft_printf("(");
+	if (token->type == DLESS)
+		ft_printf("DLESS");
+	else if (token->type == DGREAT)
+		ft_printf("DGREAT");
+	else if (token->type == LESS)
+		ft_printf("LESS");
+	else if (token->type == GREAT)
+		ft_printf("GREAT");
+	else if (token->type == PIPE)
+		ft_printf("PIPE");
+	else
+		ft_printf("%s", token->data);
+	ft_printf(") -> ");
+}
+
+int	main(int argc, char *argv[], char *envp[])
+{
+	char		*cmd;
+	t_toklist	*toklist = NULL;
+	t_toklist	*toklist_bacup;
+	int			error;
+	char		error_msg[100];
+
+	if (init_env(envp) != 0)
+		return (1);
+	while (1)
+	{
+		cmd = readline("minishell > ");
+		if (cmd == NULL)
+			continue ;
+		if (cmd[0] == '\0')
+		{
+			free(cmd);
+			continue ;
+		}
+		add_history(cmd);
+		if (ft_strncmp(cmd, "exit", 4) == 0)
+		{
+			free(cmd);
+			break ;
+		}
+		error = fill_toklist(cmd, &toklist);
+		free(cmd);
+		if (error == 0)
+		{
+			toklist_bacup = toklist;
+			if (chek_full_cmd(&toklist, error_msg) == 0)
+				ft_printf("OK\n");
+			else
+				ft_printf("%s\n", error_msg);
+			toklist = toklist_bacup;
+		}
+		if (error == 1)
+		{
+			ft_printf("quote error\n");
+		}
+		if (error == 2)
+		{
+			ft_printf("Malloc error\n");
+		}
+		ft_lstclear((t_list **)&toklist, &free_token);
+	}
+	clean_env();
+	return (0);
+}

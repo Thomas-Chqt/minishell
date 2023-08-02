@@ -11,7 +11,7 @@
 			"program": "${workspaceFolder}/minishell_debug",
 			"stopAtEntry": false,
 			"cwd": "${workspaceFolder}",
-			"externalConsole": false,
+			"externalConsole": true,
 			"MIMode": "lldb",
 			"preLaunchTask": "Build Debug"
 		}
