@@ -6,7 +6,7 @@
 /*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 22:54:17 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/02 14:41:59 by sotanaka         ###   ########.fr       */
+/*   Updated: 2023/08/02 17:18:19 by sotanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,6 @@
 
 # define EXIT_SUCCESS 0
 # define EXIT_FAILURE 1
-# define CMD_SIMPLE 2
-# define CMD_NOTFOUND 3
 
 #define F_OK 0
 #define X_OK (1<<0)
