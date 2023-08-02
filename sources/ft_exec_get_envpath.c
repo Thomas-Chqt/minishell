@@ -6,7 +6,7 @@
 /*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 18:12:27 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/07/31 18:12:33 by sotanaka         ###   ########.fr       */
+/*   Updated: 2023/08/01 18:54:19 by sotanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,14 @@ int	ft_get_envpaths(char **envp, t_dexec *dexec)
 		{
 			dexec->matrix_envpath = ft_split(&envp[i][5], ':');
 			if (dexec->matrix_envpath == NULL)
-				return (ft_free_exec(NULL, NULL, NULL, 1));
+			{
+				ft_mes_error("Error. Fail allocate memory.\n");
+				exit(1);
+			}
 			return (0);
 		}
 		i++;
 	}
 	ft_mes_error("Error: PATH= not found.");
-	return (1);
+	exit (1);
 }

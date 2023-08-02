@@ -6,7 +6,7 @@
 /*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/30 13:32:49 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/07/31 19:32:56 by sotanaka         ###   ########.fr       */
+/*   Updated: 2023/08/01 19:25:45 by sotanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,23 +18,24 @@ int	ft_exec(char *cmd, char **cmd_opts, char **envp)
 	t_dexec	dexec;
 	t_pid	pid;
 
-	if (ft_get_envpaths(envp, &dexec) == 1)
-		return (1);
-	if (ft_get_cmdpath(cmd, &dexec) == 1)
-		return (1);
-//comment out start
-	for (size_t i = 0; dexec.matrix_envpath[i] != NULL ; i++)
-	ft_printf("PATH = %s\n", dexec.matrix_envpath[i]);
-	ft_printf("PATH COMMAND = %s\n", dexec.cmd_path);
-//end
 	pid = fork();
-	if (pid == 0){
+	if (pid == 0)
+	{
+		ft_get_envpaths(envp, &dexec);
+		ft_open_redirection(/*cmd_opts, &dexec*/);
+		ft_get_cmdpath(cmd, &dexec);
 		if (execve(dexec.cmd_path, cmd_opts, envp) == -1)
 		{
+			if (errno == EISDIR)
 			cmd_cant_use(dexec.cmd_path, &dexec, CMD_SIMPLE);
 			exit(ft_print_perror(dexec.cmd_path));
 		}
 	}
+// //comment out start
+// 	for (size_t i = 0; dexec.matrix_envpath[i] != NULL ; i++)
+// 	ft_printf("PATH = %s\n", dexec.matrix_envpath[i]);
+// 	ft_printf("PATH COMMAND = %s\n", dexec.cmd_path);
+// //end
 
 ft_free_exec(dexec.matrix_envpath, cmd_opts, dexec.cmd_path, 0);
 return (0);

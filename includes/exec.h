@@ -6,17 +6,25 @@
 /*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/30 14:34:04 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/07/31 14:32:14 by sotanaka         ###   ########.fr       */
+/*   Updated: 2023/08/01 19:03:25 by sotanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef EXEC_H
 # define EXEC_H
 
+//-------define-------
+//exit status
+# define EX_CTLR_C 1
+# define EX_FILE_OPEN_ERR 1
+# define EX_IS_A_DIRECTORY 1
+# define EX_CMD_PERM_DENIED 126
+# define EX_CMD_NOT_FOUND 127
+# define EX_CTRL_BACKSLASH 131
+# define EX_SYNTAX_ERROR 258
+
 //-------include-------
 # include <minishell.h>
-// # include <unistd.h>
-// # include <stdlib.h>
 
 //-------typedef-------
 typedef struct s_dexec

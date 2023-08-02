@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_exec_get_path.c                                 :+:      :+:    :+:   */
+/*   ft_exec_get_cmdpath.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 14:50:40 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/07/31 19:27:30 by sotanaka         ###   ########.fr       */
+/*   Updated: 2023/08/01 13:52:03 by sotanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static int	path_is_current(char *cmd, t_dexec *dexec)
 
 	if (getcwd(pwd, 255) == NULL)
 	{
-		perror("getcwd");
+		perror("(f)getcwd");
 		return (ft_free_exec(NULL, NULL, pwd, 0));
 	}
 	pre_path = ft_strjoin(pwd, "/");
@@ -87,23 +87,17 @@ int	ft_get_cmdpath(char *cmd, t_dexec *dexec)
 {
 	int	result;
 
-	if (ft_strncmp(cmd, "./", 2) == 0)
-	{
-		result = path_is_current(cmd, dexec);
-		if (result == 0)
-			return (result);
-	}
-	else if (ft_strncmp(cmd, "/", 1) == 0)
+	if (ft_strncmp(cmd, "/", 1) == 0)
 	{
 		result = path_is_absolute(cmd, dexec);
 		if (result == 0 || result == 1)
 			return (result);
 	}
+	else if (ft_strncmp(cmd, "./", 2) == 0 || ft_strchr(cmd, '/') != NULL)
+		result = path_is_current(cmd, dexec);
 	else
-	{
 		result = path_is_envp(cmd, dexec);
-		if (result == 0)
-			return (result);
-	}
+	if (result == 0)
+		return (result);
 	return (cmd_cant_use(cmd, dexec, CMD_NOTFOUND));
 }

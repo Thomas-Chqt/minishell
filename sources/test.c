@@ -6,17 +6,20 @@
 /*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 22:45:40 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/07/31 18:50:05 by sotanaka         ###   ########.fr       */
+/*   Updated: 2023/08/01 15:37:17 by sotanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-// #include <unistd.h>
-// #include <stdio.h>
+#include <unistd.h>
+#include <stdio.h>
+#include <fcntl.h>
 
-// int main()
-// {
-// 	char	pwd[255];
+int main()
+{
+	char	pwd[255];
 
-// 	getcwd(pwd, 255);
-// 	printf("%s\n", pwd);
-// }
+	getcwd(pwd, 255);
+	printf("%s\n", pwd);
+	open("aaaa", O_RDONLY);
+	perror("open");
+}

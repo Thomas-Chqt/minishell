@@ -6,7 +6,7 @@
 /*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 22:54:17 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/07/31 19:24:58 by sotanaka         ###   ########.fr       */
+/*   Updated: 2023/08/01 19:09:06 by sotanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,15 @@
 # define CMD_SIMPLE 2
 # define CMD_NOTFOUND 3
 
-#define F_OK 0     
+#define F_OK 0
 #define X_OK (1<<0)
 #define W_OK (1<<1)
 #define R_OK (1<<2)
 
 # include <errno.h>
 # include <stddef.h>
+# include <sys/stat.h>
+# include <fcntl.h>
 
 # ifdef MEMCHECK
 
@@ -51,7 +53,7 @@ void	free(void *ptr);
 
 int		access(const char *path, int permision);
 
-// open
+int		open(const char *pathname, int flags);
 // read,
 // close
 t_pid	fork(void);
@@ -67,7 +69,7 @@ t_pid	fork(void);
 void	exit(int status);
 char	*getcwd(char *buf, size_t size);
 // chdir
-// stat
+int		stat(const char *pathname, struct stat *buf);
 // lstat
 // fstat
 // unlink

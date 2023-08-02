@@ -6,7 +6,7 @@
 /*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 14:08:29 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/07/31 19:24:58 by sotanaka         ###   ########.fr       */
+/*   Updated: 2023/08/01 12:18:28 by sotanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,6 @@ int	check_cmdpath(t_dexec *dexec)
 	err = access(dexec->cmd_path, F_OK);
 	if (err == 0)
 		return (0);
-	// else
-	// {
-	// 	puts("no1");
-	// 	return (ft_free_exec(dexec->matrix_envpath, NULL, dexec->cmd_path, 0));
-	// }
 	return (err);
 }
 
