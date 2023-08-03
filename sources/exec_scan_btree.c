@@ -6,13 +6,13 @@
 /*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 21:54:41 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/08/03 16:21:39 by sotanaka         ###   ########.fr       */
+/*   Updated: 2023/08/03 17:13:22 by sotanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 
-int	ft_readline(char fd_pipe[2], char *delimiter)
+static int	ft_readline(char fd_pipe[2], char *delimiter)
 {
 	char	*line;
 
@@ -66,7 +66,7 @@ int	ft_here_doc(char *delimiter, int fd_in)
 	return (fd_pipe[0]);
 }
 
-int	scan_btree_fd(t_dexec *dexec, t_syntree *node)
+int	scan_btree_fd(t_dexec *dexec, t_ast *node)
 {
 	if (node == NULL)
 		return (0);
@@ -82,7 +82,7 @@ int	scan_btree_fd(t_dexec *dexec, t_syntree *node)
 	return (0);
 }
 
-int	scan_btree_cmd(int fd_in, int fd_out, t_syntree *node)
+static int	scan_btree_cmd(int fd_in, int fd_out, t_ast *node)
 {
 	t_dexec	dexec;
 	int		pid;
@@ -108,7 +108,7 @@ int	scan_btree_cmd(int fd_in, int fd_out, t_syntree *node)
 }
 
 //first call: scan_btree_pipe(0, 1, node);
-int	scan_btree_pipe(int fd_in, int fd_out, t_syntree *node)
+int	scan_btree_pipe(int fd_in, int fd_out, t_ast *node)
 {
 	int	fd_pipe[2];
 

@@ -6,13 +6,13 @@
 /*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/30 13:32:49 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/08/03 16:22:51 by sotanaka         ###   ########.fr       */
+/*   Updated: 2023/08/03 17:10:14 by sotanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 
-int	ft_exec_set_redirect(t_dexec *dexec)
+static int	ft_exec_set_redirect(t_dexec *dexec)
 {
 	if (dexec->fd_in != STDIN_FILENO)
 	{
@@ -31,7 +31,7 @@ int	ft_exec_set_redirect(t_dexec *dexec)
 	return (0);
 }
 
-int	ft_exec_do_cmd(char *cmd_path, char **cmd_opts, char **envp)
+static int	ft_exec_do_cmd(char *cmd_path, char **cmd_opts, char **envp)
 {
 	if (execve(cmd_path, cmd_opts, envp) == -1)
 	{
@@ -41,8 +41,9 @@ int	ft_exec_do_cmd(char *cmd_path, char **cmd_opts, char **envp)
 	}
 }
 
-int	ft_exec_forked(t_dexec *dexec, t_syntree *node)
+int	ft_exec_forked(t_dexec *dexec, t_ast *node)
 {
+	char **envp;//for debug
 	if (node->left != NULL)
 		scan_btree_fd(dexec, node->left);
 	ft_exec_set_redirect(dexec);

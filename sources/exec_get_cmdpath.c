@@ -6,13 +6,13 @@
 /*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 14:50:40 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/08/03 16:19:28 by sotanaka         ###   ########.fr       */
+/*   Updated: 2023/08/03 17:10:50 by sotanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 
-int	check_cmdpath(char *cmd_path, int flag)
+static int	check_cmdpath(char *cmd_path, int flag)
 {
 	int			err;
 	struct stat	buf;
