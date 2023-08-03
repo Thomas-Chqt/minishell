@@ -6,13 +6,15 @@
 /*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 20:57:27 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/03 16:48:03 by sotanaka         ###   ########.fr       */
+/*   Updated: 2023/08/03 17:19:58 by sotanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "exec.h"
+#include "minishell.h"
 
-int main(int ac, char **av, char **envp)
+#ifdef MEMCHECK
+__attribute__((destructor))
+static void	destructor(void)
 {
 	char	*pid;
 	char	*cmd;
@@ -51,11 +53,8 @@ void	print_token(void *data)
 int	main(int argc, char *argv[], char *envp[])
 {
 	char		*cmd;
-	t_toklist	*toklist = NULL;
-	t_toklist	*toklist_bacup;
+	t_toklist	*toklist;
 	int			error;
-	char		error_msg[100];
-	t_ast		*tree;
 
 	if (init_env(envp) != 0)
 		return (1);
