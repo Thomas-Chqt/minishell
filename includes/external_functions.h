@@ -6,7 +6,7 @@
 /*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 22:54:17 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/02 17:53:49 by sotanaka         ###   ########.fr       */
+/*   Updated: 2023/08/03 14:20:54 by sotanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 
 # define EXIT_SUCCESS 0
 # define EXIT_FAILURE 1
+# define STDIN_FILENO 0
+# define STDOUT_FILENO 1
 
 #define F_OK 0
 #define X_OK (1<<0)
