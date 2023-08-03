@@ -6,13 +6,13 @@
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 22:19:03 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/03 22:20:18 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/04 00:56:23 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 
-static int	add_cmd_back(t_token *token, t_ast *tree)
+int	add_cmd_back(t_token *token, t_ast *tree)
 {
 	t_btree	*new_node;
 
@@ -30,7 +30,7 @@ static int	add_cmd_back(t_token *token, t_ast *tree)
 	return (0);
 }
 
-static int	add_io(t_toklist **token_lst, t_ast *tree)
+int	add_io(t_toklist **token_lst, t_ast *tree)
 {
 	if (is_io_token((*token_lst)->data) == false)
 		return (1);
@@ -41,7 +41,7 @@ static int	add_io(t_toklist **token_lst, t_ast *tree)
 	return (add_io_back(token_lst, tree));
 }
 
-static int	add_io_back(t_toklist **token_lst, t_ast *tree)
+int	add_io_back(t_toklist **token_lst, t_ast *tree)
 {
 	t_btree	*new_node;
 	t_btree	*new_node2;
@@ -68,7 +68,7 @@ static int	add_io_back(t_toklist **token_lst, t_ast *tree)
 	return (MALLOC_ERROR);
 }
 
-static int	add_io_front(t_toklist **token_lst, t_ast *tree)
+int	add_io_front(t_toklist **token_lst, t_ast *tree)
 {
 	t_btree	*new_node;
 	t_btree	*new_node2;
@@ -95,7 +95,7 @@ static int	add_io_front(t_toklist **token_lst, t_ast *tree)
 	return (MALLOC_ERROR);
 }
 
-static int	add_separator(t_token *token, t_ast **tree)
+int	add_separator(t_token *token, t_ast **tree)
 {
 	t_btree	*new_node;
 
