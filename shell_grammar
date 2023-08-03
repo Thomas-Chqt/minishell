@@ -30,21 +30,27 @@
 #----------------------------------------------------------------------------
 
 
-# <full_command>	-> 	  <simple_command> PIPE <full_command>
-#						| <simple_command>
+# <full_command>	:
+#					| <simple_command> PIPE <full_command>
+#					| <simple_command>
 #
-# <simple_command>	->	  <io_list> <token_list> 
-#						| <token_list> <io_list>
-#						| <token_list>
-#						| <io_list>
+# <simple_command>	:
+#					| <io_list> <text_list> <io_list>
+#					| <io_list> <text_list>
+#					| <io_list>
+#					| <text_list> <io_list>
+#					| <text_list>
+
+# <io_list>			:
+#					| <io_file> <io_list>
+#					| <io_file>
 #
-# <io_list>			->	  <io_file> <io_list>
-#						| <io_file>
+# <io_file>			:
+#					| DLESS TEXT
+#					| DGREAT TEXT
+#					| LESS TEXT
+#					| GREAT TEXT
 #
-# <io_file>			->	  LESS TEXT
-#						| GREAT TEXT
-#						| DLESS TEXT
-#						| DGREAT TEXT
-#
-# <token_list>		->	  TEXT <token_list>
-#						| TEXT
+# <text_list>		:
+#					| TEXT <text_list>
+#					| TEXT
