@@ -6,7 +6,7 @@
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 20:57:27 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/07/30 20:28:30 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/03 12:43:31 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ int	main(int argc, char *argv[], char *envp[])
 	t_toklist	*toklist_bacup;
 	int			error;
 	char		error_msg[100];
+	t_ast		*tree;
 
 	if (init_env(envp) != 0)
 		return (1);
@@ -83,10 +84,21 @@ int	main(int argc, char *argv[], char *envp[])
 		{
 			toklist_bacup = toklist;
 			if (chek_full_cmd(&toklist, error_msg) == 0)
-				ft_printf("OK\n");
+			{
+				toklist = toklist_bacup;
+				tree = make_ast(toklist);
+				if (tree != NULL)
+				{
+					btr_iter((t_btree *)tree, preorder, &print_token);
+					ft_printf("\n");
+					btr_clear((t_btree *)tree, NULL);
+				}
+			}
 			else
+			{
 				ft_printf("%s\n", error_msg);
-			toklist = toklist_bacup;
+				toklist = toklist_bacup;
+			}
 		}
 		if (error == 1)
 		{
