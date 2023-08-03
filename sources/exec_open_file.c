@@ -6,7 +6,7 @@
 /*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 18:57:15 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/08/03 16:38:37 by sotanaka         ###   ########.fr       */
+/*   Updated: 2023/08/03 17:54:43 by sotanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,11 @@ int	ft_open_file(char *file_redirect, int flag_redirect, int fd_io)
 	int	fd;
 
 	if (flag_redirect == GREAT)
-		fd = open(file_redirect, O_WRONLY | O_CREAT | O_TRUNC);
+		fd = open(file_redirect, O_WRONLY | O_CREAT | O_TRUNC,
+				S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 	else if (flag_redirect == DGREAT)
-		fd = open(file_redirect, O_WRONLY | O_CREAT | O_APPEND);
+		fd = open(file_redirect, O_WRONLY | O_CREAT | O_APPEND,
+				S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 	else
 		fd = open(file_redirect, O_RDONLY);
 	if (fd == -1)
