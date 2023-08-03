@@ -6,7 +6,7 @@
 /*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 21:54:41 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/08/02 22:06:31 by sotanaka         ###   ########.fr       */
+/*   Updated: 2023/08/03 11:05:00 by sotanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,7 @@ int	scan_btree_cmd(int fd_in, int fd_out, t_tree *node)
 	return (0);
 }
 
+//first call: scan_btree_pipe(0, 1, node);
 int	scan_btree_pipe(int fd_in, int fd_out, t_tree *node)
 {
 	int	fd_pipe[2];
