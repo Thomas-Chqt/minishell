@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_exec_print_error.c                              :+:      :+:    :+:   */
+/*   exec_print_error.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 14:50:34 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/08/02 18:43:14 by sotanaka         ###   ########.fr       */
+/*   Updated: 2023/08/03 16:20:01 by sotanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,12 @@ int	ft_print_perror(char *original_message)
 	return (EXIT_FAILURE);
 }
 
-int cmd_cant_use(char *cmd, int flag)
+int	cmd_cant_use(char *cmd, int flag)
 {
 	char	*tmp;
 
 	ft_printf("minishell: ");
-	if (flag == CMD_SIMPLE || flag == CMD_PERM_DENIED)
+	if (flag == CMD_SIMPLE || flag == CMD_PERM_DENIED || flag == IS_A_DIRECTORY)
 	{
 		ft_print_perror(cmd);
 		exit(flag);
