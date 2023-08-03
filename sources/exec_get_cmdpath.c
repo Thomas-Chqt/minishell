@@ -1,18 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_exec_get_cmdpath.c                              :+:      :+:    :+:   */
+/*   exec_get_cmdpath.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 14:50:40 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/08/02 18:15:38 by sotanaka         ###   ########.fr       */
+/*   Updated: 2023/08/03 16:19:28 by sotanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 
-static int	make_potential_fullpath(t_dexec *dexec, char *envpath, char *cmd)
+int	check_cmdpath(char *cmd_path, int flag)
+{
+	int			err;
+	struct stat	buf;
+
+	errno = 0;
+	if (flag == ACCESS_FOK)
+	{
+		err = access(cmd_path, F_OK);
+		if (err == 0)
+			return (0);
+	}
+	else if (flag == ACCESS_XOK)
+	{
+		err = access(cmd_path, X_OK);
+		if (err == -1)
+			cmd_cant_use(cmd_path, CMD_SIMPLE);
+		else
+			return (0);
+	}
+	return (1);
+}
+
+static int	make_potential_path(t_dexec *dexec, char *envpath, char *cmd)
 {
 	char	*pre_path;
 
@@ -33,7 +56,7 @@ static int	path_is_envp(char *cmd, t_dexec *dexec)
 
 	while (dexec->matrix_envpath[i] != NULL)
 	{
-		if (make_potential_fullpath(dexec, dexec->matrix_envpath[i++], cmd) != 0)
+		if (make_potential_path(dexec, dexec->matrix_envpath[i++], cmd) != 0)
 			exit (1);
 		flag = check_cmdpath(dexec->cmd_path, ACCESS_FOK);
 		if (flag == 0)
