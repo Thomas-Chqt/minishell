@@ -6,7 +6,7 @@
 /*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/30 13:32:49 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/08/03 17:10:14 by sotanaka         ###   ########.fr       */
+/*   Updated: 2023/08/03 18:01:00 by sotanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ static int	ft_exec_do_cmd(char *cmd_path, char **cmd_opts, char **envp)
 	{
 		if (errno == EISDIR)
 			cmd_cant_use(cmd_path, IS_A_DIRECTORY);
+		else
+			perror("minishell");
 		exit(1);
 	}
 }
