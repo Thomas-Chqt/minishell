@@ -6,7 +6,7 @@
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 19:35:46 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/03 21:42:33 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/04 01:46:01 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,24 +19,24 @@ int	recurse_full_cmd(const char *cmd, t_uint64 *i, t_toklist **list)
 
 	new_list = NULL;
 	error = recurse_simple_cmd(cmd, i, &new_list);
-	if (error == 0)
+	if (error != 0)
+		return (error);
+	while (cmd[*i] == ' ')
+		(*i)++;
+	if (cmd[*i] != '\0')
 	{
-		while (cmd[*i] == ' ')
-			(*i)++;
 		error = toklist_pipe_new(cmd, i, &new_list);
-		if (cmd[*i] == '\0' || error == 0)
+		if (error == 0)
 		{
 			while (cmd[*i] == ' ')
 				(*i)++;
 			error = recurse_full_cmd(cmd, i, &new_list);
-			if (cmd[*i] == '\0' || error == 0)
-			{
-				ft_lstadd_back((t_list **)list, (t_list *)new_list);
-				return (0);
-			}
 		}
-		clean_toklist(&new_list);
 	}
+	if (error != 0)
+		clean_toklist(&new_list);
+	else
+		ft_lstadd_back((t_list **)list, (t_list *)new_list);
 	return (error);
 }
 
