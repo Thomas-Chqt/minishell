@@ -6,7 +6,7 @@
 /*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/30 14:34:04 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/08/03 17:14:13 by sotanaka         ###   ########.fr       */
+/*   Updated: 2023/08/04 16:18:51 by sotanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,12 @@
 # define ACCESS_FOK 1
 # define ACCESS_XOK 2
 # define STAT_ISDIR 3
+# define STAT_ISREG 4
 # define CMD_SIMPLE 2
 # define EX_CTLR_C 1
 # define EX_FILE_OPEN_ERR 1
 # define IS_A_DIRECTORY 1
-# define CMD_PERM_DENIED 126
+# define CMD_CANT_EXEC 126
 # define CMD_NOTFOUND 127
 # define EX_CTRL_BACKSLASH 131
 # define EX_SYNTAX_ERROR 258
@@ -59,7 +60,7 @@ int	scan_btree_pipe(int fd_in, int fd_out, t_ast *node);
 //ft_print_error
 int		ft_mes_error(char *message);
 int		ft_print_perror(char *original_message);
-int 	cmd_cant_use(char *cmd, int flag);
+int 	cmd_cant_use(char *cmd, int flag, char *message);
 //ft_exec_open_file
 int		ft_open_file(char *file_redirect, int flag_redirect, int fd_io);
 //ft_exec_do
