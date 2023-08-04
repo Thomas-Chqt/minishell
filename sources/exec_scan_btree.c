@@ -6,7 +6,7 @@
 /*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 21:54:41 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/08/04 14:28:41 by sotanaka         ###   ########.fr       */
+/*   Updated: 2023/08/04 15:50:47 by sotanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,11 @@ static int	ft_readline(char fd_pipe[2], char *delimiter)
 	char	*line;
 
 	if (close(fd_pipe[0]) == -1)
-		exit(ft_print_perror("Error. Fail to close pipe.\n"));
+		exit(ft_print_perror("Error. Fail to close pipe[0].\n"));
 	if (dup2(fd_pipe[1], 1) == -1)
-		exit(ft_print_perror("Error. Fail to dup2.\n"));
+		exit(ft_print_perror("Error. Fail to dup2_pipi[1].\n"));
 	if (close(fd_pipe[1]) == -1)
-		exit(ft_print_perror("Error. Fail to close pipe.\n"));
+		exit(ft_print_perror("Error. Fail to close pipe[1].\n"));
 	while (1)
 	{
 		line = readline("> ");
@@ -48,7 +48,7 @@ int	ft_here_doc(char *delimiter, int fd_in)
 	if (fd_in > 0)
 	{
 		if (close(fd_in) == -1)
-			exit(ft_print_perror("Error. Fail to close pipe.\n"));
+			exit(ft_print_perror("Error. Fail to close fd_in.\n"));
 	}
 	if (pipe(fd_pipe) == -1)
 		exit(ft_print_perror("Error. Fail to create pipe.\n"));
@@ -61,7 +61,7 @@ int	ft_here_doc(char *delimiter, int fd_in)
 	{
 		waitpid(pid, NULL, 0);
 		if (close(fd_pipe[1]) == -1)
-			exit(ft_print_perror("Error. Fail to close pipe.\n"));
+			exit(ft_print_perror("Error. Fail to close pipe[1].\n"));
 	}
 	return (fd_pipe[0]);
 }
