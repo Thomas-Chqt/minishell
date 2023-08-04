@@ -1,6 +1,6 @@
 <mxfile host="65bd71144e">
     <diagram id="BvWW733BPgkkqq4AlifG" name="pipe overview">
-        <mxGraphModel dx="662" dy="530" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+        <mxGraphModel dx="1837" dy="722" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -165,7 +165,7 @@
         </mxGraphModel>
     </diagram>
     <diagram id="ne1Ae2F7Ikecl4E5r_GX" name="exec overview">
-        <mxGraphModel dx="662" dy="530" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+        <mxGraphModel dx="1837" dy="722" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -198,54 +198,56 @@
                 </mxCell>
                 <mxCell id="15" style="edgeStyle=orthogonalEdgeStyle;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;strokeColor=#FFFFFF;" parent="1" source="8" edge="1">
                     <mxGeometry relative="1" as="geometry">
-                        <mxPoint x="310" y="290" as="targetPoint"/>
+                        <mxPoint x="310" y="410" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
                 <mxCell id="19" style="edgeStyle=orthogonalEdgeStyle;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeColor=#FFFFFF;" parent="1" source="8" target="18" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
                 <mxCell id="8" value="search cmd" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
-                    <mxGeometry x="150" y="280" width="120" height="20" as="geometry"/>
+                    <mxGeometry x="150" y="400" width="120" height="20" as="geometry"/>
                 </mxCell>
                 <mxCell id="13" style="edgeStyle=orthogonalEdgeStyle;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;strokeColor=#FF0000;" parent="1" source="10" edge="1">
                     <mxGeometry relative="1" as="geometry">
-                        <mxPoint x="100" y="480" as="targetPoint"/>
+                        <mxPoint x="90" y="590" as="targetPoint"/>
                         <Array as="points">
-                            <mxPoint x="620" y="160"/>
-                            <mxPoint x="620" y="480"/>
+                            <mxPoint x="710" y="160"/>
+                            <mxPoint x="710" y="590"/>
                         </Array>
                     </mxGeometry>
                 </mxCell>
                 <mxCell id="10" value="if redirection path not exist or&lt;br&gt;path permit err, exit 1" style="text;strokeColor=none;align=center;fillColor=none;html=1;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
                     <mxGeometry x="310" y="140" width="190" height="40" as="geometry"/>
                 </mxCell>
-                <mxCell id="17" style="edgeStyle=orthogonalEdgeStyle;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;strokeColor=#FF0000;" parent="1" source="16" edge="1">
+                <mxCell id="17" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#FF0000;" parent="1" source="w5JiVjKuMmMYk0G0d3Ck-34" edge="1">
                     <mxGeometry relative="1" as="geometry">
-                        <mxPoint x="620" y="320" as="targetPoint"/>
+                        <mxPoint x="710" y="340" as="targetPoint"/>
+                        <mxPoint x="590" y="310" as="sourcePoint"/>
                     </mxGeometry>
                 </mxCell>
                 <mxCell id="16" value="if&amp;nbsp; cmd not found, exit 127&lt;br&gt;if&amp;nbsp; cmd not permit, exit 126&lt;br&gt;if cmd is a dir, exit 126" style="text;strokeColor=none;align=center;fillColor=none;html=1;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
-                    <mxGeometry x="310" y="270" width="190" height="40" as="geometry"/>
+                    <mxGeometry x="310" y="390" width="190" height="40" as="geometry"/>
                 </mxCell>
                 <mxCell id="21" style="edgeStyle=orthogonalEdgeStyle;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeColor=#FFFFFF;" parent="1" source="18" target="20" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
                 <mxCell id="18" value="exec cmd" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
-                    <mxGeometry x="150" y="360" width="120" height="20" as="geometry"/>
+                    <mxGeometry x="150" y="480" width="120" height="20" as="geometry"/>
                 </mxCell>
-                <mxCell id="22" style="edgeStyle=orthogonalEdgeStyle;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;strokeColor=#FF0000;" parent="1" source="20" edge="1">
+                <mxCell id="22" style="edgeStyle=orthogonalEdgeStyle;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;strokeColor=#FF0000;" parent="1" source="16" edge="1">
                     <mxGeometry relative="1" as="geometry">
-                        <mxPoint x="620" y="400" as="targetPoint"/>
+                        <mxPoint x="710" y="440" as="targetPoint"/>
+                        <mxPoint x="590" y="410" as="sourcePoint"/>
                     </mxGeometry>
                 </mxCell>
                 <mxCell id="20" value="if&amp;nbsp; path is dir when inredirection need, exit 1" style="text;strokeColor=none;align=center;fillColor=none;html=1;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
-                    <mxGeometry x="310" y="350" width="190" height="40" as="geometry"/>
+                    <mxGeometry x="310" y="470" width="190" height="40" as="geometry"/>
                 </mxCell>
                 <mxCell id="23" value="waitpid" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
                     <mxGeometry x="40" y="690" width="80" height="20" as="geometry"/>
                 </mxCell>
                 <mxCell id="25" value="print appropriate error message" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
-                    <mxGeometry x="530" y="420" width="190" height="30" as="geometry"/>
+                    <mxGeometry x="630" y="530" width="190" height="30" as="geometry"/>
                 </mxCell>
                 <mxCell id="29" style="edgeStyle=orthogonalEdgeStyle;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;strokeColor=#FFFFFF;" parent="1" source="26" target="28" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
@@ -255,11 +257,41 @@
                 </mxCell>
                 <mxCell id="31" style="edgeStyle=orthogonalEdgeStyle;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;strokeColor=#FFFF33;" parent="1" source="28" edge="1">
                     <mxGeometry relative="1" as="geometry">
-                        <mxPoint x="620" y="250" as="targetPoint"/>
+                        <mxPoint x="710" y="250" as="targetPoint"/>
+                        <mxPoint x="590" y="220" as="sourcePoint"/>
                     </mxGeometry>
                 </mxCell>
                 <mxCell id="28" value="if set fail, exit xx" style="text;strokeColor=none;align=center;fillColor=none;html=1;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
                     <mxGeometry x="310" y="200" width="190" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="w5JiVjKuMmMYk0G0d3Ck-35" style="edgeStyle=none;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="w5JiVjKuMmMYk0G0d3Ck-32" target="w5JiVjKuMmMYk0G0d3Ck-34">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="w5JiVjKuMmMYk0G0d3Ck-32" value="cmd is NULL&lt;br&gt;path isnt NULL" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="150" y="300" width="120" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="w5JiVjKuMmMYk0G0d3Ck-34" value="if path isnt exist, exit 1&lt;br&gt;if path is dir, exit 126" style="text;strokeColor=none;align=center;fillColor=none;html=1;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                    <mxGeometry x="319" y="295" width="190" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="w5JiVjKuMmMYk0G0d3Ck-37" style="edgeStyle=orthogonalEdgeStyle;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;strokeColor=#FF0000;" edge="1" parent="1" source="20">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="710" y="520" as="targetPoint"/>
+                        <mxPoint x="510" y="420" as="sourcePoint"/>
+                    </mxGeometry>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+    <diagram id="Go_9v61vXXeIeFIEiVHx" name="Page-3">
+        <mxGraphModel dx="1837" dy="722" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="UtS9cXT9Xc7uGd4HVy8b-1" value="Function need to add" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+                    <mxGeometry x="40" y="45" width="140" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="UtS9cXT9Xc7uGd4HVy8b-2" value="&lt;ul&gt;&lt;li&gt;path &amp;amp; prog find logic.&lt;/li&gt;&lt;li&gt;program when build in function called.&lt;/li&gt;&lt;/ul&gt;" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+                    <mxGeometry x="40" y="60" width="260" height="80" as="geometry"/>
                 </mxCell>
             </root>
         </mxGraphModel>
