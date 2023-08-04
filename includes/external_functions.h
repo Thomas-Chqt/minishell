@@ -6,7 +6,7 @@
 /*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 22:54:17 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/03 14:20:54 by sotanaka         ###   ########.fr       */
+/*   Updated: 2023/08/04 15:51:27 by sotanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ t_pid	fork(void);
 void	exit(int status);
 char	*getcwd(char *buf, size_t size);
 // chdir
-int		stat(const char *pathname, struct stat *buf);
+int		stat(const char *path, struct stat *buf);
 // lstat
 // fstat
 // unlink
