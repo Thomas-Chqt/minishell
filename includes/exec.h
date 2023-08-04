@@ -6,7 +6,7 @@
 /*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/30 14:34:04 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/08/04 18:10:05 by sotanaka         ###   ########.fr       */
+/*   Updated: 2023/08/04 18:47:33 by sotanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ char	*ft_get_cmdpath(char *path, char *prog, t_dexec *dexec);
 //getpath_util
 int		ft_access_wrap(char *path, int flag);
 int		ft_stat_wrap(char *path, int flag);
+int		check_cmdpath(char *cmd_path, int flag);
 //ft_exec_scan_btree
 int		scan_btree_fd(t_dexec *dexec, t_ast *node);
 int	scan_btree_pipe(int fd_in, int fd_out, t_ast *node);

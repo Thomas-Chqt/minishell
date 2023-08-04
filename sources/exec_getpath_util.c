@@ -6,7 +6,7 @@
 /*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/04 17:42:46 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/08/04 17:52:45 by sotanaka         ###   ########.fr       */
+/*   Updated: 2023/08/04 18:47:09 by sotanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,4 +55,26 @@ int	ft_access_wrap(char *path, int flag)
 			return (true);
 	}
 	return (false);
+}
+
+int	check_cmdpath(char *cmd_path, int flag)
+{
+	int			err;
+
+	errno = 0;
+	if (flag == ACCESS_FOK)
+	{
+		err = ft_access_wrap(cmd_path, F_OK);
+		if (err == true)
+			return (0);
+	}
+	else if (flag == ACCESS_XOK)
+	{
+		err = ft_access_wrap(cmd_path, X_OK);
+		if (err == false)
+			minishell_error(cmd_path, CMD_SIMPLE, NULL);
+		else
+			return (0);
+	}
+	return (1);
 }

@@ -6,33 +6,11 @@
 /*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 14:50:40 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/08/04 18:05:41 by sotanaka         ###   ########.fr       */
+/*   Updated: 2023/08/04 18:46:50 by sotanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
-
-static int	check_cmdpath(char *cmd_path, int flag)
-{
-	int			err;
-
-	errno = 0;
-	if (flag == ACCESS_FOK)
-	{
-		err = ft_access_wrap(cmd_path, F_OK);
-		if (err == true)
-			return (0);
-	}
-	else if (flag == ACCESS_XOK)
-	{
-		err = ft_access_wrap(cmd_path, X_OK);
-		if (err == false)
-			minishell_error(cmd_path, CMD_SIMPLE, NULL);
-		else
-			return (0);
-	}
-	return (1);
-}
 
 static int	make_potential_path(t_dexec *dexec, char *envpath, char *cmd)
 {
@@ -76,6 +54,24 @@ static void	path_is(char *path)
 	exit(1);
 }
 
+static void	path_is_builtin(char *prog, t_dexec *dexec)
+{
+	if (ft_memcmp("echo", prog, 5) == 0)
+		;
+	if (ft_memcmp("cd", prog, 3) == 0)
+		;
+	if (ft_memcmp("pwd", prog, 4) == 0)
+		;
+	if (ft_memcmp("export", prog, 7) == 0)
+		;
+	if (ft_memcmp("unset", prog, 6) == 0)
+		;
+	if (ft_memcmp("env", prog, 4) == 0)
+		;
+	if (ft_memcmp("exit", prog, 5) == 0)
+		;
+}
+
 char	*ft_get_cmdpath(char *path, char *prog, t_dexec *dexec)
 {
 	int		result;
@@ -90,6 +86,7 @@ char	*ft_get_cmdpath(char *path, char *prog, t_dexec *dexec)
 		exit(ft_mes_error("Error. Fail allocate memory.\n"));
 	if (path == NULL)
 	{
+		path_is_builtin(prog, dexec);
 		if (path_is_envp(prog, dexec) == 1)
 			minishell_error(prog, CMD_NOTFOUND, "command not found");
 	}
