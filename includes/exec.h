@@ -6,7 +6,7 @@
 /*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/30 14:34:04 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/08/04 16:18:51 by sotanaka         ###   ########.fr       */
+/*   Updated: 2023/08/04 18:10:05 by sotanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,9 @@
 //-------define-------
 //exit status
 # define ACCESS_FOK 1
-# define ACCESS_XOK 2
+# define ACCESS_ROK 2
+# define ACCESS_WOK 3
+# define ACCESS_XOK 4
 # define STAT_ISDIR 3
 # define STAT_ISREG 4
 # define CMD_SIMPLE 2
@@ -30,6 +32,8 @@
 
 //-------include-------
 # include <minishell.h>
+# include <lexer.h>
+# include <parser.h>
 
 //-------typedef-------
 typedef struct s_dexec
@@ -41,26 +45,21 @@ typedef struct s_dexec
 	int		fd_out;
 }	t_dexec;
 
-typedef struct s_tree
-{
-	int				type;
-	char			*data;
-	struct s_tree	*left;
-	struct s_tree	*right;
-}	t_tree;
-
 //-------prototype-------
 //ft_exec_env_path
 char	**ft_split_by_token(char **matrix, char token);
 //ft_exec_cmd_path
 char	*ft_get_cmdpath(char *path, char *prog, t_dexec *dexec);
+//getpath_util
+int		ft_access_wrap(char *path, int flag);
+int		ft_stat_wrap(char *path, int flag);
 //ft_exec_scan_btree
 int		scan_btree_fd(t_dexec *dexec, t_ast *node);
 int	scan_btree_pipe(int fd_in, int fd_out, t_ast *node);
 //ft_print_error
 int		ft_mes_error(char *message);
 int		ft_print_perror(char *original_message);
-int 	cmd_cant_use(char *cmd, int flag, char *message);
+int 	minishell_error(char *cmd, int flag, char *message);
 //ft_exec_open_file
 int		ft_open_file(char *file_redirect, int flag_redirect, int fd_io);
 //ft_exec_do

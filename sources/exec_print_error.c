@@ -6,7 +6,7 @@
 /*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 14:50:34 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/08/03 16:20:01 by sotanaka         ###   ########.fr       */
+/*   Updated: 2023/08/04 18:05:42 by sotanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,19 +24,19 @@ int	ft_print_perror(char *original_message)
 	return (EXIT_FAILURE);
 }
 
-int	cmd_cant_use(char *cmd, int flag)
+int	minishell_error(char *cmd, int flag, char *message)
 {
 	char	*tmp;
 
 	ft_printf("minishell: ");
-	if (flag == CMD_SIMPLE || flag == CMD_PERM_DENIED || flag == IS_A_DIRECTORY)
+	if (message == NULL)
 	{
 		ft_print_perror(cmd);
 		exit(flag);
 	}
-	else if (flag == CMD_NOTFOUND)
+	else
 	{
-		ft_printf("%s: %s", cmd, ": command not found\n");
+		ft_printf("%s: %s\n", cmd, message);
 		exit(flag);
 	}
 	exit (1);

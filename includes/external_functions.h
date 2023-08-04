@@ -6,7 +6,7 @@
 /*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 22:54:17 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/04 15:51:27 by sotanaka         ###   ########.fr       */
+/*   Updated: 2023/08/04 18:09:13 by sotanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ int		stat(const char *path, struct stat *buf);
 int		execve(const char *path, char *const argv[], char *const envp[]);
 
 // dup
-// dup2
+int		dup2(int fildes, int fildes2);
 int		pipe(int pipefd[2]);
 // opendir
 // readdir

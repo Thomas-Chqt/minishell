@@ -6,7 +6,7 @@
 /*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 18:57:15 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/08/03 17:54:43 by sotanaka         ###   ########.fr       */
+/*   Updated: 2023/08/04 18:07:04 by sotanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,7 @@ int	ft_open_file(char *file_redirect, int flag_redirect, int fd_io)
 	else
 		fd = open(file_redirect, O_RDONLY);
 	if (fd == -1)
-	{
-		ft_printf("minishell: ");
-		ft_print_perror(file_redirect);
-		exit (EX_FILE_OPEN_ERR);
-	}
+		minishell_error(file_redirect, EX_FILE_OPEN_ERR, NULL);
 	else
 	{
 		if (fd_io != fd && fd_io != STDIN_FILENO && fd_io != STDOUT_FILENO)

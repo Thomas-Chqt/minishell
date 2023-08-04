@@ -6,7 +6,7 @@
 /*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/30 13:32:49 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/08/03 18:01:00 by sotanaka         ###   ########.fr       */
+/*   Updated: 2023/08/04 18:05:41 by sotanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static int	ft_exec_do_cmd(char *cmd_path, char **cmd_opts, char **envp)
 	if (execve(cmd_path, cmd_opts, envp) == -1)
 	{
 		if (errno == EISDIR)
-			cmd_cant_use(cmd_path, IS_A_DIRECTORY);
+			minishell_error(cmd_path, IS_A_DIRECTORY, NULL);
 		else
 			perror("minishell");
 		exit(1);
@@ -51,7 +51,7 @@ int	ft_exec_forked(t_dexec *dexec, t_ast *node)
 	ft_exec_set_redirect(dexec);
 	if (node->data->type == TEXT && node->data->data != NULL)
 	{
-		//Get data of cmd_path, cmd_opts, envp is not available.
+		//Get data of cmd_path, cmd_opts and envp is not available.
 		ft_exec_do_cmd(dexec->cmd_path, dexec->cmd_opts, envp);
 	}
 	return (0);
