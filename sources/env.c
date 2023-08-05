@@ -6,7 +6,7 @@
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 15:37:37 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/04 14:11:54 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/05 00:08:59 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,7 @@ int	init_env(char *envp[])
 	t_uint64	i;
 	char		**splited_str;
 
-	if (env_internal(NULL, (t_env_entry){}, NULL, init) != 0)
-		return (1);
+	*(env_get_dict()) = dicstrenv_new(1024);
 	i = 0;
 	while (envp[i] != NULL)
 	{
@@ -42,43 +41,29 @@ int	set_env(const char *key, const char *val, t_bool exported)
 		return (1);
 	if (ft_strlen(val) == 0)
 		return (1);
-	return (env_internal(key, (t_env_entry){
+	return (
+		dicstrenv_set(*(env_get_dict()), key, (t_env_entry){
 			.is_export = exported,
-			.value = (char *)val}, NULL, set));
+			.value = (char *)val})
+		);
 }
 
 char	*get_env(const char *key)
 {
 	t_env_entry	entry;
 
-	env_internal(key, (t_env_entry){}, &entry, get);
+	entry = dicstrenv_get(*(env_get_dict()), key);
 	return (entry.value);
 }
 
 void	clean_env(void)
 {
-	(void)env_internal(NULL, (t_env_entry){}, NULL, clean);
+	dic_clear(*(env_get_dict()));
 }
 
-int	env_internal(const char *key, t_env_entry val,
-		t_env_entry *result, t_env_action action)
+t_dictionary	*env_get_dict(void)
 {
-	static t_dictionary	dict;
+	static t_dictionary	env_dict;
 
-	if (action == init)
-	{
-		dict = dicstrenv_new(1024);
-		if (dict == NULL)
-			return (1);
-	}
-	else if (action == set)
-	{
-		if (dicstrenv_set(dict, key, val) != 0)
-			return (1);
-	}
-	else if (action == get)
-		*result = dicstrenv_get(dict, key);
-	else if (action == clean)
-		dic_clear(dict);
-	return (0);
+	return (&env_dict);
 }

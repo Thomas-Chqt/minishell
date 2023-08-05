@@ -6,7 +6,7 @@
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 20:57:41 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/04 14:27:07 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/05 00:14:04 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,6 @@ int			set_env(const char *key, const char *val, t_bool exported);
 char		*get_env(const char *key);
 void		clean_env(void);
 
-
-
 t_toklist	*make_toklist(const char *cmd, char *error_msg);
 void		clean_toklist(t_toklist **token_list);
 
@@ -41,5 +39,6 @@ t_ast		*make_ast(t_toklist *toklist);
 /*----Debug----*/
 
 void		print_token(void *data);
+void		print_env_var(void *data);
 
 #endif // MINISHELL_H
