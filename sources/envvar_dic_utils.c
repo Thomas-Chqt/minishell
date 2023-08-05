@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env_dic_utils.c                                    :+:      :+:    :+:   */
+/*   envvar_dic_utils.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/04 12:13:01 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/04 12:16:47 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/05 14:44:03 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "env.h"
+#include "envvar.h"
 
 t_uint64	hash_func(void *key_ptr, size_t dict_size)
 {

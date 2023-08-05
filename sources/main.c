@@ -6,7 +6,7 @@
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 20:57:27 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/05 00:15:08 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/05 15:04:42 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,13 +52,17 @@ int	main(int argc, char *argv[], char *envp[])
 			free(cmd);
 			break ;
 		}
-		token_list = make_toklist(cmd, error_msg);
 		free(cmd);
-		if (token_list == NULL)
-			ft_printf("%s\n", error_msg);
-		else
-			ft_lstiter((t_list *)token_list, &print_env_var);
-		clean_toklist(&token_list);
+		env();
+		
+		// token_list = make_toklist(cmd, error_msg);
+		// free(cmd);
+		// if (token_list == NULL)
+		// 	ft_printf("%s\n", error_msg);
+		// else
+		// 	ft_lstiter((t_list *)token_list, &print_env_var);
+		// clean_toklist(&token_list);
+		
 	}
 	clean_env();
 	return (0);
