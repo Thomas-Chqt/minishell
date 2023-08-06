@@ -6,7 +6,7 @@
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/05 17:27:31 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/06 14:45:01 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/06 15:51:24 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ int	set_env2(const char *keyval, t_bool exported)
 	int		retval;
 
 	splited_str = str_split_on_first(keyval, '=');
-	retval = set_env(splited_str[0], splited_str[1], true);
+	retval = set_env(splited_str[0], splited_str[1], exported);
 	free_splited_str(splited_str);
 	return (retval);
 }

@@ -6,7 +6,7 @@
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 20:57:27 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/06 15:06:02 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/06 15:53:55 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,9 @@ static void	destructor(void)
 int	main(int argc, char *argv[], char *envp[])
 {
 	char		*cmd;
-	t_toklist	*token_list;
-	char		error_msg[ERROR_MSG_MAX_LEN];
-	char		**splited_str;
 
+	if (argc || argv)
+		argc = (int)argv;
 	if (init_env(envp) != 0)
 		return (1);
 	while (1)
@@ -52,18 +51,6 @@ int	main(int argc, char *argv[], char *envp[])
 		{
 			free(cmd);
 			break ;
-		}
-		if (str_cmp(cmd, "env") == 0)
-			env(0, NULL);
-		else if (str_cmp(cmd, "export") == 0)
-			export(0, NULL);
-		else
-		{
-			char *temp = ft_strjoin("minishell ", cmd);
-			splited_str = ft_split(temp, ' ');
-			free(temp);
-			export(arrstr_len(splited_str), splited_str);
-			free_splited_str(splited_str);
 		}
 		free(cmd);
 	}
