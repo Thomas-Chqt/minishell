@@ -6,23 +6,38 @@
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 20:57:41 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/07/27 16:07:17 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/06 16:06:47 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+# include <libft.h>
+# include "external_functions.h"
+# include "error_codes.h"
+
 # ifdef MEMCHECK
 #  include <memory_leak_detector.h>
 # endif // MEMCHECK
 
-# include <libft.h>
-# include "external_functions.h"
+# define ERROR_MSG_MAX_LEN 100
 
-int		init_env(char *envp[]);
-int		set_env(const char *key, const char *val);
-char	*get_env(const char *key);
-void	clean_env(void);
+typedef struct s_toklist	t_toklist;
+typedef struct s_ast		t_ast;
+
+int			init_env(char *envp[]);
+int			set_env(const char *key, const char *val, t_bool exported);
+char		*get_env(const char *key);
+int			export_env(const char *key);
+void		clean_env(void);
+
+t_toklist	*make_toklist(const char *cmd, char *error_msg);
+void		clean_toklist(t_toklist **token_list);
+
+t_ast		*make_ast(t_toklist *toklist);
+
+int			env(int argc, char *argv[]);
+int			export(int argc, char *argv[]);
 
 #endif // MINISHELL_H
