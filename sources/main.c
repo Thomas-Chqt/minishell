@@ -6,7 +6,7 @@
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 20:57:27 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/05 15:04:42 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/06 15:06:02 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ int	main(int argc, char *argv[], char *envp[])
 	char		*cmd;
 	t_toklist	*token_list;
 	char		error_msg[ERROR_MSG_MAX_LEN];
+	char		**splited_str;
 
 	if (init_env(envp) != 0)
 		return (1);
@@ -47,22 +48,24 @@ int	main(int argc, char *argv[], char *envp[])
 			continue ;
 		}
 		add_history(cmd);
-		if (ft_strncmp(cmd, "exit", 4) == 0)
+		if (str_cmp(cmd, "exit") == 0)
 		{
 			free(cmd);
 			break ;
 		}
+		if (str_cmp(cmd, "env") == 0)
+			env(0, NULL);
+		else if (str_cmp(cmd, "export") == 0)
+			export(0, NULL);
+		else
+		{
+			char *temp = ft_strjoin("minishell ", cmd);
+			splited_str = ft_split(temp, ' ');
+			free(temp);
+			export(arrstr_len(splited_str), splited_str);
+			free_splited_str(splited_str);
+		}
 		free(cmd);
-		env();
-		
-		// token_list = make_toklist(cmd, error_msg);
-		// free(cmd);
-		// if (token_list == NULL)
-		// 	ft_printf("%s\n", error_msg);
-		// else
-		// 	ft_lstiter((t_list *)token_list, &print_env_var);
-		// clean_toklist(&token_list);
-		
 	}
 	clean_env();
 	return (0);
