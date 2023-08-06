@@ -6,7 +6,7 @@
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 20:57:41 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/06 14:34:58 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/06 16:06:47 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,5 @@ t_ast		*make_ast(t_toklist *toklist);
 
 int			env(int argc, char *argv[]);
 int			export(int argc, char *argv[]);
-
-/*----Debug----*/
-
-void		print_token(void *data);
-void		print_env_var(void *data);
 
 #endif // MINISHELL_H

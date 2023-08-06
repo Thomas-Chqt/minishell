@@ -6,7 +6,7 @@
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 20:24:15 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/03 22:23:06 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/06 16:06:06 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,4 +37,14 @@ t_ast	*make_ast(t_toklist *toklist)
 		return (NULL);
 	}
 	return ((t_ast *)btr_get_root((t_btree *)tree));
+}
+
+t_bool	is_io_token(t_token *token)
+{
+	return (
+		token->type == DLESS
+		|| token->type == DGREAT
+		|| token->type == LESS
+		|| token->type == GREAT
+	);
 }
