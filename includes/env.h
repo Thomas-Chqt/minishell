@@ -6,7 +6,7 @@
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/04 11:26:37 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/06 14:44:26 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/06 22:11:13 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,10 @@ struct s_env_list
 	t_env_entry	*data;
 	t_env_list	*next;
 };
+
+int			set_env(const char *key, const char *val, t_bool exported);
+char		*get_env(const char *key);
+int			export_env(const char *key);
 
 t_env_list	*lst_env_new(const char *key, const char *val, t_bool is_export);
 void		del_env_entry(void *v_entry);
