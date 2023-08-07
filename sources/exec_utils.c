@@ -6,13 +6,14 @@
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 17:35:15 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/07 20:37:43 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/07 21:59:29 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 
-//! No way to know if there is no path or if the allocation failed
+static int	argv_fill_option(char **argv, t_ast *node);
+
 char	*get_cmd_path(t_ast *node)
 {
 	if (node->data->type != TEXT || node->data->data == NULL)
@@ -46,24 +47,35 @@ int	get_argc(t_ast *node)
 char	**get_argv(t_ast *node)
 {
 	char		**argv;
+
+	if (node->data->data[ft_strlen(node->data->data) - 1] == '/')
+		return (NULL);
+	argv = ft_calloc(get_argc(node) + 1, sizeof(char *));
+	if (argv == NULL)
+		return (NULL);
+	if (ft_strchr(node->data->data, '/') == NULL)
+		argv[0] = node->data->data;
+	else
+		argv[0] = ft_strrchr(node->data->data, '/') + 1;
+	if (argv_fill_option(argv, node->right) != 0)
+		free_null((void **)&argv);
+	return (argv);
+}
+
+static int	argv_fill_option(char **argv, t_ast *node)
+{
 	t_uint64	i;
 	t_ast		*current;
 
-	argv = ft_calloc(get_argc(node), sizeof(char *));
-	if (argv == NULL)
-		return (NULL);
+	i = 1;
 	current = node;
-	i = 0;
 	while (current != NULL)
 	{
-		argv[i] = ft_strdup(current->data->data);
+		argv[i] = current->data->data;
 		if (argv[i] == NULL)
-		{
-			free_splited_str(argv);
-			return (NULL);
-		}
+			return (1);
 		current = current->right;
 		i++;
 	}
-	return (argv);
+	return (0);
 }
