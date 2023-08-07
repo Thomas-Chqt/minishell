@@ -6,7 +6,7 @@
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 15:37:37 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/04 14:11:54 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/06 14:53:20 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,22 +15,15 @@
 int	init_env(char *envp[])
 {
 	t_uint64	i;
-	char		**splited_str;
 
-	if (env_internal(NULL, (t_env_entry){}, NULL, init) != 0)
-		return (1);
 	i = 0;
 	while (envp[i] != NULL)
 	{
-		splited_str = str_split_on_first(envp[i], '=');
-		if (arrstr_len(splited_str) != 2
-			|| set_env(splited_str[0], splited_str[1], true) != 0)
+		if (set_env2(envp[i], true) != 0)
 		{
-			free_splited_str(splited_str);
 			clean_env();
 			return (1);
 		}
-		free_splited_str(splited_str);
 		i++;
 	}
 	return (0);
@@ -38,47 +31,60 @@ int	init_env(char *envp[])
 
 int	set_env(const char *key, const char *val, t_bool exported)
 {
-	if (ft_strlen(key) == 0)
+	t_env_list	*found;
+
+	if (key == NULL || key[0] == '\0')
 		return (1);
-	if (ft_strlen(val) == 0)
-		return (1);
-	return (env_internal(key, (t_env_entry){
-			.is_export = exported,
-			.value = (char *)val}, NULL, set));
+	found = (t_env_list *)lst_chr((t_list *)*(get_lstenv()),
+			&is_env_key_equal, (void *)key);
+	if (found == NULL)
+	{
+		found = lst_env_new(key, val, exported);
+		if (found == NULL)
+			return (MALLOC_ERROR);
+		ft_lstadd_back((t_list **)get_lstenv(), (t_list *)found);
+		return (0);
+	}
+	found->data->is_export = exported;
+	free_null((void **)&found->data->value);
+	if (val == NULL)
+		return (0);
+	found->data->value = ft_strdup(val);
+	if (found->data->value == NULL)
+		return (2);
+	return (0);
 }
 
 char	*get_env(const char *key)
 {
-	t_env_entry	entry;
+	t_env_list	*found;
+	char		*str;
 
-	env_internal(key, (t_env_entry){}, &entry, get);
-	return (entry.value);
+	if (key == NULL)
+		return (NULL);
+	found = (t_env_list *)lst_chr((t_list *)*(get_lstenv()),
+			&is_env_key_equal, (void *)key);
+	if (found == NULL)
+		return (NULL);
+	str = ft_strdup(found->data->value);
+	return (str);
+}
+
+int	export_env(const char *key)
+{
+	t_env_list	*found;
+
+	if (key == NULL)
+		return (1);
+	found = (t_env_list *)lst_chr((t_list *)*(get_lstenv()),
+			&is_env_key_equal, (void *)key);
+	if (found == NULL)
+		return (set_env(key, NULL, true));
+	found->data->is_export = true;
+	return (0);
 }
 
 void	clean_env(void)
 {
-	(void)env_internal(NULL, (t_env_entry){}, NULL, clean);
-}
-
-int	env_internal(const char *key, t_env_entry val,
-		t_env_entry *result, t_env_action action)
-{
-	static t_dictionary	dict;
-
-	if (action == init)
-	{
-		dict = dicstrenv_new(1024);
-		if (dict == NULL)
-			return (1);
-	}
-	else if (action == set)
-	{
-		if (dicstrenv_set(dict, key, val) != 0)
-			return (1);
-	}
-	else if (action == get)
-		*result = dicstrenv_get(dict, key);
-	else if (action == clean)
-		dic_clear(dict);
-	return (0);
+	ft_lstclear((t_list **)get_lstenv(), &del_env_entry);
 }

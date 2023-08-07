@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hotph <hotph@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/30 14:34:04 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/08/04 18:47:33 by sotanaka         ###   ########.fr       */
+/*   Updated: 2023/08/07 16:49:50 by hotph            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,7 @@
 # define EX_SYNTAX_ERROR 258
 
 //-------include-------
-# include <minishell.h>
-# include <lexer.h>
-# include <parser.h>
+# include "parser.h"
 
 //-------typedef-------
 typedef struct s_dexec

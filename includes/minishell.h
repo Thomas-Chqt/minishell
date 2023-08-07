@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hotph <hotph@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 20:57:41 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/04 16:29:12 by sotanaka         ###   ########.fr       */
+/*   Updated: 2023/08/07 16:50:04 by hotph            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,25 +21,19 @@
 #  include <memory_leak_detector.h>
 # endif // MEMCHECK
 
-# define ERROR_MSG_MAX_LEN 100
-
 typedef struct s_toklist	t_toklist;
 typedef struct s_ast		t_ast;
 
 int			init_env(char *envp[]);
-int			set_env(const char *key, const char *val, t_bool exported);
-char		*get_env(const char *key);
 void		clean_env(void);
 
+t_ast		*parse_cmd(const char *cmd);
+void		execute_ast(t_ast *ast);
+void		clean_ast(t_ast *ast);
 
+void		minishell_loop(void);
 
-t_toklist	*make_toklist(const char *cmd, char *error_msg);
-void		clean_toklist(t_toklist **token_list);
-
-t_ast		*make_ast(t_toklist *toklist);
-
-/*----Debug----*/
-
-void		print_token(void *data);
+int			env(int argc, char *argv[]);
+int			export(int argc, char *argv[]);
 
 #endif // MINISHELL_H
