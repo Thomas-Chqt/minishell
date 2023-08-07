@@ -6,7 +6,7 @@
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 17:35:15 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/07 18:42:27 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/07 20:37:43 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ char	*get_cmd_prog(t_ast *node)
 		return (NULL);
 	if (ft_strchr(node->data->data, '/') == NULL)
 		return (ft_strdup(node->data->data));
+	if (node->data->data[ft_strlen(node->data->data) - 1] == '/')
+		return (NULL);
 	return (ft_strdup(ft_strrchr(node->data->data, '/') + 1));
 }
 
