@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   external_functions.h                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hotph <hotph@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 22:54:17 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/04 18:09:13 by sotanaka         ###   ########.fr       */
+/*   Updated: 2023/08/07 18:24:31 by hotph            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,10 +57,10 @@ int		access(const char *path, int permision);
 
 // int		open(const char *pathname, int flags);
 // read,
-// close
+int		close(int fildes);
 t_pid	fork(void);
 // wait
-// waitpid
+pid_t	waitpid(pid_t pid, int *stat_loc, int options);
 // wait3
 // wait4
 // signal,
