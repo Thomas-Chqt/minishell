@@ -1,39 +1,13 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/23 20:57:27 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/06 22:50:11 by tchoquet         ###   ########.fr       */
+/*   Created: 2023/08/06 21:58:21 by tchoquet          #+#    #+#             */
+/*   Updated: 2023/08/07 12:56:49 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-
-#ifdef MEMCHECK
-
-__attribute__((destructor))
-static void	destructor(void)
-{
-	char	*pid;
-	char	*cmd;
-
-	print_report();
-	pid = ft_itoa(getpid());
-	cmd = ft_strjoin("leaks -q ", pid);
-	system((const char *)cmd);
-	free(pid);
-	free(cmd);
-}
-
-#endif // MEMCHECK
-
-int	main(int argc, char *argv[], char *envp[])
-{
-	if (init_env(envp) != 0)
-		return (1);
-	minishell_loop();
-	return (0);
-}
+#include "parser.h"

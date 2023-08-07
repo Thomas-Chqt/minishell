@@ -6,12 +6,14 @@
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 14:51:42 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/03 22:17:37 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/06 21:42:17 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LEXER_H
 # define LEXER_H
+
+# define ERROR_MSG_MAX_LEN 100
 
 # include "minishell.h"
 
@@ -41,15 +43,18 @@ struct s_toklist
 	t_toklist	*next;
 };
 
-int		toklist_text_new(const char *cmd, t_uint64 *i, t_toklist **list);
-int		toklist_pipe_new(const char *cmd, t_uint64 *i, t_toklist **list);
-int		toklist_io_new(const char *cmd, t_uint64 *i, t_toklist **list);
-void	free_token(void *token);
+int			toklist_text_new(const char *cmd, t_uint64 *i, t_toklist **list);
+int			toklist_pipe_new(const char *cmd, t_uint64 *i, t_toklist **list);
+int			toklist_io_new(const char *cmd, t_uint64 *i, t_toklist **list);
+void		free_token(void *token);
 
-int		recurse_full_cmd(const char *cmd, t_uint64 *i, t_toklist **list);
-int		recurse_simple_cmd(const char *cmd, t_uint64 *i, t_toklist **list);
-int		recurse_io_list(const char *cmd, t_uint64 *i, t_toklist **list);
-int		recurse_io_file(const char *cmd, t_uint64 *i, t_toklist **list);
-int		recurse_text_list(const char *cmd, t_uint64 *i, t_toklist **list);
+int			recurse_full_cmd(const char *cmd, t_uint64 *i, t_toklist **list);
+int			recurse_simple_cmd(const char *cmd, t_uint64 *i, t_toklist **list);
+int			recurse_io_list(const char *cmd, t_uint64 *i, t_toklist **list);
+int			recurse_io_file(const char *cmd, t_uint64 *i, t_toklist **list);
+int			recurse_text_list(const char *cmd, t_uint64 *i, t_toklist **list);
+
+t_toklist	*make_toklist(const char *cmd, char *error_msg);
+void		clean_toklist(t_toklist **token_list);
 
 #endif // LEXER_H

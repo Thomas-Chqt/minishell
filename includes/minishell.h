@@ -6,7 +6,7 @@
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 20:57:41 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/06 16:06:47 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/07 12:56:18 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,21 +21,17 @@
 #  include <memory_leak_detector.h>
 # endif // MEMCHECK
 
-# define ERROR_MSG_MAX_LEN 100
-
 typedef struct s_toklist	t_toklist;
 typedef struct s_ast		t_ast;
 
 int			init_env(char *envp[]);
-int			set_env(const char *key, const char *val, t_bool exported);
-char		*get_env(const char *key);
-int			export_env(const char *key);
 void		clean_env(void);
 
-t_toklist	*make_toklist(const char *cmd, char *error_msg);
-void		clean_toklist(t_toklist **token_list);
+t_ast		*parse_cmd(const char *cmd);
+void		execute_ast(t_ast *ast);
+void		clean_ast(t_ast *ast);
 
-t_ast		*make_ast(t_toklist *toklist);
+void		minishell_loop(void);
 
 int			env(int argc, char *argv[]);
 int			export(int argc, char *argv[]);
