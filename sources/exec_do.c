@@ -6,11 +6,12 @@
 /*   By: hotph <hotph@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/30 13:32:49 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/08/08 11:51:25 by hotph            ###   ########.fr       */
+/*   Updated: 2023/08/08 14:57:57 by hotph            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
+#include "env.h"
 
 static int	ft_exec_set_redirect(t_dexec *dexec)
 {
@@ -31,7 +32,7 @@ static int	ft_exec_set_redirect(t_dexec *dexec)
 	return (0);
 }
 
-static int	ft_exec_do_cmd(char *cmd_path, char **cmd_opts, char **envp)
+static void	ft_exec_do_cmd(char *cmd_path, char **cmd_opts, char **envp)
 {
 	if (execve(cmd_path, cmd_opts, envp) == -1)
 	{
@@ -50,11 +51,10 @@ int	ft_exec_forked(t_dexec *dexec, t_ast *node)
 	ft_exec_set_redirect(dexec);
 	if (node->data->type == TEXT && node->data->data != NULL)
 	{
-		//Get envp is not available.
-		dexec->matrix_envpath = ft_split_by_token(dexec->matrix_envpath, ':');//Usage get_env is correct?
+		dexec->matrix_envpath = ft_split_by_token(dexec->matrix_envpath, ':');
 		dexec->cmd_path = ft_get_cmdpath(get_cmd_path(node),get_cmd_prog(node), dexec);
 		dexec->cmd_opts = get_argv(node);
-		ft_exec_do_cmd(dexec->cmd_path, dexec->cmd_opts, environ);//Are there same data as *envp[]?
+		ft_exec_do_cmd(dexec->cmd_path, dexec->cmd_opts, get_envp());
 	}
 	return (0);
 }
