@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/27 15:37:37 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/06 14:53:20 by tchoquet         ###   ########.fr       */
+/*   Created: 2023/08/07 19:59:47 by tchoquet          #+#    #+#             */
+/*   Updated: 2023/08/08 02:56:25 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,39 +19,13 @@ int	init_env(char *envp[])
 	i = 0;
 	while (envp[i] != NULL)
 	{
-		if (set_env2(envp[i], true) != 0)
+		if (set_env(envp[i], true) != 0)
 		{
 			clean_env();
 			return (1);
 		}
 		i++;
 	}
-	return (0);
-}
-
-int	set_env(const char *key, const char *val, t_bool exported)
-{
-	t_env_list	*found;
-
-	if (key == NULL || key[0] == '\0')
-		return (1);
-	found = (t_env_list *)lst_chr((t_list *)*(get_lstenv()),
-			&is_env_key_equal, (void *)key);
-	if (found == NULL)
-	{
-		found = lst_env_new(key, val, exported);
-		if (found == NULL)
-			return (MALLOC_ERROR);
-		ft_lstadd_back((t_list **)get_lstenv(), (t_list *)found);
-		return (0);
-	}
-	found->data->is_export = exported;
-	free_null((void **)&found->data->value);
-	if (val == NULL)
-		return (0);
-	found->data->value = ft_strdup(val);
-	if (found->data->value == NULL)
-		return (2);
 	return (0);
 }
 
@@ -70,21 +44,67 @@ char	*get_env(const char *key)
 	return (str);
 }
 
-int	export_env(const char *key)
+char	**get_envp(void)
+{
+	char		**envp;
+	t_env_list	*current;
+	t_uint64	i;
+
+	current = *(get_lstenv());
+	envp = ft_calloc(ft_lstsize((t_list *)current) + 1, sizeof(char *));
+	if (envp == NULL)
+		return (NULL);
+	i = 0;
+	while (current != NULL)
+	{
+		envp[i] = env_entry_to_str(*current->data);
+		if (envp[i] == NULL)
+		{
+			free_splited_str(envp);
+			return (NULL);
+		}
+		i++;
+		current = current->next;
+	}
+	return (envp);
+}
+
+int	set_env(const char *keyval, t_bool exported)
 {
 	t_env_list	*found;
+	t_env_list	*new_node;
 
-	if (key == NULL)
-		return (1);
-	found = (t_env_list *)lst_chr((t_list *)*(get_lstenv()),
-			&is_env_key_equal, (void *)key);
-	if (found == NULL)
-		return (set_env(key, NULL, true));
-	found->data->is_export = true;
-	return (0);
+	new_node = lst_env_new(keyval, exported);
+	if (new_node != NULL)
+	{
+		found = (t_env_list *)lst_chr(*((t_list **)get_lstenv()),
+				&is_env_key_equal, new_node->data->key);
+		if (found == NULL)
+		{
+			ft_lstadd_back((t_list **)get_lstenv(), (t_list *)new_node);
+			return (0);
+		}
+		found->data = new_node->data;
+		free(new_node);
+		return (0);
+	}
+	return (1);
 }
 
 void	clean_env(void)
 {
-	ft_lstclear((t_list **)get_lstenv(), &del_env_entry);
+	t_env_list	*watched;
+	t_env_list	*temp;
+
+	watched = *(get_lstenv());
+	while (watched != NULL)
+	{
+		free(watched->data->key);
+		free(watched->data->value);
+		free(watched->data);
+		temp = watched->next;
+		free(watched);
+		watched = temp;
+	}
+	(*(get_lstenv())) = NULL;
 }
