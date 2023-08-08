@@ -3,19 +3,31 @@
 /*                                                        :::      ::::::::   */
 /*   external_functions.h                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: hotph <hotph@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 22:54:17 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/07/30 18:51:26 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/08 15:09:47 by hotph            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef EXTERNAL_FUNCTIONS_H
 # define EXTERNAL_FUNCTIONS_H
 
-// # include <sys/errno.h>
-// #include <readline/history.h>
-// #include <readline/readline.h>
+# define EXIT_SUCCESS 0
+# define EXIT_FAILURE 1
+# define STDIN_FILENO 0
+# define STDOUT_FILENO 1
+
+#define F_OK 0
+#define X_OK (1<<0)
+#define W_OK (1<<1)
+#define R_OK (1<<2)
+
+# include <errno.h>
+# include <stddef.h>
+# include <sys/stat.h>
+# include <sys/wait.h>
+# include <fcntl.h>
 
 # ifdef MEMCHECK
 
@@ -23,6 +35,8 @@ int		getpid(void);
 int		system(const char *command);
 
 # endif // MEMCHECK
+
+typedef int t_pid;
 
 char	*readline(const char *prompt);
 
@@ -39,13 +53,15 @@ void	*malloc(size_t size);
 void	free(void *ptr);
 
 // write
-// access
-// open
+
+int		access(const char *path, int permision);
+
+// int		open(const char *pathname, int flags);
 // read,
-// close
-// fork
+int		close(int fildes);
+t_pid	fork(void);
 // wait
-// waitpid
+pid_t	waitpid(pid_t pid, int *stat_loc, int options);
 // wait3
 // wait4
 // signal,
@@ -53,10 +69,10 @@ void	free(void *ptr);
 // sigemptyset
 // sigaddset
 // kill
-// exit,
-// getcwd
+void	exit(int status);
+char	*getcwd(char *buf, size_t size);
 // chdir
-// stat
+int		stat(const char *path, struct stat *buf);
 // lstat
 // fstat
 // unlink
@@ -64,13 +80,13 @@ void	free(void *ptr);
 int		execve(const char *path, char *const argv[], char *const envp[]);
 
 // dup
-// dup2
-// pipe
+int		dup2(int fildes, int fildes2);
+int		pipe(int pipefd[2]);
 // opendir
 // readdir
 // closedir,
 // strerror
-// perror
+void	perror(const char *s);
 // isatty
 // ttyname
 // ttyslot
