@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_get_cmdpath.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hotph <hotph@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 14:50:40 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/08/04 18:46:50 by sotanaka         ###   ########.fr       */
+/*   Updated: 2023/08/07 20:23:06 by hotph            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ static int	path_is_envp(char *cmd, t_dexec *dexec)
 	size_t	i;
 	int		flag;
 
+	i = 0;
 	while (dexec->matrix_envpath[i] != NULL)
 	{
 		if (make_potential_path(dexec, dexec->matrix_envpath[i++], cmd) != 0)
@@ -56,19 +57,19 @@ static void	path_is(char *path)
 
 static void	path_is_builtin(char *prog, t_dexec *dexec)
 {
-	if (ft_memcmp("echo", prog, 5) == 0)
+	if (str_cmp("echo", prog) == 0)
 		;
-	if (ft_memcmp("cd", prog, 3) == 0)
+	if (str_cmp("cd", prog) == 0)
 		;
-	if (ft_memcmp("pwd", prog, 4) == 0)
+	if (str_cmp("pwd", prog) == 0)
 		;
-	if (ft_memcmp("export", prog, 7) == 0)
+	if (str_cmp("export", prog) == 0)
 		;
-	if (ft_memcmp("unset", prog, 6) == 0)
+	if (str_cmp("unset", prog) == 0)
 		;
-	if (ft_memcmp("env", prog, 4) == 0)
+	if (str_cmp("env", prog) == 0)
 		;
-	if (ft_memcmp("exit", prog, 5) == 0)
+	if (str_cmp("exit", prog) == 0)
 		;
 }
 
@@ -76,15 +77,18 @@ char	*ft_get_cmdpath(char *path, char *prog, t_dexec *dexec)
 {
 	int		result;
 
-	if (path != NULL && prog == NULL)
-		path_is(path);
-	else if (ft_strncmp(path, "./", 2) == 0)
-		dexec->cmd_path = ft_strjoin(path[1], prog);
-	else if (path != NULL)
-		dexec->cmd_path = ft_strjoin(path, prog);
-	if (dexec->cmd_path == NULL)
-		exit(ft_mes_error("Error. Fail allocate memory.\n"));
-	if (path == NULL)
+	if (path != NULL)
+	{
+		if (prog == NULL)
+			path_is(path);
+		else if (ft_strncmp(path, "./", 2) == 0)
+			dexec->cmd_path = ft_strjoin(&path[2], prog);
+		else
+			dexec->cmd_path = ft_strjoin(path, prog);
+		if (dexec->cmd_path == NULL)
+			exit(ft_mes_error("Error. Fail allocate memory.\n"));
+	}
+	else
 	{
 		path_is_builtin(prog, dexec);
 		if (path_is_envp(prog, dexec) == 1)
