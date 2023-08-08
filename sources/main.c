@@ -6,7 +6,7 @@
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 20:57:27 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/06 22:50:11 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/08 02:31:16 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,5 +35,6 @@ int	main(int argc, char *argv[], char *envp[])
 	if (init_env(envp) != 0)
 		return (1);
 	minishell_loop();
+	clean_env();
 	return (0);
 }

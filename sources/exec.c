@@ -6,14 +6,25 @@
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/06 21:58:32 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/07 12:57:05 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/08 03:08:07 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
+#include "env.h"
 
 // TODO : execution start here
 void	execute_ast(t_ast *ast)
 {
-	ft_printf("Execution...\n");
+	char		**envp;
+	t_uint64	i;
+
+	envp = get_envp();
+	i = 0;
+	while (envp[i] != NULL)
+	{
+		ft_printf("%s\n", envp[i]);
+		i++;
+	}
+	free_splited_str(envp);
 }

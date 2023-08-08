@@ -6,7 +6,7 @@
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/06 22:20:59 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/07 12:56:34 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/08 01:52:49 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,11 @@ void	minishell_loop(void)
 			continue ;
 		if (cmd[0] != '\0')
 		{
+			if (str_cmp(cmd, "exit") == 0)
+			{
+				free((void *)cmd);
+				break ;
+			}
 			add_history(cmd);
 			ast = parse_cmd(cmd);
 			if (ast != NULL)
