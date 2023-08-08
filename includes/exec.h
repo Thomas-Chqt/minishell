@@ -6,7 +6,7 @@
 /*   By: hotph <hotph@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/30 14:34:04 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/08/07 16:49:50 by hotph            ###   ########.fr       */
+/*   Updated: 2023/08/07 18:29:06 by hotph            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ typedef struct s_dexec
 }	t_dexec;
 
 //-------prototype-------
+//scan_btree_pipe
+int		scan_btree_pipe(int fd_in, int fd_out, t_ast *node);
 //ft_exec_env_path
 char	**ft_split_by_token(char **matrix, char token);
 //ft_exec_cmd_path
