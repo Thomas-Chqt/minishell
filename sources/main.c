@@ -6,7 +6,7 @@
 /*   By: hotph <hotph@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 20:57:27 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/07 16:51:42 by hotph            ###   ########.fr       */
+/*   Updated: 2023/08/08 14:12:29 by hotph            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,5 +34,6 @@ int	main(int argc, char *argv[], char *envp[])
 	if (init_env(envp) != 0)
 		return (1);
 	minishell_loop();
+	clean_env();
 	return (0);
 }

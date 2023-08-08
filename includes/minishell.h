@@ -6,7 +6,7 @@
 /*   By: hotph <hotph@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 20:57:41 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/07 16:50:04 by hotph            ###   ########.fr       */
+/*   Updated: 2023/08/08 14:11:37 by hotph            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,11 @@ typedef struct s_ast		t_ast;
 int			init_env(char *envp[]);
 void		clean_env(void);
 
+void		minishell_loop(void);
+
 t_ast		*parse_cmd(const char *cmd);
 void		execute_ast(t_ast *ast);
 void		clean_ast(t_ast *ast);
-
-void		minishell_loop(void);
 
 int			env(int argc, char *argv[]);
 int			export(int argc, char *argv[]);

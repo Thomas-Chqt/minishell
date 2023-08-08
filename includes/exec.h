@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: hotph <hotph@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/30 14:34:04 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/08/07 18:29:06 by hotph            ###   ########.fr       */
+/*   Created: 2023/08/06 21:58:21 by tchoquet          #+#    #+#             */
+/*   Updated: 2023/08/08 14:10:07 by hotph            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,5 +65,9 @@ int 	minishell_error(char *cmd, int flag, char *message);
 int		ft_open_file(char *file_redirect, int flag_redirect, int fd_io);
 //ft_exec_do
 int		ft_exec_forked(t_dexec *dexec, t_ast *node);
+char	*get_cmd_path(t_ast *node);
+char	*get_cmd_prog(t_ast *node);
+int		get_argc(t_ast *node);
+char	**get_argv(t_ast *node);
 
 #endif
