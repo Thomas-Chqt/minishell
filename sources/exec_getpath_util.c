@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_getpath_util.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hotph <hotph@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/04 17:42:46 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/08/04 18:47:09 by sotanaka         ###   ########.fr       */
+/*   Updated: 2023/08/07 20:34:58 by hotph            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,18 +59,18 @@ int	ft_access_wrap(char *path, int flag)
 
 int	check_cmdpath(char *cmd_path, int flag)
 {
-	int			err;
+	int	err;
 
 	errno = 0;
 	if (flag == ACCESS_FOK)
 	{
-		err = ft_access_wrap(cmd_path, F_OK);
+		err = ft_access_wrap(cmd_path, ACCESS_FOK);
 		if (err == true)
 			return (0);
 	}
 	else if (flag == ACCESS_XOK)
 	{
-		err = ft_access_wrap(cmd_path, X_OK);
+		err = ft_access_wrap(cmd_path, ACCESS_FOK);
 		if (err == false)
 			minishell_error(cmd_path, CMD_SIMPLE, NULL);
 		else
