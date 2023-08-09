@@ -6,7 +6,7 @@
 /*   By: hotph <hotph@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 18:12:27 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/08/07 19:09:43 by hotph            ###   ########.fr       */
+/*   Updated: 2023/08/09 17:38:12 by hotph            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,17 @@ char	**ft_split_by_token(char **matrix, char token)
 
 	tmp = get_env("PATH");
 	if (tmp == NULL)
-		exit (ft_mes_error("Error: 'PATH' not found."));
+	{
+		ft_mes_error("Error: 'PATH' not found.\n");
+		return (NULL);
+	}
 	matrix = ft_split(tmp, token);
 	if (matrix == NULL)
-		exit(ft_mes_error("Error. Fail allocate memory.\n"));
+	{
+		free(tmp);
+		ft_mes_error("Error. Fail allocate memory.\n");
+		return (NULL);
+	}
 	free(tmp);
 	return (matrix);
 }
