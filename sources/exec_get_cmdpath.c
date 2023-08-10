@@ -6,7 +6,7 @@
 /*   By: hotph <hotph@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 14:50:40 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/08/09 17:41:04 by hotph            ###   ########.fr       */
+/*   Updated: 2023/08/10 12:38:14 by hotph            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,7 @@ int	ft_get_cmdpath(char *path, char *prog, t_dexec *dexec)
 	{
 		path_is_builtin(prog, dexec);
 		exit_val = path_is_envp(prog, dexec);
+		free_splited_str(dexec->matrix_envpath);
 		if (exit_val == CMD_NOTFOUND)
 			return (minishell_error(prog, CMD_NOTFOUND, "command not found"));
 		if (exit_val == 1)
