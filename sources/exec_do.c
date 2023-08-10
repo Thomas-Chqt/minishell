@@ -6,7 +6,7 @@
 /*   By: hotph <hotph@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/30 13:32:49 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/08/08 14:57:57 by hotph            ###   ########.fr       */
+/*   Updated: 2023/08/09 18:11:37 by hotph            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,9 @@ static void	ft_exec_do_cmd(char *cmd_path, char **cmd_opts, char **envp)
 
 int	ft_exec_forked(t_dexec *dexec, t_ast *node)
 {
-	if (node->left != NULL)
-		scan_btree_fd(dexec, node->left);
+	scan_btree_fd(dexec, node->left);
 	ft_exec_set_redirect(dexec);
-	if (node->data->type == TEXT && node->data->data != NULL)
+	if (node->data != NULL && node->data->data != NULL)
 	{
 		dexec->matrix_envpath = ft_split_by_token(dexec->matrix_envpath, ':');
 		dexec->cmd_path = ft_get_cmdpath(get_cmd_path(node),get_cmd_prog(node), dexec);
