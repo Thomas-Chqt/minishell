@@ -6,24 +6,53 @@
 /*   By: hotph <hotph@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 21:54:41 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/08/09 18:10:14 by hotph            ###   ########.fr       */
+/*   Updated: 2023/08/10 15:39:35 by hotph            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
+
+int	ft_open_file(char *file_redirect, int flag_redirect, int fd_io)
+{
+	int	fd;
+
+	if (flag_redirect == GREAT)
+		fd = open(file_redirect, O_WRONLY | O_CREAT | O_TRUNC,
+				S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+	else if (flag_redirect == DGREAT)
+		fd = open(file_redirect, O_WRONLY | O_CREAT | O_APPEND,
+				S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+	else
+		fd = open(file_redirect, O_RDONLY);
+	if (fd == -1)
+		exit(minishell_error(file_redirect, EX_FILE_OPEN_ERR, NULL));
+	else
+	{
+		if (fd_io != fd && fd_io != STDIN_FILENO && fd_io != STDOUT_FILENO)
+		{
+			if (close(fd_io) == -1)
+				exit(ft_print_perror("Error. Fail to close.\n"));
+		}
+	}
+	return (fd);
+}
 
 void	scan_btree_fd(t_dexec *dexec, t_ast *node)
 {
 	if (node == NULL)
 		return ;
 	if (node->data->type == LESS)
-		dexec->fd_in = ft_open_file(node->left->data->data, LESS, dexec->fd_in);
+		dexec->fd_in
+			= ft_open_file(node->left->data->data, LESS, dexec->fd_in);
 	else if (node->data->type == GREAT)
-		dexec->fd_out = ft_open_file(node->left->data->data, GREAT, dexec->fd_out);
+		dexec->fd_out
+			= ft_open_file(node->left->data->data, GREAT, dexec->fd_out);
 	else if (node->data->type == DGREAT)
-		dexec->fd_out = ft_open_file(node->left->data->data, DGREAT, dexec->fd_out);
+		dexec->fd_out
+			= ft_open_file(node->left->data->data, DGREAT, dexec->fd_out);
 	else if (node->data->type == DLESS)
-		dexec->fd_in = ft_here_doc(node->left->data->data, dexec->fd_in);
+		dexec->fd_in
+			= ft_here_doc(node->left->data->data, dexec->fd_in);
 	scan_btree_fd(dexec, node->right);
 }
 

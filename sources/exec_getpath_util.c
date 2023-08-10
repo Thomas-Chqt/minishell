@@ -6,18 +6,22 @@
 /*   By: hotph <hotph@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/04 17:42:46 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/08/07 20:34:58 by hotph            ###   ########.fr       */
+/*   Updated: 2023/08/10 15:24:08 by hotph            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
+#include "env.h"
 
 int	ft_stat_wrap(char *path, int flag)
 {
 	struct stat	buf;
 
 	if (stat(path, &buf) == -1)
-		exit(ft_mes_error("Error. Fail to stat.\n"));
+	{
+		ft_print_perror("stat");
+		return (255);
+	}
 	if (flag == STAT_ISDIR)
 	{
 		if (S_ISDIR(buf.st_mode))
@@ -77,4 +81,41 @@ int	check_cmdpath(char *cmd_path, int flag)
 			return (0);
 	}
 	return (1);
+}
+
+int	check_cmdpath_hub(t_dexec *dexec, char *prog)
+{
+	if (check_cmdpath(dexec->cmd_path, ACCESS_FOK) == 1)
+	{
+		free(dexec->cmd_path);
+		return (minishell_error(prog, CMD_NOTFOUND, "command not found"));
+	}
+	if (check_cmdpath(dexec->cmd_path, ACCESS_XOK) == 1)
+	{
+		free(dexec->cmd_path);
+		return (minishell_error(prog, CMD_CANT_EXEC, NULL));
+	}
+	return (0);
+}
+
+char	**ft_split_by_token(char **matrix, char token)
+{
+	size_t	i;
+	char	*tmp;
+
+	tmp = get_env("PATH");
+	if (tmp == NULL)
+	{
+		ft_mes_error("Error: 'PATH' not found.\n");
+		return (NULL);
+	}
+	matrix = ft_split(tmp, token);
+	if (matrix == NULL)
+	{
+		free(tmp);
+		ft_mes_error("Error. Fail allocate memory.\n");
+		return (NULL);
+	}
+	free(tmp);
+	return (matrix);
 }
