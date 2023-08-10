@@ -6,14 +6,14 @@
 /*   By: hotph <hotph@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/30 13:32:49 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/08/08 14:57:57 by hotph            ###   ########.fr       */
+/*   Updated: 2023/08/10 13:37:10 by hotph            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 #include "env.h"
 
-static int	ft_exec_set_redirect(t_dexec *dexec)
+static int	exec_set_redirect(t_dexec *dexec)
 {
 	if (dexec->fd_in != STDIN_FILENO)
 	{
@@ -32,29 +32,61 @@ static int	ft_exec_set_redirect(t_dexec *dexec)
 	return (0);
 }
 
-static void	ft_exec_do_cmd(char *cmd_path, char **cmd_opts, char **envp)
+static int	exec_do_cmd(char *cmd_path, char **cmd_opts, char **envp)
 {
 	if (execve(cmd_path, cmd_opts, envp) == -1)
 	{
+		free_splited_str(envp);
 		if (errno == EISDIR)
-			minishell_error(cmd_path, IS_A_DIRECTORY, NULL);
+			return (minishell_error(cmd_path, IS_A_DIRECTORY, NULL));
 		else
 			perror("minishell");
-		exit(1);
 	}
+	return (1);
 }
 
-int	ft_exec_forked(t_dexec *dexec, t_ast *node)
+static int	preset_and_do(t_dexec *dexec, t_ast *node, char *path, char *prog)
 {
-	if (node->left != NULL)
-		scan_btree_fd(dexec, node->left);
-	ft_exec_set_redirect(dexec);
-	if (node->data->type == TEXT && node->data->data != NULL)
+	int	exit_val;
+
+	exit_val = ft_get_cmdpath(path, prog, dexec);
+	if (exit_val != 0)
+		return (exit_val);
+	dexec->cmd_opts = get_argv(node);
+	if (dexec->cmd_opts == NULL)
 	{
-		dexec->matrix_envpath = ft_split_by_token(dexec->matrix_envpath, ':');
-		dexec->cmd_path = ft_get_cmdpath(get_cmd_path(node),get_cmd_prog(node), dexec);
-		dexec->cmd_opts = get_argv(node);
-		ft_exec_do_cmd(dexec->cmd_path, dexec->cmd_opts, get_envp());
+		free(dexec->cmd_path);
+		return (ft_mes_error("Error. Fail to allocate memory.\n"));
+	}
+	exit_val = exec_do_cmd(dexec->cmd_path, dexec->cmd_opts, get_envp());
+	if (exit_val != 0)
+	{
+		free(dexec->cmd_path);
+		free(dexec->cmd_opts);
+		return (exit_val);
 	}
 	return (0);
+}
+
+void	ft_exec_forked(t_dexec *dexec, t_ast *node)
+{
+	char	*path;
+	char	*prog;
+	int		exit_val;
+
+	exit_val = 0;
+	if (node->left != NULL)
+		scan_btree_fd(dexec, node->left);
+	exec_set_redirect(dexec);
+	if (node->data->type == TEXT && node->data->data != NULL)
+	{
+		path = get_cmd_path(node);
+		prog = get_cmd_prog(node);
+		if (path == NULL && prog == NULL)
+			exit(ft_mes_error("Error. Fail to allocate memory.\n"));
+		exit_val = preset_and_do(dexec, node, path, prog);
+		free(path);
+		free(prog);
+	}
+	exit (exit_val);
 }

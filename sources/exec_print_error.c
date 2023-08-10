@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_print_error.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hotph <hotph@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 14:50:34 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/08/04 18:05:42 by sotanaka         ###   ########.fr       */
+/*   Updated: 2023/08/09 15:56:08 by hotph            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,12 @@ int	minishell_error(char *cmd, int flag, char *message)
 	if (message == NULL)
 	{
 		ft_print_perror(cmd);
-		exit(flag);
+		return (flag);
 	}
 	else
 	{
 		ft_printf("%s: %s\n", cmd, message);
-		exit(flag);
+		return (flag);
 	}
-	exit (1);
+	return (flag);
 }

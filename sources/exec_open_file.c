@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_open_file.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hotph <hotph@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 18:57:15 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/08/04 18:07:04 by sotanaka         ###   ########.fr       */
+/*   Updated: 2023/08/09 16:51:09 by hotph            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	ft_open_file(char *file_redirect, int flag_redirect, int fd_io)
 	else
 		fd = open(file_redirect, O_RDONLY);
 	if (fd == -1)
-		minishell_error(file_redirect, EX_FILE_OPEN_ERR, NULL);
+		exit(minishell_error(file_redirect, EX_FILE_OPEN_ERR, NULL));
 	else
 	{
 		if (fd_io != fd && fd_io != STDIN_FILENO && fd_io != STDOUT_FILENO)
