@@ -6,7 +6,7 @@
 /*   By: hotph <hotph@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/04 17:42:46 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/08/09 17:07:10 by hotph            ###   ########.fr       */
+/*   Updated: 2023/08/10 14:08:31 by hotph            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,10 @@ int	ft_stat_wrap(char *path, int flag)
 	struct stat	buf;
 
 	if (stat(path, &buf) == -1)
-		exit(ft_mes_error("Error. Fail to stat.\n"));
+	{
+		ft_print_perror("stat");
+		return (255);
+	}
 	if (flag == STAT_ISDIR)
 	{
 		if (S_ISDIR(buf.st_mode))

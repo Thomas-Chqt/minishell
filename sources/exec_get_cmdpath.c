@@ -6,7 +6,7 @@
 /*   By: hotph <hotph@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 14:50:40 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/08/10 12:38:14 by hotph            ###   ########.fr       */
+/*   Updated: 2023/08/10 13:54:58 by hotph            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,10 +52,13 @@ static int	path_is(char *path)
 {
 	int		exit_val;
 
+	path[ft_strlen(path) - 1] = '\0';
 	if (ft_stat_wrap(path, STAT_ISDIR) == true)
 		exit_val = minishell_error(path, CMD_CANT_EXEC, "is a directory");
 	else if (ft_stat_wrap(path, STAT_ISREG) == true)
 		exit_val = minishell_error(path, CMD_CANT_EXEC, "Not a directory");
+	else if (ft_stat_wrap(path, 0) == 255)
+		exit_val = 256;
 	else if (check_cmdpath(path, ACCESS_FOK) == 1)
 		exit_val = minishell_error(path, CMD_NOTFOUND, NULL);
 	return (exit_val);

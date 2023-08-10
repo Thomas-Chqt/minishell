@@ -6,7 +6,7 @@
 /*   By: hotph <hotph@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/30 13:32:49 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/08/09 17:31:42 by hotph            ###   ########.fr       */
+/*   Updated: 2023/08/10 13:37:10 by hotph            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ static int	exec_do_cmd(char *cmd_path, char **cmd_opts, char **envp)
 {
 	if (execve(cmd_path, cmd_opts, envp) == -1)
 	{
+		free_splited_str(envp);
 		if (errno == EISDIR)
 			return (minishell_error(cmd_path, IS_A_DIRECTORY, NULL));
 		else
