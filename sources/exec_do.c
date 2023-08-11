@@ -6,7 +6,7 @@
 /*   By: hotph <hotph@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/30 13:32:49 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/08/10 13:37:10 by hotph            ###   ########.fr       */
+/*   Updated: 2023/08/10 15:18:42 by hotph            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,10 +75,9 @@ void	ft_exec_forked(t_dexec *dexec, t_ast *node)
 	int		exit_val;
 
 	exit_val = 0;
-	if (node->left != NULL)
-		scan_btree_fd(dexec, node->left);
+	scan_btree_fd(dexec, node->left);
 	exec_set_redirect(dexec);
-	if (node->data->type == TEXT && node->data->data != NULL)
+	if (node->data != NULL && node->data->type == TEXT)
 	{
 		path = get_cmd_path(node);
 		prog = get_cmd_prog(node);

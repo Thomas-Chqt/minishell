@@ -6,11 +6,12 @@
 /*   By: hotph <hotph@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/04 17:42:46 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/08/10 14:08:31 by hotph            ###   ########.fr       */
+/*   Updated: 2023/08/10 15:24:08 by hotph            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
+#include "env.h"
 
 int	ft_stat_wrap(char *path, int flag)
 {
@@ -95,4 +96,26 @@ int	check_cmdpath_hub(t_dexec *dexec, char *prog)
 		return (minishell_error(prog, CMD_CANT_EXEC, NULL));
 	}
 	return (0);
+}
+
+char	**ft_split_by_token(char **matrix, char token)
+{
+	size_t	i;
+	char	*tmp;
+
+	tmp = get_env("PATH");
+	if (tmp == NULL)
+	{
+		ft_mes_error("Error: 'PATH' not found.\n");
+		return (NULL);
+	}
+	matrix = ft_split(tmp, token);
+	if (matrix == NULL)
+	{
+		free(tmp);
+		ft_mes_error("Error. Fail allocate memory.\n");
+		return (NULL);
+	}
+	free(tmp);
+	return (matrix);
 }

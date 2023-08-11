@@ -6,7 +6,7 @@
 /*   By: hotph <hotph@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/06 21:58:21 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/09 17:03:57 by hotph            ###   ########.fr       */
+/*   Updated: 2023/08/10 15:29:18 by hotph            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,6 @@ typedef struct s_dexec
 }	t_dexec;
 
 //-------prototype-------
-//scan_btree_pipe
-int		scan_btree_pipe(int fd_in, int fd_out, t_ast *node);
-//get_envpath
-char	**ft_split_by_token(char **matrix, char token);
 //get_cmdpath
 int		ft_get_cmdpath(char *path, char *prog, t_dexec *dexec);
 //getpath_util
@@ -55,15 +51,16 @@ int		ft_access_wrap(char *path, int flag);
 int		ft_stat_wrap(char *path, int flag);
 int		check_cmdpath(char *cmd_path, int flag);
 int		check_cmdpath_hub(t_dexec *dexec, char *prog);
+char	**ft_split_by_token(char **matrix, char token);
 //scan_btree
-int		scan_btree_fd(t_dexec *dexec, t_ast *node);
+void	scan_btree_fd(t_dexec *dexec, t_ast *node);
 int		scan_btree_pipe(int fd_in, int fd_out, t_ast *node);
+//here_doc
+int		ft_here_doc(char *delimiter, int fd_in);
 //print_error
 int		ft_mes_error(char *message);
 int		ft_print_perror(char *original_message);
-int 	minishell_error(char *cmd, int flag, char *message);
-//open_file
-int		ft_open_file(char *file_redirect, int flag_redirect, int fd_io);
+int		minishell_error(char *cmd, int flag, char *message);
 //do
 void	ft_exec_forked(t_dexec *dexec, t_ast *node);
 //util
