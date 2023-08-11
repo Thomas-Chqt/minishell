@@ -6,7 +6,7 @@
 /*   By: hotph <hotph@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 21:54:41 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/08/10 15:39:35 by hotph            ###   ########.fr       */
+/*   Updated: 2023/08/11 13:04:11 by hotph            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ static int	scan_btree_cmd(int fd_in, int fd_out, t_ast *node)
 	dexec.fd_out = fd_out;
 	pid = fork();
 	if (pid == -1)
-		exit(ft_print_perror("Error. Fail to fork.\n"));
+		return (ft_print_perror("Error. Fail to fork.\n"));
 	else if (pid == 0)
 		ft_exec_forked(&dexec, node);
 	else
