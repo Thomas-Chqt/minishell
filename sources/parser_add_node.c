@@ -6,7 +6,7 @@
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 22:19:03 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/04 00:56:23 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/11 13:55:03 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,6 @@ int	add_io(t_toklist **token_lst, t_ast *tree)
 	if (is_io_token((*token_lst)->data) == false)
 		return (1);
 	if ((*token_lst)->data->type == DLESS)
-		return (add_io_front(token_lst, tree));
-	if ((*token_lst)->data->type == DGREAT)
 		return (add_io_front(token_lst, tree));
 	return (add_io_back(token_lst, tree));
 }
