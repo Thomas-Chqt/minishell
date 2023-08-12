@@ -6,16 +6,14 @@
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 14:51:42 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/06 21:42:17 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/12 20:10:18 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LEXER_H
 # define LEXER_H
 
-# define ERROR_MSG_MAX_LEN 100
-
-# include "minishell.h"
+# include "error.h"
 
 typedef enum e_token_type	t_token_type;
 typedef struct s_token		t_token;
@@ -54,7 +52,7 @@ int			recurse_io_list(const char *cmd, t_uint64 *i, t_toklist **list);
 int			recurse_io_file(const char *cmd, t_uint64 *i, t_toklist **list);
 int			recurse_text_list(const char *cmd, t_uint64 *i, t_toklist **list);
 
-t_toklist	*make_toklist(const char *cmd, char *error_msg);
+t_toklist	*make_toklist(const char *cmd);
 void		clean_toklist(t_toklist **token_list);
 
 #endif // LEXER_H
