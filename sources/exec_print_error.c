@@ -6,7 +6,7 @@
 /*   By: hotph <hotph@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 14:50:34 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/08/09 15:56:08 by hotph            ###   ########.fr       */
+/*   Updated: 2023/08/13 12:06:28 by hotph            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	minishell_error(char *cmd, int flag, char *message)
 {
 	char	*tmp;
 
-	ft_printf("minishell: ");
+	ft_putstr_fd("minishell: ", 2);
 	if (message == NULL)
 	{
 		ft_print_perror(cmd);
@@ -36,7 +36,9 @@ int	minishell_error(char *cmd, int flag, char *message)
 	}
 	else
 	{
-		ft_printf("%s: %s\n", cmd, message);
+		ft_putstr_fd(cmd, 2);
+		ft_putstr_fd(": ", 2);
+		ft_putendl_fd(message, 2);
 		return (flag);
 	}
 	return (flag);

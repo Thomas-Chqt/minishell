@@ -6,33 +6,26 @@
 /*   By: hotph <hotph@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/30 13:32:49 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/08/10 15:18:42 by hotph            ###   ########.fr       */
+/*   Updated: 2023/08/13 20:54:23 by hotph            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 #include "env.h"
 
-static int	exec_set_redirect(t_dexec *dexec)
+static int	fd_close(int fd_in, int fd_out)
 {
-	if (dexec->fd_in != STDIN_FILENO)
-	{
-		if (dup2(dexec->fd_in, STDIN_FILENO) == -1)
-			exit(ft_print_perror("Error. Fail to dup2_fd_in.\n"));
-		if (close(dexec->fd_in) == -1)
-			exit(ft_print_perror("Error. Fail to close_fd_in.\n"));
-	}
-	if (dexec->fd_out != STDOUT_FILENO)
-	{
-		if (dup2(dexec->fd_out, STDOUT_FILENO) == -1)
-			exit(ft_print_perror("Error. Fail to dup2_fd_out.\n"));
-		if (close(dexec->fd_out) == -1)
-			exit(ft_print_perror("Error. Fail to close_fd_out.\n"));
-	}
-	return (0);
+	int	status;
+
+	status = 0;
+	if (fd_in != STDIN_FILENO)
+		status = close(fd_in);
+	if (fd_out != STDOUT_FILENO)
+		status = close(fd_out);
+	return (status);
 }
 
-static int	exec_do_cmd(char *cmd_path, char **cmd_opts, char **envp)
+static int	do_cmd(char *cmd_path, char **cmd_opts, char **envp)
 {
 	if (execve(cmd_path, cmd_opts, envp) == -1)
 	{
@@ -45,47 +38,67 @@ static int	exec_do_cmd(char *cmd_path, char **cmd_opts, char **envp)
 	return (1);
 }
 
-static int	preset_and_do(t_dexec *dexec, t_ast *node, char *path, char *prog)
+static int	set_redirect(t_dexec *dexec)
 {
-	int	exit_val;
-
-	exit_val = ft_get_cmdpath(path, prog, dexec);
-	if (exit_val != 0)
-		return (exit_val);
-	dexec->cmd_opts = get_argv(node);
-	if (dexec->cmd_opts == NULL)
+	if (dexec->fd_in != STDIN_FILENO)
 	{
-		free(dexec->cmd_path);
-		return (ft_mes_error("Error. Fail to allocate memory.\n"));
+		if (dup2(dexec->fd_in, STDIN_FILENO) == -1)
+			return (ft_print_perror("Error. Fail to dup2_fd_in.\n"));
+		if (close(dexec->fd_in) == -1)
+			return (ft_print_perror("Error. Fail to close_fd_in.\n"));
 	}
-	exit_val = exec_do_cmd(dexec->cmd_path, dexec->cmd_opts, get_envp());
-	if (exit_val != 0)
+	if (dexec->fd_out != STDOUT_FILENO)
 	{
-		free(dexec->cmd_path);
-		free(dexec->cmd_opts);
-		return (exit_val);
+		if (dup2(dexec->fd_out, STDOUT_FILENO) == -1)
+			return (ft_print_perror("Error. Fail to dup2_fd_out.\n"));
+		if (close(dexec->fd_out) == -1)
+			return (ft_print_perror("Error. Fail to close_fd_out.\n"));
 	}
 	return (0);
 }
 
-void	ft_exec_forked(t_dexec *dexec, t_ast *node)
+void	forked(t_dexec *dexec, t_ast *node)
 {
-	char	*path;
-	char	*prog;
 	int		exit_val;
 
-	exit_val = 0;
-	scan_btree_fd(dexec, node->left);
-	exec_set_redirect(dexec);
+	exit_val = set_redirect(dexec);
+	if (exit_val != 0)
+		exit(exit_val);
 	if (node->data != NULL && node->data->type == TEXT)
 	{
-		path = get_cmd_path(node);
-		prog = get_cmd_prog(node);
-		if (path == NULL && prog == NULL)
-			exit(ft_mes_error("Error. Fail to allocate memory.\n"));
-		exit_val = preset_and_do(dexec, node, path, prog);
-		free(path);
-		free(prog);
+		exit_val = do_cmd(dexec->cmd_path, dexec->cmd_opts, get_envp());
+		if (exit_val != 0)
+		{
+			free(dexec->cmd_path);
+			free(dexec->cmd_opts);
+			exit(exit_val);
+		}
 	}
-	exit (exit_val);
+	exit(exit_val);
+}
+
+int	exec_do(t_dexec *dexec, t_ast *node, int flag)
+{
+	int		pid;
+	int		status;
+
+	pid = fork();
+	if (pid == -1)
+		return (ft_print_perror("Error. Fail to fork.\n"));
+	else if (pid == 0)
+		forked(dexec, node);
+	else
+	{
+		status = fd_close(dexec->fd_in, dexec->fd_out);
+		if (status != 0)
+			return (ft_print_perror("ft_close"));
+		if (flag <= 1)
+		{
+			if (waitpid(pid, &status, 0) == -1)
+				return (ft_print_perror("Error. Fail to wait.\n"));
+			if (WIFEXITED(status))
+				return (WEXITSTATUS(status));
+		}
+	}
+	return (status);
 }

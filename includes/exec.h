@@ -6,7 +6,7 @@
 /*   By: hotph <hotph@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/06 21:58:21 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/13 11:47:43 by hotph            ###   ########.fr       */
+/*   Updated: 2023/08/13 20:54:31 by hotph            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,29 +44,28 @@ typedef struct s_dexec
 }	t_dexec;
 
 //-------prototype-------
-//get_cmdpath
-int		ft_get_cmdpath(char *path, char *prog, t_dexec *dexec);
-//getpath_util
-int		ft_access_wrap(char *path, int flag);
-int		ft_stat_wrap(char *path, int flag);
-int		check_cmdpath(char *cmd_path, int flag);
-int		check_cmdpath_hub(t_dexec *dexec, char *prog);
-char	**ft_split_by_token(char **matrix, char token);
-//scan_btree
-void	scan_btree_fd(t_dexec *dexec, t_ast *node);
-int		scan_btree_pipe(int fd_in, int fd_out, t_ast *node, int flag);
-//here_doc
-int		ft_here_doc(char *delimiter, int fd_in);
 //print_error
 int		ft_mes_error(char *message);
 int		ft_print_perror(char *original_message);
 int		minishell_error(char *cmd, int flag, char *message);
-//do
-void	ft_exec_forked(t_dexec *dexec, t_ast *node);
-//util
+
+//redirect
+int		scan_btree_io(t_dexec *dexec, t_ast *node);
+//cmd
+int		scan_path_prog(t_dexec *dexec, t_ast *node);
+//cmd util1
+int		directory_is(char *path);
+int		path_is_envp(char *cmd, t_dexec *dexec);
+//cmd util2
+int		ft_access_wrap(char *path, int flag);
+int		ft_stat_wrap(char *path, int flag);
+int		check_cmdpath(char *cmd_path, int flag);
+int		check_cmdpath_hub(t_dexec *dexec, char *prog);
+//utils
 char	*get_cmd_path(t_ast *node);
 char	*get_cmd_prog(t_ast *node);
-int		get_argc(t_ast *node);
 char	**get_argv(t_ast *node);
+//do
+int		exec_do(t_dexec *dexec, t_ast *node, int flag);
 
 #endif

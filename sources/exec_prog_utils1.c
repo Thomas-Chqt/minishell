@@ -1,16 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec_get_cmdpath.c                                 :+:      :+:    :+:   */
+/*   exec_prog_utils1.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hotph <hotph@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 14:50:40 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/08/10 13:54:58 by hotph            ###   ########.fr       */
+/*   Updated: 2023/08/13 21:24:55 by hotph            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
+#include "env.h"
+
+static char	**split_wrap(char **matrix, char token)
+{
+	size_t	i;
+	char	*tmp;
+
+	tmp = get_env("PATH");
+	if (tmp == NULL)
+	{
+		ft_mes_error("Error: 'PATH' not found.\n");
+		return (NULL);
+	}
+	matrix = ft_split(tmp, token);
+	if (matrix == NULL)
+	{
+		free(tmp);
+		ft_mes_error("Error. Fail allocate memory.\n");
+		return (NULL);
+	}
+	free(tmp);
+	return (matrix);
+}
 
 static int	make_potential_path(t_dexec *dexec, char *envpath, char *cmd)
 {
@@ -29,12 +52,12 @@ static int	make_potential_path(t_dexec *dexec, char *envpath, char *cmd)
 	return (0);
 }
 
-static int	path_is_envp(char *cmd, t_dexec *dexec)
+int	path_is_envp(char *cmd, t_dexec *dexec)
 {
 	size_t	i;
 
 	i = 0;
-	dexec->matrix_envpath = ft_split_by_token(dexec->matrix_envpath, ':');
+	dexec->matrix_envpath = split_wrap(dexec->matrix_envpath, ':');
 	if (dexec->matrix_envpath == NULL)
 		return (1);
 	while (dexec->matrix_envpath[i] != NULL)
@@ -43,70 +66,28 @@ static int	path_is_envp(char *cmd, t_dexec *dexec)
 			return (1);
 		if (check_cmdpath(dexec->cmd_path, ACCESS_FOK) == 0)
 			return (0);
-		free(dexec->cmd_path);
+		free_null((void **)&(dexec->cmd_path));
 	}
 	return (CMD_NOTFOUND);
 }
 
-static int	path_is(char *path)
+int	directory_is(char *path)
 {
-	int		exit_val;
+	int		status;
+	char	*cpy;
 
+	cpy = ft_strdup(path);
+	if (cpy == NULL)
+		return (ft_mes_error("Error. Fail allocate memory.\n"));
 	path[ft_strlen(path) - 1] = '\0';
 	if (ft_stat_wrap(path, STAT_ISDIR) == true)
-		exit_val = minishell_error(path, CMD_CANT_EXEC, "is a directory");
+		status = minishell_error(cpy, CMD_CANT_EXEC, "Is a directory");
 	else if (ft_stat_wrap(path, STAT_ISREG) == true)
-		exit_val = minishell_error(path, CMD_CANT_EXEC, "Not a directory");
+		status = minishell_error(cpy, CMD_CANT_EXEC, "Not a directory");
 	else if (ft_stat_wrap(path, 0) == 255)
-		exit_val = 256;
+		status = 255;
 	else if (check_cmdpath(path, ACCESS_FOK) == 1)
-		exit_val = minishell_error(path, CMD_NOTFOUND, NULL);
-	return (exit_val);
-}
-
-static void	path_is_builtin(char *prog, t_dexec *dexec)
-{
-	if (str_cmp("echo", prog) == 0)
-		;
-	if (str_cmp("cd", prog) == 0)
-		;
-	if (str_cmp("pwd", prog) == 0)
-		;
-	if (str_cmp("export", prog) == 0)
-		;
-	if (str_cmp("unset", prog) == 0)
-		;
-	if (str_cmp("env", prog) == 0)
-		;
-	if (str_cmp("exit", prog) == 0)
-		;
-}
-
-int	ft_get_cmdpath(char *path, char *prog, t_dexec *dexec)
-{
-	int	exit_val;
-
-	if (path != NULL)
-	{
-		if (prog == NULL)
-			return (path_is(path));
-		else if (ft_strncmp(path, "./", 2) == 0)
-			dexec->cmd_path = ft_strjoin(&path[2], prog);
-		else
-			dexec->cmd_path = ft_strjoin(path, prog);
-		if (dexec->cmd_path == NULL)
-			return (ft_mes_error("Error. Fail allocate memory.\n"));
-	}
-	else
-	{
-		path_is_builtin(prog, dexec);
-		exit_val = path_is_envp(prog, dexec);
-		free_splited_str(dexec->matrix_envpath);
-		if (exit_val == CMD_NOTFOUND)
-			return (minishell_error(prog, CMD_NOTFOUND, "command not found"));
-		if (exit_val == 1)
-			return (exit_val);
-	}
-	exit_val = check_cmdpath_hub(dexec, prog);
-	return (exit_val);
+		status = minishell_error(cpy, CMD_NOTFOUND, NULL);
+	free(cpy);
+	return (status);
 }
