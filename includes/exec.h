@@ -6,7 +6,7 @@
 /*   By: hotph <hotph@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/06 21:58:21 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/10 15:29:18 by hotph            ###   ########.fr       */
+/*   Updated: 2023/08/13 11:47:43 by hotph            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int		check_cmdpath_hub(t_dexec *dexec, char *prog);
 char	**ft_split_by_token(char **matrix, char token);
 //scan_btree
 void	scan_btree_fd(t_dexec *dexec, t_ast *node);
-int		scan_btree_pipe(int fd_in, int fd_out, t_ast *node);
+int		scan_btree_pipe(int fd_in, int fd_out, t_ast *node, int flag);
 //here_doc
 int		ft_here_doc(char *delimiter, int fd_in);
 //print_error

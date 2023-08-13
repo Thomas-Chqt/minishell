@@ -6,7 +6,7 @@
 /*   By: hotph <hotph@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 21:54:41 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/08/11 13:04:11 by hotph            ###   ########.fr       */
+/*   Updated: 2023/08/13 12:00:02 by hotph            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	scan_btree_fd(t_dexec *dexec, t_ast *node)
 	scan_btree_fd(dexec, node->right);
 }
 
-static int	scan_btree_cmd(int fd_in, int fd_out, t_ast *node)
+static int	scan_btree_cmd(int fd_in, int fd_out, t_ast *node, int flag)
 {
 	t_dexec	dexec;
 	int		pid;
@@ -73,15 +73,18 @@ static int	scan_btree_cmd(int fd_in, int fd_out, t_ast *node)
 		ft_exec_forked(&dexec, node);
 	else
 	{
-		if (wait(&status) == -1)
-			return (ft_print_perror("Error. Fail to wait.\n"));
-		if (WIFEXITED(status))
-			return (WEXITSTATUS(status));
+		if (flag <= 1)
+		{
+			if (waitpid(pid, &status, 0) == -1)
+				return (ft_print_perror("Error. Fail to wait.\n"));
+			if (WIFEXITED(status))
+				return (WEXITSTATUS(status));
+		}
 	}
 	return (0);
 }
 
-int	scan_btree_pipe(int fd_in, int fd_out, t_ast *node)
+int	scan_btree_pipe(int fd_in, int fd_out, t_ast *node, int flag)
 {
 	int	fd_pipe[2];
 	int	exit_status;
@@ -91,16 +94,16 @@ int	scan_btree_pipe(int fd_in, int fd_out, t_ast *node)
 	{
 		if (pipe(fd_pipe) == -1)
 			return (ft_print_perror("Error. Fail to create pipe.\n"));
-		if (scan_btree_pipe(fd_in, fd_pipe[1], node->left) == 1)
-			return (1);
+		scan_btree_pipe(fd_in, fd_pipe[1], node->left, flag + 2);
 		if (close(fd_pipe[1]) == -1)
 			return (ft_print_perror("Error. Fail to close pipe[1].\n"));
-		if (scan_btree_pipe(fd_pipe[0], fd_out, node->right) == 1)
-			return (1);
+		exit_status = scan_btree_pipe(fd_pipe[0], fd_out, node->right, flag + 1);
 	}
 	else
-		exit_status = scan_btree_cmd(fd_in, fd_out, node);
+		exit_status = scan_btree_cmd(fd_in, fd_out, node, flag);
 	if (node->data->type == PIPE && close(fd_pipe[0]) == -1)
 		return (ft_print_perror("Error. Fail to close pipe[0]_scanpipe.\n"));
-	return (exit_status);
+	if (flag == 0 || flag == 1)
+		return (exit_status);
+	return (0);
 }
