@@ -6,7 +6,7 @@
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 22:54:17 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/12 18:58:59 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/14 15:20:00 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,10 @@
 # define STDOUT_FILENO 1
 # define STDERR_FILENO 2
 
-#define F_OK 0
-#define X_OK (1<<0)
-#define W_OK (1<<1)
-#define R_OK (1<<2)
+# define F_OK 0
+# define X_OK 1
+# define W_OK 2
+# define R_OK 4
 
 # include <errno.h>
 # include <stddef.h>
@@ -37,7 +37,7 @@ int		system(const char *command);
 
 # endif // MEMCHECK
 
-typedef int t_pid;
+typedef int	t_pid;
 
 char	*readline(const char *prompt);
 
@@ -59,10 +59,14 @@ int		access(const char *path, int permision);
 
 // int		open(const char *pathname, int flags);
 // read,
+
 int		close(int fildes);
 t_pid	fork(void);
+
 // wait
+
 pid_t	waitpid(pid_t pid, int *stat_loc, int options);
+
 // wait3
 // wait4
 // signal,
@@ -70,10 +74,14 @@ pid_t	waitpid(pid_t pid, int *stat_loc, int options);
 // sigemptyset
 // sigaddset
 // kill
+
 void	exit(int status);
 char	*getcwd(char *buf, size_t size);
+
 // chdir
+
 int		stat(const char *path, struct stat *buf);
+
 // lstat
 // fstat
 // unlink
@@ -81,13 +89,17 @@ int		stat(const char *path, struct stat *buf);
 int		execve(const char *path, char *const argv[], char *const envp[]);
 
 // dup
+
 int		dup2(int fildes, int fildes2);
 int		pipe(int pipefd[2]);
+
 // opendir
 // readdir
 // closedir,
 // strerror
+
 void	perror(const char *s);
+
 // isatty
 // ttyname
 // ttyslot
