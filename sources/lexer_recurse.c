@@ -6,7 +6,7 @@
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 19:35:46 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/04 01:46:01 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/12 19:53:12 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,20 +47,20 @@ int	recurse_simple_cmd(const char *cmd, t_uint64 *i, t_toklist **list)
 
 	new_list = NULL;
 	error = recurse_io_list(cmd, i, &new_list);
-	if (error != 0 && error != 1)
+	if (error != 0 && error != PARSING_ERROR)
 		return (error);
 	while (cmd[*i] == ' ')
 		(*i)++;
 	error = recurse_text_list(cmd, i, &new_list);
-	if (error == 0 || error == 1)
+	if (error == 0 || error == PARSING_ERROR)
 	{
 		while (cmd[*i] == ' ')
 			(*i)++;
 		error = recurse_io_list(cmd, i, &new_list);
-		if (error == 0 || error == 1)
+		if (error == 0 || error == PARSING_ERROR)
 		{
 			if (new_list == NULL)
-				return (1);
+				return (PARSING_ERROR);
 			ft_lstadd_back((t_list **)list, (t_list *)new_list);
 			return (0);
 		}
@@ -81,7 +81,7 @@ int	recurse_io_list(const char *cmd, t_uint64 *i, t_toklist **list)
 		while (cmd[*i] == ' ')
 			(*i)++;
 		error = recurse_io_file(cmd, i, &new_list);
-		if (error == 0 || error == 1)
+		if (error == 0 || error == PARSING_ERROR)
 		{
 			ft_lstadd_back((t_list **)list, (t_list *)new_list);
 			return (0);
@@ -128,7 +128,7 @@ int	recurse_text_list(const char *cmd, t_uint64 *i, t_toklist **list)
 		while (cmd[*i] == ' ')
 			(*i)++;
 		error = recurse_text_list(cmd, i, &new_list);
-		if (error == 0 || error == 1)
+		if (error == 0 || error == PARSING_ERROR)
 		{
 			ft_lstadd_back((t_list **)list, (t_list *)new_list);
 			return (0);

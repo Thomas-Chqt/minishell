@@ -6,7 +6,7 @@
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 20:24:15 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/06 23:11:08 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/12 20:18:07 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,10 @@ t_ast	*make_ast(t_toklist *toklist)
 
 	tree = (t_ast *)btr_new(NULL);
 	if (tree == NULL)
+	{
+		print_error(MALLOC_ERROR);
 		return (NULL);
+	}
 	toklist_current = toklist;
 	while (toklist_current != NULL)
 	{
@@ -31,12 +34,11 @@ t_ast	*make_ast(t_toklist *toklist)
 			break ;
 		toklist_current = toklist_current->next;
 	}
-	if (toklist_current != NULL)
-	{
-		btr_clear(btr_get_root((t_btree *)tree), NULL);
-		return (NULL);
-	}
-	return ((t_ast *)btr_get_root((t_btree *)tree));
+	if (toklist_current == NULL)
+		return ((t_ast *)btr_get_root((t_btree *)tree));
+	btr_clear(btr_get_root((t_btree *)tree), NULL);
+	print_error(MALLOC_ERROR);
+	return (NULL);
 }
 
 void	clean_ast(t_ast *ast)
@@ -58,9 +60,8 @@ t_ast	*parse_cmd(const char *cmd)
 {
 	t_ast		*ast;
 	t_toklist	*token_list;
-	char		error_msg[ERROR_MSG_MAX_LEN];
 
-	token_list = make_toklist(cmd, error_msg);
+	token_list = make_toklist(cmd);
 	if (token_list != NULL)
 	{
 		ast = make_ast(token_list);
@@ -70,6 +71,5 @@ t_ast	*parse_cmd(const char *cmd)
 			ft_lstclear((t_list **)&token_list, NULL);
 		return (ast);
 	}
-	ft_printf("%s\n", error_msg);
 	return (NULL);
 }

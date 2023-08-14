@@ -6,7 +6,7 @@
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 15:31:29 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/03 22:15:14 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/12 19:48:05 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static t_toklist	*toklist_new(t_token_type type, char *data);
 int	toklist_text_new(const char *cmd, t_uint64 *i, t_toklist **list)
 {
 	t_uint64	token_start;
-	char		temp;
+	char		quote;
 	t_toklist	*new_node;
 
 	token_start = (*i);
@@ -25,20 +25,20 @@ int	toklist_text_new(const char *cmd, t_uint64 *i, t_toklist **list)
 	{
 		if (cmd[*i] == '\"' || cmd[*i] == '\'')
 		{
-			temp = cmd[(*i)++];
-			while (cmd[*i] != temp && cmd[*i] != '\0')
+			quote = cmd[(*i)++];
+			while (cmd[*i] != quote && cmd[*i] != '\0')
 				(*i)++;
 		}
 		if (cmd[*i] == '\0')
-			return (MISSING_QUOTE + temp);
+			return (MISSING_QUOTE + quote);
 		(*i)++;
 	}
 	if (token_start == *i)
-		return (1);
+		return (PARSING_ERROR);
 	new_node = toklist_new(TEXT, ft_substr(cmd, token_start,
 				(*i) - token_start));
 	if (new_node == NULL)
-		return (2);
+		return (MALLOC_ERROR);
 	ft_lstadd_back((t_list **)list, (t_list *)new_node);
 	return (0);
 }
@@ -56,7 +56,7 @@ int	toklist_pipe_new(const char *cmd, t_uint64 *i, t_toklist **list)
 		ft_lstadd_back((t_list **)list, (t_list *)new_node);
 		return (0);
 	}
-	return (1);
+	return (PARSING_ERROR);
 }
 
 int	toklist_io_new(const char *cmd, t_uint64 *i, t_toklist **list)
@@ -64,7 +64,7 @@ int	toklist_io_new(const char *cmd, t_uint64 *i, t_toklist **list)
 	t_toklist	*new_node;
 
 	if (cmd[*i] != '<' && cmd[*i] != '>')
-		return (1);
+		return (PARSING_ERROR);
 	new_node = toklist_new(DLESS, NULL);
 	if (new_node == NULL)
 		return (MALLOC_ERROR);
