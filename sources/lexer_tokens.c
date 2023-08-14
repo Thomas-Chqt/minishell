@@ -6,7 +6,7 @@
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 15:31:29 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/12 19:48:05 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/14 15:05:08 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,8 @@ int	toklist_io_new(const char *cmd, t_uint64 *i, t_toklist **list)
 
 void	free_token(void *token)
 {
+	if (token == NULL)
+		return ;
 	free(((t_token *)token)->data);
 	free(token);
 }
