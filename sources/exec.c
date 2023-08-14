@@ -6,7 +6,7 @@
 /*   By: hotph <hotph@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 21:54:41 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/08/13 20:54:38 by hotph            ###   ########.fr       */
+/*   Updated: 2023/08/14 12:08:12 by hotph            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static int	scan_btree_pipe(int fd_in, int fd_out, t_ast *node, int flag)
 	if (node->data != NULL && node->data->type == PIPE)
 	{
 		if (pipe(fd_pipe) == -1)
-			return (ft_print_perror("Error. Fail to create pipe.\n"));
+			return (perror_wrap("scan_pipe", 1));
 		scan_btree_pipe(fd_in, fd_pipe[1], node->left, flag + 2);
 		status = scan_btree_pipe(fd_pipe[0], fd_out, node->right, flag + 1);
 	}

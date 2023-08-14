@@ -6,7 +6,7 @@
 /*   By: hotph <hotph@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 14:50:40 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/08/13 21:24:55 by hotph            ###   ########.fr       */
+/*   Updated: 2023/08/14 12:10:26 by hotph            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,14 @@ static char	**split_wrap(char **matrix, char token)
 	tmp = get_env("PATH");
 	if (tmp == NULL)
 	{
-		ft_mes_error("Error: 'PATH' not found.\n");
+		print_error_msg("Error: 'PATH' not found", 1);
 		return (NULL);
 	}
 	matrix = ft_split(tmp, token);
 	if (matrix == NULL)
 	{
 		free(tmp);
-		ft_mes_error("Error. Fail allocate memory.\n");
+		print_error(MALLOC_ERROR);
 		return (NULL);
 	}
 	free(tmp);
@@ -41,12 +41,12 @@ static int	make_potential_path(t_dexec *dexec, char *envpath, char *cmd)
 
 	pre_path = ft_strjoin(envpath, "/");
 	if (pre_path == NULL)
-		return (ft_mes_error("Error. Fail allocate memory.\n"));
+		return (print_error(MALLOC_ERROR));
 	dexec->cmd_path = ft_strjoin(pre_path, cmd);
 	if (dexec->cmd_path == NULL)
 	{
 		free(pre_path);
-		return (ft_mes_error("Error. Fail allocate memory.\n"));
+		return (print_error(MALLOC_ERROR));
 	}
 	free(pre_path);
 	return (0);
@@ -78,16 +78,16 @@ int	directory_is(char *path)
 
 	cpy = ft_strdup(path);
 	if (cpy == NULL)
-		return (ft_mes_error("Error. Fail allocate memory.\n"));
+		return (print_error(MALLOC_ERROR));
 	path[ft_strlen(path) - 1] = '\0';
 	if (ft_stat_wrap(path, STAT_ISDIR) == true)
-		status = minishell_error(cpy, CMD_CANT_EXEC, "Is a directory");
+		status = exec_error(cpy, CMD_CANT_EXEC, "Is a directory");
 	else if (ft_stat_wrap(path, STAT_ISREG) == true)
-		status = minishell_error(cpy, CMD_CANT_EXEC, "Not a directory");
+		status = exec_error(cpy, CMD_CANT_EXEC, "Not a directory");
 	else if (ft_stat_wrap(path, 0) == 255)
 		status = 255;
 	else if (check_cmdpath(path, ACCESS_FOK) == 1)
-		status = minishell_error(cpy, CMD_NOTFOUND, NULL);
+		status = exec_error(cpy, CMD_NOTFOUND, NULL);
 	free(cpy);
 	return (status);
 }

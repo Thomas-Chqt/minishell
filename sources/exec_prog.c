@@ -6,7 +6,7 @@
 /*   By: hotph <hotph@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/13 15:01:43 by hotph             #+#    #+#             */
-/*   Updated: 2023/08/13 21:21:28 by hotph            ###   ########.fr       */
+/*   Updated: 2023/08/14 12:10:27 by hotph            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static int	joint_path(char *path, char *prog, t_dexec *dexec)
 	else
 		dexec->cmd_path = ft_strjoin(path, prog);
 	if (dexec->cmd_path == NULL)
-		return (ft_mes_error("Error. Fail allocate memory.\n"));
+		return (print_error(MALLOC_ERROR));
 	return (0);
 }
 
@@ -57,7 +57,7 @@ static int	get_fullpath(char *path, char *prog, t_dexec *dexec)
 		status = path_is_envp(prog, dexec);
 		free_splited_str(dexec->matrix_envpath);
 		if (status == CMD_NOTFOUND)
-			return (minishell_error(prog, CMD_NOTFOUND, "command not found"));
+			return (exec_error(prog, CMD_NOTFOUND, "command not found"));
 		if (status == 1)
 			return (status);
 	}
@@ -78,7 +78,7 @@ int	scan_path_prog(t_dexec *dexec, t_ast *node)
 		path = get_cmd_path(node);
 		prog = get_cmd_prog(node);
 		if (path == NULL && prog == NULL)
-			return (ft_mes_error("Error. Fail to allocate memory.\n"));
+			return (print_error(MALLOC_ERROR));
 		status = get_fullpath(path, prog, dexec);
 		free_null((void **)&(path));
 		free_null((void **)&(prog));
@@ -86,7 +86,7 @@ int	scan_path_prog(t_dexec *dexec, t_ast *node)
 			return (status);
 		dexec->cmd_opts = get_argv(node);
 		if (dexec->cmd_opts == NULL)
-			return (ft_mes_error("Error. Fail to allocate memory.\n"));
+			return (print_error(MALLOC_ERROR));
 	}
 	return (0);
 }
