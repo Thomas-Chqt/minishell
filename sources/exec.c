@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hotph <hotph@student.42.fr>                +#+  +:+       +#+        */
+/*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 21:54:41 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/08/14 12:08:12 by hotph            ###   ########.fr       */
+/*   Updated: 2023/08/14 15:34:48 by sotanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ static int	scan_simple_cmd(int fd_in, int fd_out, t_ast *node, int flag)
 	status = scan_btree_io(&dexec, node->left);
 	if (status != 0)
 		return (status);
+	if (node->data == NULL)
+		return (0);
 	status = scan_path_prog(&dexec, node);
 	if (status != 0)
 	{
