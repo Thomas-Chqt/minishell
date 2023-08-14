@@ -6,14 +6,14 @@
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/04 11:26:37 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/12 17:34:49 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/14 16:35:10 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef ENV_H
 # define ENV_H
 
-# include "minishell.h"
+# include "error.h"
 
 typedef struct s_env_entry	t_env_entry;
 typedef struct s_env_list	t_env_list;

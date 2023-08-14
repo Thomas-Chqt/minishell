@@ -6,7 +6,7 @@
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 19:59:47 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/08 02:56:25 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/14 17:29:40 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,11 @@ int	init_env(char *envp[])
 			return (1);
 		}
 		i++;
+	}
+	if (set_last_error(0) != 0)
+	{
+		clean_env();
+		return (1);
 	}
 	return (0);
 }
@@ -57,13 +62,16 @@ char	**get_envp(void)
 	i = 0;
 	while (current != NULL)
 	{
-		envp[i] = env_entry_to_str(*current->data);
-		if (envp[i] == NULL)
+		if (current->data->is_export == true)
 		{
-			free_splited_str(envp);
-			return (NULL);
+			envp[i] = env_entry_to_str(*current->data);
+			if (envp[i] == NULL)
+			{
+				free_splited_str(envp);
+				return (NULL);
+			}
+			i++;
 		}
-		i++;
 		current = current->next;
 	}
 	return (envp);
@@ -84,6 +92,9 @@ int	set_env(const char *keyval, t_bool exported)
 			ft_lstadd_back((t_list **)get_lstenv(), (t_list *)new_node);
 			return (0);
 		}
+		free(found->data->key);
+		free(found->data->value);
+		free(found->data);
 		found->data = new_node->data;
 		free(new_node);
 		return (0);

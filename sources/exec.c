@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 21:54:41 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/08/14 15:34:48 by sotanaka         ###   ########.fr       */
+/*   Updated: 2023/08/14 16:15:51 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,4 +68,5 @@ void	execute_ast(t_ast *ast)
 	val = scan_btree_pipe(STDIN_FILENO, STDOUT_FILENO, ast, 0);
 	while (wait(NULL) > 0)
 		;
+	set_last_error(val);
 }
