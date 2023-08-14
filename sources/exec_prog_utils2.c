@@ -1,17 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec_getpath_util.c                                :+:      :+:    :+:   */
+/*   exec_prog_utils2.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hotph <hotph@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/04 17:42:46 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/08/10 15:24:08 by hotph            ###   ########.fr       */
+/*   Updated: 2023/08/14 12:10:26 by hotph            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
-#include "env.h"
 
 int	ft_stat_wrap(char *path, int flag)
 {
@@ -19,7 +18,7 @@ int	ft_stat_wrap(char *path, int flag)
 
 	if (stat(path, &buf) == -1)
 	{
-		ft_print_perror("stat");
+		perror_wrap("stat", 1);
 		return (255);
 	}
 	if (flag == STAT_ISDIR)
@@ -76,7 +75,7 @@ int	check_cmdpath(char *cmd_path, int flag)
 	{
 		err = ft_access_wrap(cmd_path, ACCESS_FOK);
 		if (err == false)
-			minishell_error(cmd_path, CMD_SIMPLE, NULL);
+			exec_error(cmd_path, CMD_SIMPLE, NULL);
 		else
 			return (0);
 	}
@@ -87,35 +86,15 @@ int	check_cmdpath_hub(t_dexec *dexec, char *prog)
 {
 	if (check_cmdpath(dexec->cmd_path, ACCESS_FOK) == 1)
 	{
-		free(dexec->cmd_path);
-		return (minishell_error(prog, CMD_NOTFOUND, "command not found"));
+		return (exec_error(dexec->cmd_path, CMD_NOTFOUND, "command not found"));
+	}
+	if (ft_stat_wrap(dexec->cmd_path, STAT_ISDIR) == true)
+	{
+		return (exec_error(dexec->cmd_path, CMD_CANT_EXEC, "Is a directory"));
 	}
 	if (check_cmdpath(dexec->cmd_path, ACCESS_XOK) == 1)
 	{
-		free(dexec->cmd_path);
-		return (minishell_error(prog, CMD_CANT_EXEC, NULL));
+		return (exec_error(dexec->cmd_path, CMD_CANT_EXEC, NULL));
 	}
 	return (0);
-}
-
-char	**ft_split_by_token(char **matrix, char token)
-{
-	size_t	i;
-	char	*tmp;
-
-	tmp = get_env("PATH");
-	if (tmp == NULL)
-	{
-		ft_mes_error("Error: 'PATH' not found.\n");
-		return (NULL);
-	}
-	matrix = ft_split(tmp, token);
-	if (matrix == NULL)
-	{
-		free(tmp);
-		ft_mes_error("Error. Fail allocate memory.\n");
-		return (NULL);
-	}
-	free(tmp);
-	return (matrix);
 }

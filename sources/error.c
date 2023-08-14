@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: hotph <hotph@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 18:32:01 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/13 13:22:14 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/14 12:11:19 by hotph            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,4 +50,30 @@ int	printf_error_msg(char *format, char *data[], int return_val)
 	}
 	ft_putchar_fd('\n', STDERR_FILENO);
 	return (return_val);
+}
+
+int	perror_wrap(char *msg, int val)
+{
+	perror(msg);
+	return (val);
+}
+
+int	exec_error(char *cmd, int flag, char *msg)
+{
+	char	*tmp;
+
+	ft_putstr_fd("minishell: ", 2);
+	if (msg == NULL)
+	{
+		perror_wrap(cmd, flag);
+		return (flag);
+	}
+	else
+	{
+		ft_putstr_fd(cmd, 2);
+		ft_putstr_fd(": ", 2);
+		ft_putendl_fd(msg, 2);
+		return (flag);
+	}
+	return (flag);
 }
