@@ -5,11 +5,10 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2023/08/14 17:43:31 by sotanaka         ###   ########.fr       */
+/*   Created: 2023/08/14 18:17:56 by sotanaka          #+#    #+#             */
+/*   Updated: 2023/08/14 18:35:24 by sotanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "exec.h"
 
@@ -29,10 +28,13 @@ static int	scan_simple_cmd(int fd_in, int fd_out, t_ast *node, int flag)
 
 	init_dexec(fd_in, fd_out, &dexec);
 	status = scan_btree_io(&dexec, node->left);
-	if (status != 0)
+	if (status != 0 || node->data == NULL)
+	{
+		status = fd_close(dexec.fd_in, dexec.fd_out);
+		if (status != 0)
+			return (perror_wrap("scan cmd fd_close", 1));
 		return (status);
-	if (node->data == NULL)
-		return (0);
+	}
 	status = scan_path_prog(&dexec, node);
 	if (status != 0)
 	{

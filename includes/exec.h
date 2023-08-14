@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/06 21:58:21 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/14 16:17:59 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/14 18:37:13 by sotanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@
 # define IS_A_DIRECTORY 1
 # define CMD_CANT_EXEC 126
 # define CMD_NOTFOUND 127
-# define EX_CTRL_BACKSLASH 131
 
 //-------include-------
 # include "parser.h"
@@ -60,6 +59,7 @@ char	*get_cmd_path(t_ast *node);
 char	*get_cmd_prog(t_ast *node);
 char	**get_argv(t_ast *node);
 //do
+int		fd_close(int fd_in, int fd_out);
 int		exec_do(t_dexec *dexec, t_ast *node, int flag);
 
 #endif
