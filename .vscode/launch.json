@@ -6,13 +6,10 @@
 	"configurations": [
 		{
 			"name": "Debug",
-			"type": "cppdbg",
+			"type": "lldb",
 			"request": "launch",
 			"program": "${workspaceFolder}/minishell_debug",
-			"stopAtEntry": false,
 			"cwd": "${workspaceFolder}",
-			"externalConsole": true,
-			"MIMode": "lldb",
 			"preLaunchTask": "Build Debug"
 		}
 	]

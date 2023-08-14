@@ -6,7 +6,7 @@
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 20:24:15 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/12 20:18:07 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/12 22:24:08 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,11 +65,15 @@ t_ast	*parse_cmd(const char *cmd)
 	if (token_list != NULL)
 	{
 		ast = make_ast(token_list);
-		if (ast == NULL)
-			clean_toklist(&token_list);
-		else
+		if (ast != NULL)
+		{
 			ft_lstclear((t_list **)&token_list, NULL);
-		return (ast);
+			if (expand_ast(ast) == 0)
+				return (ast);
+			clean_ast(ast);
+		}
+		else
+			clean_toklist(&token_list);
 	}
 	return (NULL);
 }

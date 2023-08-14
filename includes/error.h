@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hotph <hotph@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 18:31:32 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/14 12:11:48 by hotph            ###   ########.fr       */
+/*   Updated: 2023/08/14 14:55:32 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # define MISSING_QUOTE 3333
 # define MISSING_SQUOTE MISSING_QUOTE + '\''
 # define MISSING_DQUOTE MISSING_QUOTE + '\"'
+# define BAD_SUBSTITUTION 4444
 
 int		print_error_msg(char *msg, int return_val);
 int		print_error(int code);
