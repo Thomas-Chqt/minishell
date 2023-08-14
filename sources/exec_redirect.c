@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_redirect.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hotph <hotph@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/13 12:21:58 by hotph             #+#    #+#             */
-/*   Updated: 2023/08/14 12:10:28 by hotph            ###   ########.fr       */
+/*   Updated: 2023/08/14 15:21:26 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,10 +59,8 @@ static int	ft_here_doc(char *delimiter, int *fd_in)
 		ft_readline(fd_pipe, delimiter);
 	else
 	{
-		if (waitpid(pid, &status, 0) == -1)
-			return (perror_wrap("here_doc waitpid", 1));
-		if (close(fd_pipe[1]) == -1)
-			return (perror_wrap("here_doc fd_pipe[1]", 1));
+		if (waitpid(pid, &status, 0) == -1 || close(fd_pipe[1]) == -1)
+			return (perror_wrap("here_doc", 1));
 		if (WIFEXITED(status))
 			return (WEXITSTATUS(status));
 	}
