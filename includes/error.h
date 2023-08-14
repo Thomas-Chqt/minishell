@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: hotph <hotph@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 18:31:32 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/12 22:05:37 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/14 12:11:48 by hotph            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,5 +24,7 @@
 int		print_error_msg(char *msg, int return_val);
 int		print_error(int code);
 int		printf_error_msg(char *format, char *data[], int return_val);
+int		perror_wrap(char *msg, int val);
+int		exec_error(char *cmd, int flag, char *msg);
 
 #endif // ERROR_H
