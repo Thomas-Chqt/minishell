@@ -6,7 +6,7 @@
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/04 11:26:37 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/08 03:06:21 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/12 17:34:49 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,5 +40,8 @@ t_env_list	*lst_env_new(const char *keyval, t_bool is_export);
 t_bool		is_env_key_equal(void *entry, void *key);
 char		*env_entry_to_str(t_env_entry entry);
 t_env_entry	str_to_env_entry(const char *str);
+
+t_bool		is_valid_env(char c);
+t_bool		is_all_valid_env(char *str);
 
 #endif // ENV_H

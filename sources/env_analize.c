@@ -1,40 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   env_analize.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/23 20:57:27 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/11 15:01:21 by tchoquet         ###   ########.fr       */
+/*   Created: 2023/08/10 17:24:55 by tchoquet          #+#    #+#             */
+/*   Updated: 2023/08/12 17:34:43 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "env.h"
 
-#ifdef MEMCHECK
-
-__attribute__((destructor))
-static void	destructor(void)
+t_bool	is_valid_env(char c)
 {
-	char	*pid;
-	char	*cmd;
-
-	// print_report();
-	pid = ft_itoa(getpid());
-	cmd = ft_strjoin("leaks -q ", pid);
-	// system((const char *)cmd);
-	free(pid);
-	free(cmd);
+	return (
+		ft_isalpha(c)
+		|| c == '_'
+	);
 }
 
-#endif // MEMCHECK
-
-int	main(int argc, char *argv[], char *envp[])
+t_bool	is_all_valid_env(char *str)
 {
-	if (init_env(envp) != 0)
-		return (1);
-	minishell_loop();
-	clean_env();
-	return (0);
+	t_uint64	i;
+
+	i = 0;
+	while (str[i] != '\0')
+	{
+		if (is_valid_env(str[i]) == false)
+			return (false);
+		i++;
+	}
+	return (true);
 }

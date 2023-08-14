@@ -6,7 +6,7 @@
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 18:31:32 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/12 22:05:37 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/12 22:58:57 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # define MISSING_QUOTE 3333
 # define MISSING_SQUOTE MISSING_QUOTE + '\''
 # define MISSING_DQUOTE MISSING_QUOTE + '\"'
+# define BAD_SUBSTITUTION 4444
 
 int		print_error_msg(char *msg, int return_val);
 int		print_error(int code);

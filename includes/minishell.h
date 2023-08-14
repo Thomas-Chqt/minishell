@@ -6,7 +6,7 @@
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 20:57:41 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/12 20:09:59 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/12 22:25:37 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ void		clean_env(void);
 void		minishell_loop(void);
 
 t_ast		*parse_cmd(const char *cmd);
+int			expand_ast(t_ast *ast);
 void		execute_ast(t_ast *ast);
 void		clean_ast(t_ast *ast);
 
