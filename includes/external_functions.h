@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   external_functions.h                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hotph <hotph@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 22:54:17 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/08 15:09:47 by hotph            ###   ########.fr       */
+/*   Updated: 2023/08/12 18:58:59 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # define EXIT_FAILURE 1
 # define STDIN_FILENO 0
 # define STDOUT_FILENO 1
+# define STDERR_FILENO 2
 
 #define F_OK 0
 #define X_OK (1<<0)
