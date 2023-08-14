@@ -6,7 +6,7 @@
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 19:59:47 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/14 16:29:45 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/14 17:29:40 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,13 +62,16 @@ char	**get_envp(void)
 	i = 0;
 	while (current != NULL)
 	{
-		envp[i] = env_entry_to_str(*current->data);
-		if (envp[i] == NULL)
+		if (current->data->is_export == true)
 		{
-			free_splited_str(envp);
-			return (NULL);
+			envp[i] = env_entry_to_str(*current->data);
+			if (envp[i] == NULL)
+			{
+				free_splited_str(envp);
+				return (NULL);
+			}
+			i++;
 		}
-		i++;
 		current = current->next;
 	}
 	return (envp);
