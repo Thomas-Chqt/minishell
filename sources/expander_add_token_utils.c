@@ -6,7 +6,7 @@
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 19:00:29 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/12 23:27:37 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/14 13:24:06 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,13 @@ int	exp_add_env_brake(char *str, t_uint64 *i, t_exp_toklst **list)
 	char			*next_brake;
 	t_exp_toklst	*new_node;
 
-	*i += 2;
-	next_brake = ft_strchr(str + *i, 125);
+	next_brake = ft_strchr(str + *i + 2, 125);
 	if (next_brake == NULL)
-		return (1);
+		return (PARSING_ERROR);
+	*i += 2;
 	new_node = exp_toklst_new(str + *i, next_brake - (str + *i), substit);
 	if (new_node == NULL)
-		return (1);
+		return (MALLOC_ERROR);
 	ft_lstadd_back((t_list **)list, (t_list *)new_node);
 	*i += (next_brake - (str + *i)) + 1;
 	return (0);
@@ -46,14 +46,12 @@ int	exp_add_env_no_brake(char *str, t_uint64 *i, t_exp_toklst **list)
 	t_uint64		tok_start;
 	t_exp_toklst	*new_node;
 
-	if (is_valid_env(str[*i + 1]) == false)
-		return (0);
 	tok_start = ++(*i);
 	while (is_valid_env(str[*i]))
 		(*i)++;
 	new_node = exp_toklst_new(str + tok_start, *i - tok_start, substit);
 	if (new_node == NULL)
-		return (1);
+		return (MALLOC_ERROR);
 	ft_lstadd_back((t_list **)list, (t_list *)new_node);
 	return (0);
 }

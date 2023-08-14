@@ -6,15 +6,12 @@
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 21:31:43 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/12 23:09:19 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/14 13:55:23 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "expander.h"
 
-static int	expand_string(char **str_ptr);
-static int	substitute_toklist(t_exp_toklst *tok_lst);
-static int	substitute_token(t_exp_token *token);
 static char	*join_lst(t_exp_toklst *list);
 
 int	expand_ast(t_ast *ast)
@@ -33,7 +30,7 @@ int	expand_ast(t_ast *ast)
 	return (0);
 }
 
-static int	expand_string(char **str_ptr)
+int	expand_string(char **str_ptr)
 {
 	t_exp_toklst	*token_list;
 	int				return_val;
@@ -46,55 +43,35 @@ static int	expand_string(char **str_ptr)
 	{
 		free(*str_ptr);
 		*str_ptr = join_lst(token_list);
-		ft_lstclear((t_list **)&token_list, &free_exp_toklst);
+		free_exp_toklst(&token_list);
 		if (*str_ptr == NULL)
 			return (MALLOC_ERROR);
 		return (0);
 	}
-	ft_lstclear((t_list **)&token_list, &free_exp_toklst);
+	free_exp_toklst(&token_list);
 	return (return_val);
 }
 
-static int	substitute_toklist(t_exp_toklst *tok_lst)
+int	expand_dquote_string(char **str_ptr)
 {
-	t_exp_toklst	*watched;
-	char			*founded;
-	int				temp_ret;
+	t_exp_toklst	*token_list;
+	int				return_val;
 
-	watched = tok_lst;
-	while (watched != NULL)
+	token_list = make_exp_toklst_no_quote(*str_ptr);
+	if (token_list == NULL)
+		return (MALLOC_ERROR);
+	return_val = substitute_toklist_no_print(token_list);
+	if (return_val == 0)
 	{
-		temp_ret = substitute_token(watched->data);
-		if (temp_ret == MALLOC_ERROR)
+		free(*str_ptr);
+		*str_ptr = join_lst(token_list);
+		free_exp_toklst(&token_list);
+		if (*str_ptr == NULL)
 			return (MALLOC_ERROR);
-		if (temp_ret == BAD_SUBSTITUTION)
-			break ;
-		watched = watched->next;
+		return (0);
 	}
-	if (watched != NULL)
-		return (printf_error_msg("minishell: %: bad substitution\n", &watched->data->str, 1));
-	return (0);
-}
-
-static int	substitute_token(t_exp_token *token)
-{
-	char	*founded;
-
-	if (token->type == substit)
-	{
-		if (is_all_valid_env(token->str) == false)
-			return (BAD_SUBSTITUTION);
-		founded = get_env(token->str);
-		if (founded == NULL)
-			founded = ft_strdup("");
-		if (founded == NULL)
-			return (MALLOC_ERROR);
-		free(token->str);
-		token->str = founded;
-	}
-	if (token->type == dquote)
-		return (expand_string(&token->str));
-	return (0);
+	free_exp_toklst(&token_list);
+	return (return_val);
 }
 
 static char	*join_lst(t_exp_toklst *list)
@@ -110,7 +87,7 @@ static char	*join_lst(t_exp_toklst *list)
 		str_len += ft_strlen(watched->data->str);
 		watched = watched->next;
 	}
-	str = malloc(sizeof(char) * (str_len + 1));
+	str = ft_calloc(str_len + 1, sizeof(char));
 	if (str == NULL)
 		return (NULL);
 	watched = list;

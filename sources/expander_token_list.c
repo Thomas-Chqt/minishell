@@ -6,13 +6,13 @@
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 19:12:27 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/13 13:13:57 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/14 14:04:50 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "expander.h"
 
-static void			free_exp_toklst_node(void *v_node);
+static void	free_exp_toklst_node(void *v_node);
 
 t_exp_toklst	*make_exp_toklst(char *str)
 {
@@ -23,18 +23,42 @@ t_exp_toklst	*make_exp_toklst(char *str)
 	i = 0;
 	while (str[i] != '\0')
 	{
-		if (exp_add_env(str, &i, &token_lst) == MALLOC_ERROR)
-			break ;
-		if (exp_add_dquote(str, &i, &token_lst) == MALLOC_ERROR)
-			break ;
-		if (exp_add_quote(str, &i, &token_lst) == MALLOC_ERROR)
-			break ;
-		if (exp_add_normal(str, &i, &token_lst) == MALLOC_ERROR)
-			break ;
+		if (exp_add_env(str, &i, &token_lst) == 0)
+			continue ;
+		if (exp_add_dquote(str, &i, &token_lst) == 0)
+			continue ;
+		if (exp_add_quote(str, &i, &token_lst) == 0)
+			continue ;
+		if (exp_add_normal(str, &i, &token_lst) == 0)
+			continue ;
+		break ;
 	}
 	if (str[i] != '\0')
 	{
-		ft_lstclear((t_list **)&token_lst, &free_exp_toklst);
+		free_exp_toklst(&token_lst);
+		return (NULL);
+	}
+	return (token_lst);
+}
+
+t_exp_toklst	*make_exp_toklst_no_quote(char *str)
+{
+	t_exp_toklst	*token_lst;
+	t_uint64		i;
+
+	token_lst = NULL;
+	i = 0;
+	while (str[i] != '\0')
+	{
+		if (exp_add_env(str, &i, &token_lst) == 0)
+			continue ;
+		if (exp_add_normal_no_quote(str, &i, &token_lst) == 0)
+			continue ;
+		break ;
+	}
+	if (str[i] != '\0')
+	{
+		free_exp_toklst(&token_lst);
 		return (NULL);
 	}
 	return (token_lst);
@@ -64,7 +88,7 @@ t_exp_toklst	*exp_toklst_new(char *str, t_uint64 len, t_tok_type type)
 
 void	free_exp_toklst(t_exp_toklst **lst)
 {
-	ft_lstclear((t_list **)lst, &free_exp_toklst);
+	ft_lstclear((t_list **)lst, &free_exp_toklst_node);
 }
 
 static void	free_exp_toklst_node(void *v_node)
