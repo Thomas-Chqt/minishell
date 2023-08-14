@@ -6,7 +6,7 @@
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 18:32:01 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/12 20:28:41 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/13 13:22:14 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,5 +48,6 @@ int	printf_error_msg(char *format, char *data[], int return_val)
 			ft_putchar_fd(format[i], STDERR_FILENO);
 		i++;
 	}
+	ft_putchar_fd('\n', STDERR_FILENO);
 	return (return_val);
 }
