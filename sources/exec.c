@@ -6,7 +6,7 @@
 /*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 18:17:56 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/08/14 18:35:24 by sotanaka         ###   ########.fr       */
+/*   Updated: 2023/08/14 18:43:47 by sotanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,7 @@ static int	scan_simple_cmd(int fd_in, int fd_out, t_ast *node, int flag)
 	status = scan_btree_io(&dexec, node->left);
 	if (status != 0 || node->data == NULL)
 	{
-		status = fd_close(dexec.fd_in, dexec.fd_out);
-		if (status != 0)
+		if (fd_close(dexec.fd_in, dexec.fd_out) != 0)
 			return (perror_wrap("scan cmd fd_close", 1));
 		return (status);
 	}
