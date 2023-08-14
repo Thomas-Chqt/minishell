@@ -6,7 +6,7 @@
 /*   By: hotph <hotph@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/06 21:58:21 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/13 20:54:31 by hotph            ###   ########.fr       */
+/*   Updated: 2023/08/14 12:12:36 by hotph            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,6 @@ typedef struct s_dexec
 }	t_dexec;
 
 //-------prototype-------
-//print_error
-int		ft_mes_error(char *message);
-int		ft_print_perror(char *original_message);
-int		minishell_error(char *cmd, int flag, char *message);
-
 //redirect
 int		scan_btree_io(t_dexec *dexec, t_ast *node);
 //cmd
