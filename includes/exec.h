@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hotph <hotph@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/06 21:58:21 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/14 12:12:36 by hotph            ###   ########.fr       */
+/*   Updated: 2023/08/14 16:17:59 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@
 # define CMD_CANT_EXEC 126
 # define CMD_NOTFOUND 127
 # define EX_CTRL_BACKSLASH 131
-# define EX_SYNTAX_ERROR 258
 
 //-------include-------
 # include "parser.h"

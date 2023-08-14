@@ -5,10 +5,11 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/02 21:54:41 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/08/14 15:34:48 by sotanaka         ###   ########.fr       */
+/*   Created: Invalid date        by                   #+#    #+#             */
+/*   Updated: 2023/08/14 17:43:31 by sotanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "exec.h"
 
@@ -68,4 +69,5 @@ void	execute_ast(t_ast *ast)
 	val = scan_btree_pipe(STDIN_FILENO, STDOUT_FILENO, ast, 0);
 	while (wait(NULL) > 0)
 		;
+	set_last_error(val);
 }
