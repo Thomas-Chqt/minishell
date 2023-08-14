@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/02 21:54:41 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/08/14 16:15:51 by tchoquet         ###   ########.fr       */
+/*   Created: 2023/08/14 18:17:56 by sotanaka          #+#    #+#             */
+/*   Updated: 2023/08/14 18:43:47 by sotanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,12 @@ static int	scan_simple_cmd(int fd_in, int fd_out, t_ast *node, int flag)
 
 	init_dexec(fd_in, fd_out, &dexec);
 	status = scan_btree_io(&dexec, node->left);
-	if (status != 0)
+	if (status != 0 || node->data == NULL)
+	{
+		if (fd_close(dexec.fd_in, dexec.fd_out) != 0)
+			return (perror_wrap("scan cmd fd_close", 1));
 		return (status);
-	if (node->data == NULL)
-		return (0);
+	}
 	status = scan_path_prog(&dexec, node);
 	if (status != 0)
 	{
