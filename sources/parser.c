@@ -6,7 +6,7 @@
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 20:24:15 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/12 22:24:08 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/14 16:20:50 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,12 @@ t_ast	*parse_cmd(const char *cmd)
 			clean_ast(ast);
 		}
 		else
+		{
+			set_last_error(MALLOC_ERROR);
 			clean_toklist(&token_list);
+		}
 	}
+	else
+		set_last_error(SYNTAX_ERROR);
 	return (NULL);
 }

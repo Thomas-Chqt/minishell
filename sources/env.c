@@ -6,7 +6,7 @@
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 19:59:47 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/08 02:56:25 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/14 16:29:45 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,11 @@ int	init_env(char *envp[])
 			return (1);
 		}
 		i++;
+	}
+	if (set_last_error(0) != 0)
+	{
+		clean_env();
+		return (1);
 	}
 	return (0);
 }
@@ -84,6 +89,9 @@ int	set_env(const char *keyval, t_bool exported)
 			ft_lstadd_back((t_list **)get_lstenv(), (t_list *)new_node);
 			return (0);
 		}
+		free(found->data->key);
+		free(found->data->value);
+		free(found->data);
 		found->data = new_node->data;
 		free(new_node);
 		return (0);
