@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hotph <hotph@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 18:17:56 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/08/15 15:46:19 by sotanaka         ###   ########.fr       */
+/*   Updated: 2023/08/16 08:58:32 by hotph            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ static int	scan_btree_pipe(int fd_in, int fd_out, t_ast *node, t_intr intr)
 		if (pipe(fd_pipe) == -1)
 			return (perror_wrap("scan_pipe", 1));
 		scan_btree_pipe(fd_in, fd_pipe[1], node->left,
-				(t_intr){fd_pipe, intr.flag_wait + 2});
+			(t_intr){fd_pipe, intr.flag_wait + 2});
 		status = scan_btree_pipe(fd_pipe[0], fd_out, node->right,
 				(t_intr){intr.pipe, intr.flag_wait + 1});
 	}
@@ -77,7 +77,7 @@ void	execute_ast(t_ast *ast)
 	int		val;
 	t_intr	intr;
 
-	intr =(t_intr){NULL, 0};
+	intr = (t_intr){NULL, 0};
 	val = scan_btree_pipe(STDIN_FILENO, STDOUT_FILENO, ast, intr);
 	while (wait(NULL) > 0)
 		;
