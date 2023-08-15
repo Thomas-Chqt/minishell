@@ -6,7 +6,7 @@
 /*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/06 21:58:21 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/14 18:37:13 by sotanaka         ###   ########.fr       */
+/*   Updated: 2023/08/15 14:58:27 by sotanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,15 @@ typedef struct s_dexec
 	char	**cmd_opts;
 	int		fd_in;
 	int		fd_out;
+	int		*pipe;
+	int		flag_pipe;
 }	t_dexec;
+
+typedef struct s_intr
+{
+	int		*pipe;
+	int		flag_wait;
+}	t_intr;
 
 //-------prototype-------
 //redirect
