@@ -6,7 +6,7 @@
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 18:32:01 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/14 15:20:16 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/17 00:53:23 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ int	print_error(int code)
 		return (print_error_msg("minishell: Missing quote `\'\'", code));
 	if (code == MISSING_DQUOTE)
 		return (print_error_msg("minishell: Missing quote `\"\'", code));
+	if (code == SIGACTION_ERROR)
+		return (print_error_msg("minishell: Sigaction error", code));
 	return (print_error_msg("minishell: Unknown error", code));
 }
 
