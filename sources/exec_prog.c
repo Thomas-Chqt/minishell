@@ -3,29 +3,41 @@
 /*                                                        :::      ::::::::   */
 /*   exec_prog.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hotph <hotph@student.42.fr>                +#+  +:+       +#+        */
+/*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/13 15:01:43 by hotph             #+#    #+#             */
-/*   Updated: 2023/08/14 12:10:27 by hotph            ###   ########.fr       */
+/*   Updated: 2023/08/16 13:57:11 by sotanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
+#include "builtin.h"
 
-void	path_is_builtin(char *prog, t_dexec *dexec)
+int	path_is_builtin(char *path, char *prog, t_dexec *dexec)
 {
+	if (path != NULL)
+		return (1);
 	if (str_cmp("echo", prog) == 0)
-		;
+		dexec->flag_builtin = BUILTIN_ECHO;
 	if (str_cmp("cd", prog) == 0)
-		;
+		dexec->flag_builtin = BUILTIN_CD;
 	if (str_cmp("pwd", prog) == 0)
-		;
+		dexec->flag_builtin = BUILTIN_PWD;
 	if (str_cmp("export", prog) == 0)
-		;
+		dexec->flag_builtin = BUILTIN_EXPORT;
 	if (str_cmp("unset", prog) == 0)
-		;
+		dexec->flag_builtin = BUILTIN_UNSET;
 	if (str_cmp("env", prog) == 0)
-		;
+		dexec->flag_builtin = BUILTIN_ENV;
+	if (dexec->flag_builtin == -1)
+		return (1);
+	else
+	{
+		dexec->cmd_path = ft_strdup(prog);
+		if (dexec->cmd_path == NULL)
+			return (print_error(MALLOC_ERROR));
+	}
+	return (0);
 }
 
 static int	joint_path(char *path, char *prog, t_dexec *dexec)
@@ -45,7 +57,10 @@ static int	get_fullpath(char *path, char *prog, t_dexec *dexec)
 {
 	int	status;
 
-	if (path != NULL)
+	status = path_is_builtin(path, prog, dexec);
+	if (status == 0)
+		return (status);
+	else if (path != NULL)
 	{
 		status = joint_path(path, prog, dexec);
 		if (status != 0)
@@ -53,7 +68,6 @@ static int	get_fullpath(char *path, char *prog, t_dexec *dexec)
 	}
 	else
 	{
-		path_is_builtin(prog, dexec);
 		status = path_is_envp(prog, dexec);
 		free_splited_str(dexec->matrix_envpath);
 		if (status == CMD_NOTFOUND)

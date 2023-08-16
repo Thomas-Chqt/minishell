@@ -6,12 +6,13 @@
 /*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/30 13:32:49 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/08/15 15:47:37 by sotanaka         ###   ########.fr       */
+/*   Updated: 2023/08/16 15:02:39 by sotanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 #include "env.h"
+#include "builtin.h"
 
 int	fd_close(int fd_in, int fd_out)
 {
@@ -87,6 +88,8 @@ int	exec_do(t_dexec *dexec, t_ast *node, int flag)
 	int		pid;
 	int		status;
 
+	if (dexec->flag_builtin > 0)
+		return (is_builtin(dexec));
 	pid = fork();
 	if (pid == -1)
 		return (perror_wrap("exec_do fork", 1));

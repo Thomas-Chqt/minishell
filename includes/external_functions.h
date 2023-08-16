@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   external_functions.h                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 22:54:17 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/14 15:20:00 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/16 14:12:38 by sotanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ pid_t	waitpid(pid_t pid, int *stat_loc, int options);
 void	exit(int status);
 char	*getcwd(char *buf, size_t size);
 
-// chdir
+int		chdir(const char *path);
 
 int		stat(const char *path, struct stat *buf);
 
@@ -96,7 +96,7 @@ int		pipe(int pipefd[2]);
 // opendir
 // readdir
 // closedir,
-// strerror
+char	*strerror(int errnum);
 
 void	perror(const char *s);
 

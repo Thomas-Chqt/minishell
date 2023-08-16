@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hotph <hotph@student.42.fr>                +#+  +:+       +#+        */
+/*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 18:17:56 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/08/16 08:58:32 by hotph            ###   ########.fr       */
+/*   Updated: 2023/08/16 13:36:34 by sotanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void	init_dexec(int fd_in, int fd_out, t_dexec *dexec, t_intr *intr)
 	dexec->fd_out = fd_out;
 	dexec->flag_pipe = 0;
 	dexec->pipe = intr->pipe;
+	dexec->flag_builtin = -1;
 }
 
 int	cmd_only_redirection(t_dexec *dexec, int status)
