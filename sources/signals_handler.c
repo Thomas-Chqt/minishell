@@ -6,7 +6,7 @@
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 23:03:15 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/17 01:11:43 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/17 14:17:48 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,9 @@
 
 void	sigint_handler_new_line(int sig)
 {
+	set_last_error(1);
 	ft_putchar_fd('\n', STDOUT_FILENO);
+	ft_putstr_fd("✘ ", STDOUT_FILENO);
 	rl_on_new_line();
 	rl_replace_line("", 1);
 	rl_redisplay();
