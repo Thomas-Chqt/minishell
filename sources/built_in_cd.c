@@ -6,7 +6,7 @@
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 12:31:07 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/08/17 18:36:14 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/17 18:59:48 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static int	set_env_pwd(void)
 	{
 		ft_strlcat(key_val, "PWD=", ft_strlen(cwd) + 5);
 		ft_strlcat(key_val, cwd, ft_strlen(cwd) + 5);
-		if (set_env(key_val, false) == 0)
+		if (set_env_single_str(key_val, false) == 0)
 		{
 			free(key_val);
 			free(cwd);

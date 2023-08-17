@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env_utils.c                                        :+:      :+:    :+:   */
+/*   environment_env_list_utils.c                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/05 17:27:31 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/17 18:36:14 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/17 19:18:43 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,27 +17,6 @@ t_env_list	**get_lstenv(void)
 	static t_env_list	*env_list = NULL;
 
 	return (&env_list);
-}
-
-t_env_list	*lst_env_new(const char *keyval, t_bool is_export)
-{
-	t_env_list	*new_node;
-
-	new_node = malloc(sizeof(t_env_list));
-	if (new_node != NULL)
-	{
-		new_node->next = NULL;
-		new_node->data = malloc(sizeof(t_env_entry));
-		if (new_node->data != NULL)
-		{	
-			*(new_node->data) = str_to_env_entry(keyval);
-			new_node->data->is_export = is_export;
-			if (new_node->data->key != NULL)
-				return (new_node);
-		}
-		free(new_node);
-	}
-	return (NULL);
 }
 
 t_bool	is_env_key_equal(void *v_entry, void *v_key)

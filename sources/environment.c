@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.c                                              :+:      :+:    :+:   */
+/*   environment.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 19:59:47 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/17 18:36:14 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/17 19:22:06 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	init_env(char *envp[])
 	i = 0;
 	while (envp[i] != NULL)
 	{
-		if (set_env(envp[i], true) != 0)
+		if (set_env_single_str(envp[i], true) != 0)
 		{
 			clean_env();
 			return (MALLOC_ERROR);
@@ -28,6 +28,36 @@ int	init_env(char *envp[])
 	}
 	set_last_error(0);
 	return (0);
+}
+
+int	set_env(const char *key, const char *val, t_bool exported)
+{
+
+}
+
+int	set_env_single_str(const char *keyval, t_bool exported)
+{
+	t_env_list	*found;
+	t_env_list	*new_node;
+
+	new_node = lst_env_new(keyval, exported);
+	if (new_node != NULL)
+	{
+		found = (t_env_list *)lst_chr(*((t_list **)get_lstenv()),
+				&is_env_key_equal, new_node->data->key);
+		if (found == NULL)
+		{
+			ft_lstadd_back((t_list **)get_lstenv(), (t_list *)new_node);
+			return (0);
+		}
+		free(found->data->key);
+		free(found->data->value);
+		free(found->data);
+		found->data = new_node->data;
+		free(new_node);
+		return (0);
+	}
+	return (MALLOC_ERROR);
 }
 
 char	*get_env(const char *key)
@@ -71,47 +101,4 @@ char	**get_envp(void)
 		current = current->next;
 	}
 	return (envp);
-}
-
-int	set_env(const char *keyval, t_bool exported)
-{
-	t_env_list	*found;
-	t_env_list	*new_node;
-
-	new_node = lst_env_new(keyval, exported);
-	if (new_node != NULL)
-	{
-		found = (t_env_list *)lst_chr(*((t_list **)get_lstenv()),
-				&is_env_key_equal, new_node->data->key);
-		if (found == NULL)
-		{
-			ft_lstadd_back((t_list **)get_lstenv(), (t_list *)new_node);
-			return (0);
-		}
-		free(found->data->key);
-		free(found->data->value);
-		free(found->data);
-		found->data = new_node->data;
-		free(new_node);
-		return (0);
-	}
-	return (MALLOC_ERROR);
-}
-
-void	clean_env(void)
-{
-	t_env_list	*watched;
-	t_env_list	*temp;
-
-	watched = *(get_lstenv());
-	while (watched != NULL)
-	{
-		free(watched->data->key);
-		free(watched->data->value);
-		free(watched->data);
-		temp = watched->next;
-		free(watched);
-		watched = temp;
-	}
-	(*(get_lstenv())) = NULL;
 }

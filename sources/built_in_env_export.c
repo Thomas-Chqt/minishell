@@ -6,7 +6,7 @@
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/05 14:45:34 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/17 18:36:14 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/17 18:59:48 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	export(int argc, char *argv[])
 	i = 1;
 	while (i < (t_uint64)argc)
 	{
-		if (set_env(argv[i], true) != 0)
+		if (set_env_single_str(argv[i], true) != 0)
 			return (1);
 		i++;
 	}
