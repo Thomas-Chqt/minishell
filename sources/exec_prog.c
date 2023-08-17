@@ -6,7 +6,7 @@
 /*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/13 15:01:43 by hotph             #+#    #+#             */
-/*   Updated: 2023/08/17 17:57:01 by sotanaka         ###   ########.fr       */
+/*   Updated: 2023/08/17 19:41:22 by sotanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,20 +66,17 @@ static int	get_fullpath(char *path, char *prog, t_dexec *dexec)
 	if (status == 0)
 		return (status);
 	else if (path != NULL)
-	{
 		status = joint_path(path, prog, dexec);
-		if (status != 0)
-			return (status);
-	}
 	else
 	{
 		status = path_is_envp(prog, dexec);
 		free_splited_str(dexec->matrix_envpath);
 		if (status == CMD_NOTFOUND)
-			return (exec_error(prog, CMD_NOTFOUND, "command not found"));
-		if (status == 1)
-			return (status);
+			printf_error_msg("minishell: %: command not found",
+				&prog, CMD_NOTFOUND);
 	}
+	if (status != 0)
+		return (status);
 	status = check_cmdpath_hub(dexec, prog);
 	if (status != 0)
 		free_null((void **)&(dexec->cmd_path));
