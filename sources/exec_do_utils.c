@@ -6,7 +6,7 @@
 /*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 15:00:18 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/08/16 15:23:20 by sotanaka         ###   ########.fr       */
+/*   Updated: 2023/08/17 15:53:20 by sotanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,4 +28,16 @@ int	is_builtin(t_dexec *dexec)
 	// 	return (built_in_env(dexec));
 	// if (dexec->flag_builtin == BUILTIN_EXIT)
 	// 	return (built_in_exit(dexec));
+}
+
+int	fd_close(int fd_in, int fd_out)
+{
+	int	status;
+
+	status = 0;
+	if (fd_in != STDIN_FILENO)
+		status = close(fd_in);
+	if (fd_out != STDOUT_FILENO)
+		status = close(fd_out);
+	return (status);
 }
