@@ -6,7 +6,7 @@
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 18:31:32 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/14 16:04:18 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/16 19:46:28 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # define MISSING_DQUOTE MISSING_QUOTE + '\"'
 # define BAD_SUBSTITUTION 4444
 # define SYNTAX_ERROR 258
+# define SIGACTION_ERROR 5555
 
 int		print_error_msg(char *msg, int return_val);
 int		print_error(int code);

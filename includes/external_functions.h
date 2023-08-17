@@ -6,7 +6,7 @@
 /*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 22:54:17 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/16 14:12:38 by sotanaka         ###   ########.fr       */
+/*   Updated: 2023/08/17 16:25:58 by sotanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@
 # include <sys/stat.h>
 # include <sys/wait.h>
 # include <fcntl.h>
+# include <signal.h>
 
 # ifdef MEMCHECK
 
@@ -42,10 +43,10 @@ typedef int	t_pid;
 char	*readline(const char *prompt);
 
 // rl_clear_history
-// rl_on_new_line,
-// rl_replace_line
-// rl_redisplay
 
+int		rl_on_new_line(void);
+void	rl_replace_line(const char *text, int clear_undo);
+void	rl_redisplay(void);
 int		add_history(const char *str);
 
 // printf
