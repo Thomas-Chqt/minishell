@@ -6,7 +6,7 @@
 /*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/06 21:58:21 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/16 13:26:10 by sotanaka         ###   ########.fr       */
+/*   Updated: 2023/08/17 14:08:42 by sotanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,12 @@ typedef struct s_dexec
 	int		flag_pipe;
 	int		flag_builtin;
 }	t_dexec;
+
+typedef struct s_intr
+{
+	int		*pipe;
+	int		flag_wait;
+}	t_intr;
 
 typedef struct s_intr
 {

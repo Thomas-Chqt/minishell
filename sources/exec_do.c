@@ -6,7 +6,7 @@
 /*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/30 13:32:49 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/08/16 15:02:39 by sotanaka         ###   ########.fr       */
+/*   Updated: 2023/08/17 14:09:42 by sotanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,12 @@ static int	set_redirect(t_dexec *dexec)
 		if (dup2(dexec->fd_out, STDOUT_FILENO) == -1)
 			return (perror_wrap("set_redirect dup2", 1));
 		if (close(dexec->fd_out) == -1)
+			return (perror_wrap("set_redirect close1", 1));
+		if (dexec->flag_pipe == 1)
+		{
+			if (close(dexec->pipe[0]) == -1)
+				return (perror_wrap("set_redirect close2", 1));
+		}
 			return (perror_wrap("set_redirect close1", 1));
 		if (dexec->flag_pipe == 1)
 		{
