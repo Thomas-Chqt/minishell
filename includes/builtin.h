@@ -6,7 +6,7 @@
 /*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 13:23:23 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/08/16 15:23:05 by sotanaka         ###   ########.fr       */
+/*   Updated: 2023/08/17 14:11:43 by sotanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,6 @@ int		built_in_cd(t_dexec *dexec);
 // int		built_in_unset(t_dexec *dexec);
 // int		built_in_env(t_dexec *dexec);
 // int		built_in_exit(t_dexec *dexec);
-// int		is_builtin(t_dexec *dexec);
+int		is_builtin(t_dexec *dexec);
 
 #endif
