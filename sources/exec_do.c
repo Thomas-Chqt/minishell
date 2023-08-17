@@ -6,7 +6,7 @@
 /*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/30 13:32:49 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/08/17 16:12:49 by sotanaka         ###   ########.fr       */
+/*   Updated: 2023/08/17 19:54:22 by sotanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,11 @@ static int	do_cmd(char *cmd_path, char **cmd_opts, char **envp)
 	{
 		free_splited_str(envp);
 		if (errno == EISDIR)
-			return (exec_error(cmd_path, IS_A_DIRECTORY, NULL));
+			return (printf_error_msg("minishell: %: %",
+					(char *[2]){cmd_path, strerror(errno)}, IS_A_DIRECTORY));
 		else
-			perror("minishell");
+			printf_error_msg("minishell: %: %",
+				(char *[2]){cmd_path, strerror(errno)}, 0);
 	}
 	return (1);
 }
@@ -92,7 +94,7 @@ int	exec_do(t_dexec *dexec, t_ast *node, int flag)
 {
 	int		pid;
 	int		status;
-	
+
 	pid = 0;
 	status = 0;
 	if (dexec->flag_builtin > 0)
