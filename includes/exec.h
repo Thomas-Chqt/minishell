@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/06 21:58:21 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/16 22:53:32 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/17 16:25:19 by sotanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,15 @@ typedef struct s_dexec
 	int		fd_out;
 	int		*pipe;
 	int		flag_pipe;
+	int		flag_pipe_close;
+	int		flag_builtin;
 }	t_dexec;
 
 typedef struct s_intr
 {
 	int		*pipe;
 	int		flag_wait;
+	int		flag_pipe;
 }	t_intr;
 
 //-------prototype-------

@@ -6,24 +6,13 @@
 /*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/30 13:32:49 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/08/15 15:47:37 by sotanaka         ###   ########.fr       */
+/*   Updated: 2023/08/17 16:12:49 by sotanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 #include "env.h"
-
-int	fd_close(int fd_in, int fd_out)
-{
-	int	status;
-
-	status = 0;
-	if (fd_in != STDIN_FILENO)
-		status = close(fd_in);
-	if (fd_out != STDOUT_FILENO)
-		status = close(fd_out);
-	return (status);
-}
+#include "builtin.h"
 
 static int	do_cmd(char *cmd_path, char **cmd_opts, char **envp)
 {
@@ -53,7 +42,7 @@ static int	set_redirect(t_dexec *dexec)
 			return (perror_wrap("set_redirect dup2", 1));
 		if (close(dexec->fd_out) == -1)
 			return (perror_wrap("set_redirect close1", 1));
-		if (dexec->flag_pipe == 1)
+		if (dexec->flag_pipe_close == 1)
 		{
 			if (close(dexec->pipe[0]) == -1)
 				return (perror_wrap("set_redirect close2", 1));
@@ -62,7 +51,7 @@ static int	set_redirect(t_dexec *dexec)
 	return (0);
 }
 
-void	forked(t_dexec *dexec, t_ast *node)
+static void	at_child(t_dexec *dexec, t_ast *node)
 {
 	int		exit_val;
 
@@ -82,28 +71,45 @@ void	forked(t_dexec *dexec, t_ast *node)
 	exit(exit_val);
 }
 
+static int	at_parent(t_dexec *dexec, int pid, int flag)
+{
+	int	status;
+
+	status = fd_close(dexec->fd_in, dexec->fd_out);
+	if (status != 0)
+		return (perror_wrap("at_parent fd_close", 1));
+	if (flag <= 1)
+	{
+		if (waitpid(pid, &status, 0) == -1)
+			return (perror_wrap("at_parant waitpid", 1));
+		if (WIFEXITED(status))
+			return (WEXITSTATUS(status));
+	}
+	return (status);
+}
+
 int	exec_do(t_dexec *dexec, t_ast *node, int flag)
 {
 	int		pid;
 	int		status;
-
-	pid = fork();
-	if (pid == -1)
-		return (perror_wrap("exec_do fork", 1));
-	else if (pid == 0)
-		forked(dexec, node);
+	
+	pid = 0;
+	status = 0;
+	if (dexec->flag_builtin > 0)
+	{
+		pid = is_builtin(dexec);
+		if (pid == -1)
+			return (1);
+	}
 	else
 	{
-		status = fd_close(dexec->fd_in, dexec->fd_out);
-		if (status != 0)
-			return (perror_wrap("exec_do fd_close", 1));
-		if (flag <= 1)
-		{
-			if (waitpid(pid, &status, 0) == -1)
-				return (perror_wrap("exec_do waitpid", 1));
-			if (WIFEXITED(status))
-				return (WEXITSTATUS(status));
-		}
+		pid = fork();
+		if (pid == -1)
+			return (perror_wrap("exec_do fork", 1));
+		else if (pid == 0)
+			at_child(dexec, node);
 	}
+	if (pid > 0)
+		status = at_parent(dexec, pid, flag);
 	return (status);
 }

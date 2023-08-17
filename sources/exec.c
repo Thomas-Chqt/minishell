@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 18:17:56 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/08/17 16:13:28 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/17 18:27:09 by sotanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,10 @@ void	init_dexec(int fd_in, int fd_out, t_dexec *dexec, t_intr *intr)
 	dexec->cmd_opts = NULL;
 	dexec->fd_in = fd_in;
 	dexec->fd_out = fd_out;
-	dexec->flag_pipe = 0;
+	dexec->flag_pipe_close = 0;
 	dexec->pipe = intr->pipe;
+	dexec->flag_pipe = intr->flag_pipe;
+	dexec->flag_builtin = -1;
 }
 
 int	cmd_only_redirection(t_dexec *dexec, int status)
@@ -40,7 +42,7 @@ static int	scan_simple_cmd(int fd_in, int fd_out, t_ast *node, t_intr intr)
 	if (status != 0 || node->data == NULL)
 		return (cmd_only_redirection(&dexec, status));
 	if (fd_out == dexec.fd_out && fd_out != STDOUT_FILENO)
-		dexec.flag_pipe = 1;
+		dexec.flag_pipe_close = 1;
 	status = scan_path_prog(&dexec, node);
 	if (status != 0)
 	{
@@ -63,9 +65,9 @@ static int	scan_btree_pipe(int fd_in, int fd_out, t_ast *node, t_intr intr)
 		if (pipe(fd_pipe) == -1)
 			return (perror_wrap("scan_pipe", 1));
 		scan_btree_pipe(fd_in, fd_pipe[1], node->left,
-			(t_intr){fd_pipe, intr.flag_wait + 2});
+			(t_intr){fd_pipe, intr.flag_wait + 2, 1});
 		status = scan_btree_pipe(fd_pipe[0], fd_out, node->right,
-				(t_intr){intr.pipe, intr.flag_wait + 1});
+				(t_intr){intr.pipe, intr.flag_wait + 1, 1});
 	}
 	else
 		status = scan_simple_cmd(fd_in, fd_out, node, intr);
@@ -79,7 +81,7 @@ int	execute_ast(t_ast *ast)
 
 	if (sig_forwarding_mode() != 0)
 		return (print_error(SIGACTION_ERROR));
-	intr = (t_intr){NULL, 0};
+	intr = (t_intr){NULL, 0, 0};
 	val = scan_btree_pipe(STDIN_FILENO, STDOUT_FILENO, ast, intr);
 	while (wait(NULL) > 0)
 		;
