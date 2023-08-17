@@ -6,7 +6,7 @@
 /*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 15:00:18 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/08/17 15:53:20 by sotanaka         ###   ########.fr       */
+/*   Updated: 2023/08/17 17:42:36 by sotanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ int	is_builtin(t_dexec *dexec)
 	// 	return (built_in_env(dexec));
 	// if (dexec->flag_builtin == BUILTIN_EXIT)
 	// 	return (built_in_exit(dexec));
+	return (0);
 }
 
 int	fd_close(int fd_in, int fd_out)

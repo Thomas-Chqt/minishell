@@ -6,7 +6,7 @@
 /*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/13 15:01:43 by hotph             #+#    #+#             */
-/*   Updated: 2023/08/16 13:57:11 by sotanaka         ###   ########.fr       */
+/*   Updated: 2023/08/17 17:57:01 by sotanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,17 +18,22 @@ int	path_is_builtin(char *path, char *prog, t_dexec *dexec)
 	if (path != NULL)
 		return (1);
 	if (str_cmp("echo", prog) == 0)
-		dexec->flag_builtin = BUILTIN_ECHO;
+		ft_putstr_fd("Oh, waiting built in echo....below is STDFUNC\n", 2);
+	// 	dexec->flag_builtin = BUILTIN_ECHO;
 	if (str_cmp("cd", prog) == 0)
 		dexec->flag_builtin = BUILTIN_CD;
 	if (str_cmp("pwd", prog) == 0)
-		dexec->flag_builtin = BUILTIN_PWD;
+		ft_putstr_fd("Oh, waiting built in pwd....below is STDFUNC\n", 2);
+		// dexec->flag_builtin = BUILTIN_PWD;
 	if (str_cmp("export", prog) == 0)
-		dexec->flag_builtin = BUILTIN_EXPORT;
+		ft_putstr_fd("Oh, waiting built in export....below is STDFUNC\n", 2);
+		// dexec->flag_builtin = BUILTIN_EXPORT;
 	if (str_cmp("unset", prog) == 0)
-		dexec->flag_builtin = BUILTIN_UNSET;
+		ft_putstr_fd("Oh, waiting built in unset....below is STDFUNC\n", 2);
+		// dexec->flag_builtin = BUILTIN_UNSET;
 	if (str_cmp("env", prog) == 0)
-		dexec->flag_builtin = BUILTIN_ENV;
+		ft_putstr_fd("Oh, waiting built in env....below is STDFUNC\n", 2);
+	// 	dexec->flag_builtin = BUILTIN_ENV;
 	if (dexec->flag_builtin == -1)
 		return (1);
 	else
