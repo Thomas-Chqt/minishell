@@ -6,7 +6,7 @@
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 18:32:01 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/17 00:53:23 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/17 15:53:59 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,17 @@ int	print_error(int code)
 	if (code == MALLOC_ERROR)
 		return (print_error_msg("minishell: Malloc error", code));
 	if (code == PARSING_ERROR)
-		return (print_error_msg("minishell: parsing error", code));
+		return (print_error_msg("minishell: parsing error", SYNTAX_ERROR));
 	if (code == MISSING_SQUOTE)
-		return (print_error_msg("minishell: Missing quote `\'\'", code));
+		return (print_error_msg("minishell: Missing quote `\'\'", SYNTAX_ERROR));
 	if (code == MISSING_DQUOTE)
-		return (print_error_msg("minishell: Missing quote `\"\'", code));
+		return (print_error_msg("minishell: Missing quote `\"\'", SYNTAX_ERROR));
+	if (code == MISSING_CLOSE_BRACKET)
+	{
+		ft_putstr_fd("minishell: Missing closing bracket `", STDERR_FILENO);
+		ft_putchar_fd(125, STDERR_FILENO);
+		return (print_error_msg("\'", SYNTAX_ERROR));
+	}
 	if (code == SIGACTION_ERROR)
 		return (print_error_msg("minishell: Sigaction error", code));
 	return (print_error_msg("minishell: Unknown error", code));

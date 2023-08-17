@@ -6,7 +6,7 @@
 /*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 22:54:17 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/17 16:25:58 by sotanaka         ###   ########.fr       */
+/*   Updated: 2023/08/17 18:26:43 by sotanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ char	*readline(const char *prompt);
 int		rl_on_new_line(void);
 void	rl_replace_line(const char *text, int clear_undo);
 void	rl_redisplay(void);
-int		add_history(const char *str);
+void	add_history(const char *str);
 
 // printf
 

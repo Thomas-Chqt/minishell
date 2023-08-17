@@ -6,7 +6,7 @@
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 19:59:47 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/14 17:29:40 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/17 16:17:36 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,15 +22,11 @@ int	init_env(char *envp[])
 		if (set_env(envp[i], true) != 0)
 		{
 			clean_env();
-			return (1);
+			return (MALLOC_ERROR);
 		}
 		i++;
 	}
-	if (set_last_error(0) != 0)
-	{
-		clean_env();
-		return (1);
-	}
+	set_last_error(0);
 	return (0);
 }
 
@@ -99,7 +95,7 @@ int	set_env(const char *keyval, t_bool exported)
 		free(new_node);
 		return (0);
 	}
-	return (1);
+	return (MALLOC_ERROR);
 }
 
 void	clean_env(void)

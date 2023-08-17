@@ -6,7 +6,7 @@
 /*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 18:17:56 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/08/17 17:59:28 by sotanaka         ###   ########.fr       */
+/*   Updated: 2023/08/17 18:27:09 by sotanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,18 +74,18 @@ static int	scan_btree_pipe(int fd_in, int fd_out, t_ast *node, t_intr intr)
 	return (status);
 }
 
-void	execute_ast(t_ast *ast)
+int	execute_ast(t_ast *ast)
 {
 	int		val;
 	t_intr	intr;
 
 	if (sig_forwarding_mode() != 0)
-		return ;
+		return (print_error(SIGACTION_ERROR));
 	intr = (t_intr){NULL, 0, 0};
 	val = scan_btree_pipe(STDIN_FILENO, STDOUT_FILENO, ast, intr);
 	while (wait(NULL) > 0)
 		;
-	set_last_error(val);
 	if (sig_interactive_mode() != 0)
-		return ;
+		return (print_error(SIGACTION_ERROR));
+	return (val);
 }
