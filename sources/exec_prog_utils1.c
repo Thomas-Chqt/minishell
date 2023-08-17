@@ -6,7 +6,7 @@
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 14:50:40 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/08/17 18:49:03 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/17 22:32:40 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,14 +82,17 @@ int	directory_is(char *path)
 	if (cpy == NULL)
 		return (print_error(MALLOC_ERROR));
 	path[ft_strlen(path) - 1] = '\0';
-	if (ft_stat_wrap(path, STAT_ISDIR) == true)
-		status = exec_error(cpy, CMD_CANT_EXEC, "Is a directory");
+	if (check_cmdpath(path, ACCESS_FOK) == 1)
+		status = printf_error_msg("minishell: %: %",
+				(char *[2]){cpy, strerror(errno)}, CMD_NOTFOUND);
+	else if (ft_stat_wrap(path, STAT_ISDIR) == true)
+		status = printf_error_msg("minishell: %: %",
+				(char *[2]){cpy, "Is a directory"}, CMD_CANT_EXEC);
 	else if (ft_stat_wrap(path, STAT_ISREG) == true)
-		status = exec_error(cpy, CMD_CANT_EXEC, "Not a directory");
+		status = printf_error_msg("minishell: %: %",
+				(char *[2]){cpy, "Not a directory"}, CMD_CANT_EXEC);
 	else if (ft_stat_wrap(path, 0) == 255)
 		status = 255;
-	else if (check_cmdpath(path, ACCESS_FOK) == 1)
-		status = exec_error(cpy, CMD_NOTFOUND, NULL);
 	free(cpy);
 	return (status);
 }
