@@ -6,11 +6,12 @@
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 20:57:27 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/08 13:43:22 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/17 00:43:22 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "signals.h"
 
 #ifdef MEMCHECK
 
@@ -32,9 +33,12 @@ static void	destructor(void)
 
 int	main(int argc, char *argv[], char *envp[])
 {
+	if (sig_interactive_mode() != 0)
+		return (SIGACTION_ERROR);
 	if (init_env(envp) != 0)
 		return (1);
 	minishell_loop();
+	ft_printf("exit\n");
 	clean_env();
 	return (0);
 }

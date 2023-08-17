@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hotph <hotph@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 18:17:56 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/08/16 08:58:32 by hotph            ###   ########.fr       */
+/*   Updated: 2023/08/16 22:53:07 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,9 +77,13 @@ void	execute_ast(t_ast *ast)
 	int		val;
 	t_intr	intr;
 
+	if (sig_forwarding_mode() != 0)
+		return ;
 	intr = (t_intr){NULL, 0};
 	val = scan_btree_pipe(STDIN_FILENO, STDOUT_FILENO, ast, intr);
 	while (wait(NULL) > 0)
 		;
 	set_last_error(val);
+	if (sig_interactive_mode() != 0)
+		return ;
 }
