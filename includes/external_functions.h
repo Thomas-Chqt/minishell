@@ -6,7 +6,7 @@
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 22:54:17 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/16 19:11:09 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/17 16:20:27 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ char	*readline(const char *prompt);
 int		rl_on_new_line(void);
 void	rl_replace_line(const char *text, int clear_undo);
 void	rl_redisplay(void);
-int		add_history(const char *str);
+void	add_history(const char *str);
 
 // printf
 

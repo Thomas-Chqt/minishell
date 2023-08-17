@@ -6,7 +6,7 @@
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 18:31:32 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/16 19:46:28 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/17 15:52:52 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,12 @@
 # define MALLOC_ERROR 1111
 # define PARSING_ERROR 2222
 # define MISSING_QUOTE 3333
-# define MISSING_SQUOTE MISSING_QUOTE + '\''
-# define MISSING_DQUOTE MISSING_QUOTE + '\"'
-# define BAD_SUBSTITUTION 4444
+# define MISSING_SQUOTE 4444
+# define MISSING_DQUOTE 5555
+# define MISSING_CLOSE_BRACKET 6666
+# define BAD_SUBSTITUTION 7777
 # define SYNTAX_ERROR 258
-# define SIGACTION_ERROR 5555
+# define SIGACTION_ERROR 8888
 
 int		print_error_msg(char *msg, int return_val);
 int		print_error(int code);

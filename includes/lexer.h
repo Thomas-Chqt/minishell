@@ -6,7 +6,7 @@
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 14:51:42 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/12 20:10:18 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/17 17:15:03 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,14 @@ struct s_toklist
 	t_toklist	*next;
 };
 
+t_toklist	*toklist_new(t_token_type type, char *data);
+void		free_token(void *token);
+
 int			toklist_text_new(const char *cmd, t_uint64 *i, t_toklist **list);
 int			toklist_pipe_new(const char *cmd, t_uint64 *i, t_toklist **list);
 int			toklist_io_new(const char *cmd, t_uint64 *i, t_toklist **list);
-void		free_token(void *token);
+
+int			set_text_token_len(const char *cmd, size_t *len);
 
 int			recurse_full_cmd(const char *cmd, t_uint64 *i, t_toklist **list);
 int			recurse_simple_cmd(const char *cmd, t_uint64 *i, t_toklist **list);
