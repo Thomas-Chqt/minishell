@@ -6,7 +6,7 @@
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/13 12:21:58 by hotph             #+#    #+#             */
-/*   Updated: 2023/08/16 22:53:53 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/17 16:11:16 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@ static int	ft_readline(int fd_pipe[2], char *delimiter)
 {
 	char	*line;
 
-	sig_heredoc_mode();
+	if (sig_heredoc_mode() != 0)
+		exit(print_error(SIGACTION_ERROR));
 	if (close(fd_pipe[0]) == -1)
 		exit(perror_wrap("readline pipe[0]", 1));
 	while (1)
