@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_prog_utils1.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hotph <hotph@student.42.fr>                +#+  +:+       +#+        */
+/*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 14:50:40 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/08/14 12:10:26 by hotph            ###   ########.fr       */
+/*   Updated: 2023/08/17 18:40:07 by sotanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,8 @@ int	path_is_envp(char *cmd, t_dexec *dexec)
 {
 	size_t	i;
 
+	if (*cmd == '\0')
+		return (CMD_NOTFOUND);
 	i = 0;
 	dexec->matrix_envpath = split_wrap(dexec->matrix_envpath, ':');
 	if (dexec->matrix_envpath == NULL)
