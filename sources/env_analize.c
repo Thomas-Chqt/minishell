@@ -6,11 +6,11 @@
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 17:24:55 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/12 17:34:43 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/17 18:36:14 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "env.h"
+#include "environment.h"
 
 t_bool	is_valid_env(char c)
 {

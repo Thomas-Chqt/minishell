@@ -6,7 +6,7 @@
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 21:29:07 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/14 14:04:16 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/17 18:36:14 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define EXPANDER_H
 
 # include "parser.h"
-# include "env.h"
+# include "environment.h"
 
 typedef struct s_exp_token		t_exp_token;
 typedef enum e_tok_type			t_tok_type;

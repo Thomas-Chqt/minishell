@@ -6,11 +6,11 @@
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 19:59:47 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/17 16:17:36 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/17 18:36:14 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "env.h"
+#include "environment.h"
 
 int	init_env(char *envp[])
 {

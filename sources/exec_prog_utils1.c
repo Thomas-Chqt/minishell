@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   exec_prog_utils1.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 14:50:40 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/08/17 18:40:07 by sotanaka         ###   ########.fr       */
+/*   Updated: 2023/08/17 18:49:03 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
-#include "env.h"
+#include "environment.h"
 
 static char	**split_wrap(char **matrix, char token)
 {

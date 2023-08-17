@@ -6,11 +6,11 @@
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/05 14:45:34 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/08 02:54:18 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/17 18:36:14 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "env.h"
+#include "environment.h"
 
 static void	print_entry_env(void *v_entry);
 static void	print_entry_export(void *v_entry);

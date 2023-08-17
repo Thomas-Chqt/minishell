@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.h                                              :+:      :+:    :+:   */
+/*   environment.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/04 11:26:37 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/14 16:35:10 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/17 18:36:02 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ENV_H
-# define ENV_H
+#ifndef ENVIRONMENT_H
+# define ENVIRONMENT_H
 
 # include "error.h"
 
@@ -44,4 +44,4 @@ t_env_entry	str_to_env_entry(const char *str);
 t_bool		is_valid_env(char c);
 t_bool		is_all_valid_env(char *str);
 
-#endif // ENV_H
+#endif // ENVIRONMENT_H

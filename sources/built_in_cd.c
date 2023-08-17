@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   built_in_cd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 12:31:07 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/08/17 17:58:58 by sotanaka         ###   ########.fr       */
+/*   Updated: 2023/08/17 18:36:14 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtin.h"
-#include "env.h"
+#include "environment.h"
 
 static int	cd_check_path(t_dexec *dexec)
 {
