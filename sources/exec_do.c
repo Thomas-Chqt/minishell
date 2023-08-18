@@ -6,7 +6,7 @@
 /*   By: hotph <hotph@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/30 13:32:49 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/08/18 11:43:53 by hotph            ###   ########.fr       */
+/*   Updated: 2023/08/18 15:12:55 by hotph            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ int	exec_do(t_dexec *dexec, t_ast *node, int flag)
 	status = 0;
 	if (dexec->flag_builtin > 0)
 	{
-		pid = is_builtin(dexec);
+		pid = is_builtin(dexec, node);
 		if (pid == -1)
 			return (1);
 	}

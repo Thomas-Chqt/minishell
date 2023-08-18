@@ -6,13 +6,13 @@
 /*   By: hotph <hotph@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 15:00:18 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/08/18 11:59:53 by hotph            ###   ########.fr       */
+/*   Updated: 2023/08/18 15:13:54 by hotph            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtin.h"
 
-int	is_builtin(t_dexec *dexec)
+int	is_builtin(t_dexec *dexec, t_ast *node)
 {
 	if (dexec->flag_builtin == BUILTIN_ECHO)
 		return (built_in_echo(dexec));
@@ -26,8 +26,8 @@ int	is_builtin(t_dexec *dexec)
 	// 	return (built_in_unset(dexec));
 	// if (dexec->flag_builtin == BUILTIN_ENV)
 	// 	return (built_in_env(dexec));
-	// if (dexec->flag_builtin == BUILTIN_EXIT)
-	// 	return (built_in_exit(dexec));
+	if (dexec->flag_builtin == BUILTIN_EXIT)
+		return (built_in_exit(dexec, node));
 	return (0);
 }
 

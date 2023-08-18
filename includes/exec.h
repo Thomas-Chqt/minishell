@@ -6,7 +6,7 @@
 /*   By: hotph <hotph@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/06 21:58:21 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/18 11:08:12 by hotph            ###   ########.fr       */
+/*   Updated: 2023/08/18 15:16:13 by hotph            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ int		check_cmdpath_hub(t_dexec *dexec, char *prog);
 char	*get_cmd_path(t_ast *node);
 char	*get_cmd_prog(t_ast *node);
 char	**get_argv(t_ast *node);
+int		get_argc(t_ast *node);
 //do
 int		exec_do(t_dexec *dexec, t_ast *node, int flag);
 //do utils
