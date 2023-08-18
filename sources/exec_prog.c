@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_prog.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hotph <hotph@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/13 15:01:43 by hotph             #+#    #+#             */
-/*   Updated: 2023/08/17 19:41:22 by sotanaka         ###   ########.fr       */
+/*   Updated: 2023/08/18 11:23:12 by hotph            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,7 @@ int	path_is_builtin(char *path, char *prog, t_dexec *dexec)
 	if (path != NULL)
 		return (1);
 	if (str_cmp("echo", prog) == 0)
-		ft_putstr_fd("Oh, waiting built in echo....below is STDFUNC\n", 2);
-	// 	dexec->flag_builtin = BUILTIN_ECHO;
+		dexec->flag_builtin = BUILTIN_ECHO;
 	if (str_cmp("cd", prog) == 0)
 		dexec->flag_builtin = BUILTIN_CD;
 	if (str_cmp("pwd", prog) == 0)

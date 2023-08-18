@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hotph <hotph@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/06 21:58:21 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/17 16:25:19 by sotanaka         ###   ########.fr       */
+/*   Updated: 2023/08/18 11:08:12 by hotph            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,12 +56,12 @@ typedef struct s_intr
 //-------prototype-------
 //redirect
 int		scan_btree_io(t_dexec *dexec, t_ast *node);
-//cmd
+//prog
 int		scan_path_prog(t_dexec *dexec, t_ast *node);
-//cmd util1
+//prog util1
 int		directory_is(char *path);
 int		path_is_envp(char *cmd, t_dexec *dexec);
-//cmd util2
+//prog util2
 int		ft_access_wrap(char *path, int flag);
 int		ft_stat_wrap(char *path, int flag);
 int		check_cmdpath(char *cmd_path, int flag);
@@ -71,7 +71,9 @@ char	*get_cmd_path(t_ast *node);
 char	*get_cmd_prog(t_ast *node);
 char	**get_argv(t_ast *node);
 //do
-int		fd_close(int fd_in, int fd_out);
 int		exec_do(t_dexec *dexec, t_ast *node, int flag);
+//do utils
+int		fd_close(int fd_in, int fd_out);
+int		set_redirect(t_dexec *dexec);
 
 #endif
