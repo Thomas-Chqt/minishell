@@ -6,7 +6,7 @@
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 18:31:32 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/18 16:10:08 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/18 20:16:36 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 # include "minishell.h"
 
 # define SYNTAX_ERROR 258
+# define INPUT_ERROR 1
+# define NO_SUCH_FILE_DIR 127
 
 # define MALLOC_ERROR 1111
 # define PARSING_ERROR 2222

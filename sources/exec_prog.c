@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_prog.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hotph <hotph@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/13 15:01:43 by hotph             #+#    #+#             */
-/*   Updated: 2023/08/18 11:23:12 by hotph            ###   ########.fr       */
+/*   Updated: 2023/08/18 20:28:14 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,7 @@ int	path_is_builtin(char *path, char *prog, t_dexec *dexec)
 		ft_putstr_fd("Oh, waiting built in unset....below is STDFUNC\n", 2);
 		// dexec->flag_builtin = BUILTIN_UNSET;
 	if (str_cmp("env", prog) == 0)
-		ft_putstr_fd("Oh, waiting built in env....below is STDFUNC\n", 2);
-	// 	dexec->flag_builtin = BUILTIN_ENV;
+		dexec->flag_builtin = BUILTIN_ENV;
 	if (dexec->flag_builtin == -1)
 		return (1);
 	else

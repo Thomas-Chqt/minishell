@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_do_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hotph <hotph@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 15:00:18 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/08/18 11:59:53 by hotph            ###   ########.fr       */
+/*   Updated: 2023/08/18 20:29:28 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ int	is_builtin(t_dexec *dexec)
 	// 	return (built_in_export(dexec));
 	// if (dexec->flag_builtin == BUILTIN_UNSET)
 	// 	return (built_in_unset(dexec));
-	// if (dexec->flag_builtin == BUILTIN_ENV)
-	// 	return (built_in_env(dexec));
+	if (dexec->flag_builtin == BUILTIN_ENV)
+		return (built_in_env(arrstr_len(dexec->cmd_opts), dexec->cmd_opts));
 	// if (dexec->flag_builtin == BUILTIN_EXIT)
 	// 	return (built_in_exit(dexec));
 	return (0);
