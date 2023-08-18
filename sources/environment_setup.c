@@ -1,35 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env_analize.c                                      :+:      :+:    :+:   */
+/*   environment_setup.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/10 17:24:55 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/17 18:36:14 by tchoquet         ###   ########.fr       */
+/*   Created: 2023/08/18 16:40:53 by tchoquet          #+#    #+#             */
+/*   Updated: 2023/08/18 17:04:29 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "environment.h"
 
-t_bool	is_valid_env(char c)
-{
-	return (
-		ft_isalpha(c)
-		|| c == '_'
-	);
-}
+void	lstenv_clear(void);
 
-t_bool	is_all_valid_env(char *str)
+int	init_env(char *envp[])
 {
 	t_uint64	i;
 
 	i = 0;
-	while (str[i] != '\0')
+	while (envp[i] != NULL)
 	{
-		if (is_valid_env(str[i]) == false)
-			return (false);
+		if (set_env_single_str(envp[i], true) != 0)
+		{
+			clear_env();
+			return (MALLOC_ERROR);
+		}
 		i++;
 	}
-	return (true);
+	return (0);
+}
+
+void	clear_env(void)
+{
+	lstenv_clear();
 }

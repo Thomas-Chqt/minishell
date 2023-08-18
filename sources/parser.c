@@ -6,11 +6,13 @@
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 20:24:15 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/17 17:37:19 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/18 17:16:56 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
+#include "environment.h"
+#include "expander.h"
 
 t_ast	*make_ast(t_toklist *toklist)
 {

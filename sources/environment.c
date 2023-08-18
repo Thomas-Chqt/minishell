@@ -6,73 +6,87 @@
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 19:59:47 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/17 19:22:06 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/18 17:24:16 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "environment.h"
 
-int	init_env(char *envp[])
-{
-	t_uint64	i;
+t_env_list	*lstenv_new(char *key, char *val, t_bool is_export);
+t_env_list	*lstenv_new_single_str(const char *keyval, t_bool is_export);
+t_env_list	*lstenv_chr(const char *key, t_bool create);
+void		lstenv_add_back(t_env_list	*new_node);
 
-	i = 0;
-	while (envp[i] != NULL)
-	{
-		if (set_env_single_str(envp[i], true) != 0)
-		{
-			clean_env();
-			return (MALLOC_ERROR);
-		}
-		i++;
-	}
-	set_last_error(0);
+t_env_list	**get_lstenv(void);
+char		*env_entry_to_str(t_env_entry entry);
+t_env_entry	str_to_env_entry(const char *str);
+
+t_bool		is_valid_env_key(const char *str);
+
+int	set_env(const char *key, const char *val, t_bool export)
+{
+	t_env_list	*founded;
+
+	if (is_valid_env_key(key) == false)
+		return (BAD_ENVIRONMENT_KEY);
+	founded = lstenv_chr(key, true);
+	if (founded == NULL)
+		return (MALLOC_ERROR);
+	founded->data->value = ft_strdup(val);
+	if (val != NULL && founded->data->value == NULL)
+		return (MALLOC_ERROR);
+	if (export == true)
+		founded->data->is_export = true;
 	return (0);
 }
 
-int	set_env(const char *key, const char *val, t_bool exported)
+int	set_env_single_str(const char *keyval, t_bool export)
 {
+	t_env_entry	input;
+	t_env_list	*founded;
 
-}
-
-int	set_env_single_str(const char *keyval, t_bool exported)
-{
-	t_env_list	*found;
-	t_env_list	*new_node;
-
-	new_node = lst_env_new(keyval, exported);
-	if (new_node != NULL)
+	if (is_valid_env_key(keyval) == false)
+		return (BAD_ENVIRONMENT_KEY);
+	input = str_to_env_entry(keyval);
+	if (input.key == NULL)
+		return (MALLOC_ERROR);
+	founded = lstenv_chr(input.key, true);
+	free(input.key);
+	if (founded == NULL)
 	{
-		found = (t_env_list *)lst_chr(*((t_list **)get_lstenv()),
-				&is_env_key_equal, new_node->data->key);
-		if (found == NULL)
-		{
-			ft_lstadd_back((t_list **)get_lstenv(), (t_list *)new_node);
-			return (0);
-		}
-		free(found->data->key);
-		free(found->data->value);
-		free(found->data);
-		found->data = new_node->data;
-		free(new_node);
-		return (0);
+		free(input.value);
+		return (MALLOC_ERROR);
 	}
-	return (MALLOC_ERROR);
+	founded->data->value = input.value;
+	if (export == true)
+		founded->data->is_export = true;
+	return (0);
 }
 
-char	*get_env(const char *key)
+char	*get_env(const char *key, int *error_code)
 {
-	t_env_list	*found;
+	t_env_list	*founded;
 	char		*str;
 
-	if (key == NULL)
+	if (is_valid_env_key(key) == false)
+	{
+		if (error_code != NULL)
+			*error_code = BAD_ENVIRONMENT_KEY;
 		return (NULL);
-	found = (t_env_list *)lst_chr((t_list *)*(get_lstenv()),
-			&is_env_key_equal, (void *)key);
-	if (found == NULL)
+	}
+	founded = lstenv_chr(key, false);
+	if (founded == NULL)
+	{
+		if (error_code != NULL)
+			*error_code = 0;
 		return (NULL);
-	str = ft_strdup(found->data->value);
-	return (str);
+	}
+	str = ft_strdup(founded->data->value);
+	if (str != NULL)
+		return (str);
+	if (error_code != NULL)
+		*error_code = MALLOC_ERROR;
+	return (NULL);
 }
 
 char	**get_envp(void)
@@ -88,7 +102,7 @@ char	**get_envp(void)
 	i = 0;
 	while (current != NULL)
 	{
-		if (current->data->is_export == true)
+		if (current->data->is_export == true && current->data->value != NULL)
 		{
 			envp[i] = env_entry_to_str(*current->data);
 			if (envp[i] == NULL)
@@ -101,4 +115,17 @@ char	**get_envp(void)
 		current = current->next;
 	}
 	return (envp);
+}
+
+int	export_env(const char *key)
+{
+	t_env_list	*founded;
+
+	if (is_valid_env_key(key) == false)
+		return (BAD_ENVIRONMENT_KEY);
+	founded = lstenv_chr(key, true);
+	if (founded == NULL)
+		return (MALLOC_ERROR);
+	founded->data->is_export = true;
+	return (0);
 }

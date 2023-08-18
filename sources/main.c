@@ -6,12 +6,14 @@
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 20:57:27 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/17 16:18:17 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/18 17:16:26 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "signals.h"
+
+#include "environment.h"
 
 #ifdef MEMCHECK
 
@@ -39,6 +41,6 @@ int	main(int argc, char *argv[], char *envp[])
 		return (MALLOC_ERROR);
 	minishell_loop();
 	ft_printf("exit\n");
-	clean_env();
+	clear_env();
 	return (0);
 }

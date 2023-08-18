@@ -6,7 +6,7 @@
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 12:31:07 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/08/17 18:59:48 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/18 17:10:52 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ static int	cd_do_nonfork_or_child(char *path, int flag_pipe)
 	status = 0;
 	if (path == NULL)
 	{
-		path = get_env("HOME");
+		path = get_env("HOME", NULL);
 		if (chdir(path) != 0)
 			status = perror_wrap("minishell: cd: ", 1);
 		free(path);

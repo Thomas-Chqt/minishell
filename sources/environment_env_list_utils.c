@@ -6,7 +6,7 @@
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/05 17:27:31 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/17 19:18:43 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/18 17:03:51 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,16 +31,18 @@ t_bool	is_env_key_equal(void *v_entry, void *v_key)
 
 char	*env_entry_to_str(t_env_entry entry)
 {
-	char	*temp_str;
 	char	*output;
+	size_t	output_len;
 
-	if (entry.value == NULL || entry.key == NULL)
-		return (ft_strdup(entry.key));
-	temp_str = ft_strjoin(entry.key, "=");
-	if (temp_str == NULL)
+	output_len = ft_strlen(entry.key) + ft_strlen(entry.value);
+	output_len += (entry.key != NULL && entry.value != NULL);
+	output = ft_calloc(output_len + 1, sizeof(char));
+	if (output == NULL)
 		return (NULL);
-	output = ft_strjoin(temp_str, entry.value);
-	free(temp_str);
+	ft_strlcat(output, entry.key, output_len + 1);
+	if (entry.key != NULL && entry.value != NULL)
+		ft_strlcat(output, "=", output_len + 1);
+	ft_strlcat(output, entry.value, output_len + 1);
 	return (output);
 }
 
@@ -48,16 +50,19 @@ t_env_entry	str_to_env_entry(const char *str)
 {
 	char	*key;
 	char	*val;
+	char	*equal_pos;
 
-	if (str == NULL || ft_strchr(str, '=') == NULL)
+	equal_pos = ft_strchr(str, '=');
+	if (equal_pos == NULL)
 		return ((t_env_entry){.key = ft_strdup(str), .value = NULL});
-	if (str[0] == '=')
-		return ((t_env_entry){.key = NULL, .value = NULL});
-	key = ft_substr(str, 0, ft_strchr(str, '=') - str);
+	key = ft_substr(str, 0, equal_pos - str);
 	if (key == NULL)
 		return ((t_env_entry){.key = NULL, .value = NULL});
-	val = ft_strdup(ft_strchr(str, '=') + 1);
+	val = ft_strdup(equal_pos + 1);
 	if (val == NULL)
-		free_null((void *)&key);
+	{
+		free(key);
+		return ((t_env_entry){.key = NULL, .value = NULL});
+	}
 	return ((t_env_entry){.key = key, .value = val});
 }

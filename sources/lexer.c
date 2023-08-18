@@ -6,11 +6,12 @@
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 15:12:11 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/17 16:23:21 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/18 13:27:42 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
+#include "environment.h"
 
 t_toklist	*make_toklist(const char *cmd)
 {

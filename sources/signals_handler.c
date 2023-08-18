@@ -6,11 +6,12 @@
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 23:03:15 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/17 14:17:48 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/18 13:28:44 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "signals.h"
+#include "environment.h"
 
 void	sigint_handler_new_line(int sig)
 {
