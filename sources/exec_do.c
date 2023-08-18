@@ -6,7 +6,7 @@
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/30 13:32:49 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/08/17 22:32:24 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/18 12:51:43 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,30 +27,6 @@ static int	do_cmd(char *cmd_path, char **cmd_opts, char **envp)
 				(char *[2]){cmd_path, strerror(errno)}, 0);
 	}
 	return (1);
-}
-
-static int	set_redirect(t_dexec *dexec)
-{
-	if (dexec->fd_in != STDIN_FILENO)
-	{
-		if (dup2(dexec->fd_in, STDIN_FILENO) == -1)
-			return (perror_wrap("set_redirect dup2", 1));
-		if (close(dexec->fd_in) == -1)
-			return (perror_wrap("set_redirect close", 1));
-	}
-	if (dexec->fd_out != STDOUT_FILENO)
-	{
-		if (dup2(dexec->fd_out, STDOUT_FILENO) == -1)
-			return (perror_wrap("set_redirect dup2", 1));
-		if (close(dexec->fd_out) == -1)
-			return (perror_wrap("set_redirect close1", 1));
-		if (dexec->flag_pipe_close == 1)
-		{
-			if (close(dexec->pipe[0]) == -1)
-				return (perror_wrap("set_redirect close2", 1));
-		}
-	}
-	return (0);
 }
 
 static void	at_child(t_dexec *dexec, t_ast *node)
