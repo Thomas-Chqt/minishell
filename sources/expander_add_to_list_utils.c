@@ -1,15 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   expander_substitute.c                              :+:      :+:    :+:   */
+/*   expander_add_to_list_utils.c                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/18 22:21:14 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/18 22:35:38 by tchoquet         ###   ########.fr       */
+/*   Created: 2023/08/19 15:38:06 by tchoquet          #+#    #+#             */
+/*   Updated: 2023/08/19 15:38:41 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "expander.h"
 
-int	add_substitued(char	*str, )
+t_bool	is_end_nomal_token(char c)
+{
+	return (
+		c == '\''
+		|| c == '\"'
+		|| c == '$'
+		|| c == '\0'
+	);
+}

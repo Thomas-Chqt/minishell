@@ -6,22 +6,20 @@
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 19:59:47 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/18 17:24:16 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/19 17:32:35 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "environment.h"
 
-t_env_list	*lstenv_new(char *key, char *val, t_bool is_export);
-t_env_list	*lstenv_new_single_str(const char *keyval, t_bool is_export);
 t_env_list	*lstenv_chr(const char *key, t_bool create);
-void		lstenv_add_back(t_env_list	*new_node);
 
 t_env_list	**get_lstenv(void);
 char		*env_entry_to_str(t_env_entry entry);
-t_env_entry	str_to_env_entry(const char *str);
 
 t_bool		is_valid_env_key(const char *str);
+int			analize_keyval(const char *keyval, t_env_entry *result);
+char		*set_error_return(int *error, int value);
 
 int	set_env(const char *key, const char *val, t_bool export)
 {
@@ -44,12 +42,11 @@ int	set_env_single_str(const char *keyval, t_bool export)
 {
 	t_env_entry	input;
 	t_env_list	*founded;
-
-	if (is_valid_env_key(keyval) == false)
-		return (BAD_ENVIRONMENT_KEY);
-	input = str_to_env_entry(keyval);
-	if (input.key == NULL)
-		return (MALLOC_ERROR);
+	int			temp_ret;
+	
+	temp_ret = analize_keyval(keyval, &input);
+	if (temp_ret != 0)
+		return (temp_ret);
 	founded = lstenv_chr(input.key, true);
 	free(input.key);
 	if (founded == NULL)
@@ -69,24 +66,14 @@ char	*get_env(const char *key, int *error_code)
 	char		*str;
 
 	if (is_valid_env_key(key) == false)
-	{
-		if (error_code != NULL)
-			*error_code = BAD_ENVIRONMENT_KEY;
-		return (NULL);
-	}
+		return (set_error_return(error_code, BAD_ENVIRONMENT_KEY));
 	founded = lstenv_chr(key, false);
 	if (founded == NULL)
-	{
-		if (error_code != NULL)
-			*error_code = 0;
-		return (NULL);
-	}
+		return (set_error_return(error_code, 0));
 	str = ft_strdup(founded->data->value);
 	if (str != NULL)
 		return (str);
-	if (error_code != NULL)
-		*error_code = MALLOC_ERROR;
-	return (NULL);
+	return (set_error_return(error_code, MALLOC_ERROR));
 }
 
 char	**get_envp(void)
