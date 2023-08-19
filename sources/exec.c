@@ -6,13 +6,13 @@
 /*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 18:17:56 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/08/17 18:27:09 by sotanaka         ###   ########.fr       */
+/*   Updated: 2023/08/19 14:05:12 by sotanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 
-void	init_dexec(int fd_in, int fd_out, t_dexec *dexec, t_intr *intr)
+static void	init_dexec(int fd_in, int fd_out, t_dexec *dexec, t_intr *intr)
 {
 	dexec->matrix_envpath = NULL;
 	dexec->cmd_path = NULL;
@@ -25,7 +25,7 @@ void	init_dexec(int fd_in, int fd_out, t_dexec *dexec, t_intr *intr)
 	dexec->flag_builtin = -1;
 }
 
-int	cmd_only_redirection(t_dexec *dexec, int status)
+static int	cmd_only_redirection(t_dexec *dexec, int status)
 {
 	if (fd_close(dexec->fd_in, dexec->fd_out) != 0)
 		return (perror_wrap("scan cmd fd_close", 1));
