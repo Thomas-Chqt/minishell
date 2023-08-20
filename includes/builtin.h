@@ -6,7 +6,7 @@
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 13:23:23 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/08/18 20:28:54 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/20 18:26:49 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,11 @@
 //-------prototype-------
 int		built_in_echo(t_dexec *dexec);
 int		built_in_cd(t_dexec *dexec);
-// int		built_in_pwd(void);
+int		built_in_pwd(t_dexec *dexec);
 // int		built_in_export(t_dexec *dexec);
 // int		built_in_unset(t_dexec *dexec);
 int		built_in_env(int argc, char *argv[]);
-// int		built_in_exit(t_dexec *dexec);
-int		is_builtin(t_dexec *dexec);
+int		built_in_exit(t_dexec *dexec, t_ast *node);
+int		is_builtin(t_dexec *dexec, t_ast *node);
 
 #endif

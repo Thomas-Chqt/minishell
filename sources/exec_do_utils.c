@@ -6,28 +6,28 @@
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 15:00:18 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/08/18 20:29:28 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/20 18:15:12 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtin.h"
 
-int	is_builtin(t_dexec *dexec)
+int	is_builtin(t_dexec *dexec, t_ast *node)
 {
 	if (dexec->flag_builtin == BUILTIN_ECHO)
 		return (built_in_echo(dexec));
 	if (dexec->flag_builtin == BUILTIN_CD)
 		return (built_in_cd(dexec));
-	// if (dexec->flag_builtin == BUILTIN_PWD)
-	// 	return (built_in_pwd());
+	if (dexec->flag_builtin == BUILTIN_PWD)
+		return (built_in_pwd(dexec));
 	// if (dexec->flag_builtin == BUILTIN_EXPORT)
 	// 	return (built_in_export(dexec));
 	// if (dexec->flag_builtin == BUILTIN_UNSET)
 	// 	return (built_in_unset(dexec));
 	if (dexec->flag_builtin == BUILTIN_ENV)
 		return (built_in_env(arrstr_len(dexec->cmd_opts), dexec->cmd_opts));
-	// if (dexec->flag_builtin == BUILTIN_EXIT)
-	// 	return (built_in_exit(dexec));
+	if (dexec->flag_builtin == BUILTIN_EXIT)
+		return (built_in_exit(dexec, node));
 	return (0);
 }
 

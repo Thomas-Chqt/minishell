@@ -6,7 +6,7 @@
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/30 13:32:49 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/08/18 12:51:43 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/20 18:16:00 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ int	exec_do(t_dexec *dexec, t_ast *node, int flag)
 	status = 0;
 	if (dexec->flag_builtin > 0)
 	{
-		pid = is_builtin(dexec);
+		pid = is_builtin(dexec, node);
 		if (pid == -1)
 			return (1);
 	}
