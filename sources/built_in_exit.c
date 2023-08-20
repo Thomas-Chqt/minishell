@@ -6,7 +6,7 @@
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/18 14:38:58 by hotph             #+#    #+#             */
-/*   Updated: 2023/08/20 18:25:52 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/20 18:56:56 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ static int	exit_do_nonfork_or_child(t_dexec *dexec, t_ast *node)
 	else
 	{
 		if (status == 0 && dexec->cmd_opts[1] == NULL)
-			exit (get_last_error()); 
+			exit (get_last_error());
 		else if (status == 0)
 			exit ((t_uint8)ft_atoi(dexec->cmd_opts[1]));
 		else if (status == 2)

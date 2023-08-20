@@ -6,7 +6,7 @@
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/19 13:33:02 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/20 15:28:24 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/20 18:50:45 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,11 +115,9 @@ int	exp_lstadd_normal(char *str, t_uint64 *i, t_str_list **list)
 	size_t		token_len;
 	t_str_list	*new_node;
 
-	token_len = 0;
+	token_len = 1;
 	while (is_end_nomal_token((str + (*i))[token_len]) == false)
 		token_len++;
-	if (token_len == 0)
-		return (PARSING_ERROR);
 	new_node = (t_str_list *)ft_lstnew(NULL);
 	if (new_node != NULL)
 	{
