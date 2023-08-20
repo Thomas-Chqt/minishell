@@ -6,7 +6,7 @@
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 19:59:47 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/19 17:32:35 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/20 17:16:21 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	set_env_single_str(const char *keyval, t_bool export)
 	t_env_entry	input;
 	t_env_list	*founded;
 	int			temp_ret;
-	
+
 	temp_ret = analize_keyval(keyval, &input);
 	if (temp_ret != 0)
 		return (temp_ret);
@@ -54,6 +54,7 @@ int	set_env_single_str(const char *keyval, t_bool export)
 		free(input.value);
 		return (MALLOC_ERROR);
 	}
+	free(founded->data->value);
 	founded->data->value = input.value;
 	if (export == true)
 		founded->data->is_export = true;
@@ -65,13 +66,15 @@ char	*get_env(const char *key, int *error_code)
 	t_env_list	*founded;
 	char		*str;
 
+	if (error_code != NULL)
+		*error_code = 0;
 	if (is_valid_env_key(key) == false)
 		return (set_error_return(error_code, BAD_ENVIRONMENT_KEY));
 	founded = lstenv_chr(key, false);
 	if (founded == NULL)
 		return (set_error_return(error_code, 0));
 	str = ft_strdup(founded->data->value);
-	if (str != NULL)
+	if (founded->data->value == NULL || str != NULL)
 		return (str);
 	return (set_error_return(error_code, MALLOC_ERROR));
 }

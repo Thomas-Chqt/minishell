@@ -6,7 +6,7 @@
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 18:55:31 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/18 17:21:23 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/20 16:23:52 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ t_env_list	*lstenv_chr(const char *key, t_bool create)
 	char		*duped_key;
 
 	founded = (t_env_list *)lst_chr(*((t_list **)get_lstenv()),
-		&is_env_key_equal, (void *)key);
+			&is_env_key_equal, (void *)key);
 	if (create == false || founded != NULL)
 		return (founded);
 	duped_key = ft_strdup(key);

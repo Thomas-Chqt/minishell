@@ -6,13 +6,13 @@
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/19 16:08:40 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/19 18:12:47 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/20 13:49:42 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "expander.h"
 
-static int	substitute_str(char *dest, char *src, size_t len);
+static int	substitute_str(char **dest, char *src, size_t len);
 
 int	add_substitued(char *str, size_t len, t_str_list **list)
 {
@@ -22,7 +22,7 @@ int	add_substitued(char *str, size_t len, t_str_list **list)
 	new_node = (t_str_list *)ft_lstnew(NULL);
 	if (new_node == NULL)
 		return (MALLOC_ERROR);
-	temp_ret = substitute_str(new_node->str, str, len);
+	temp_ret = substitute_str(&new_node->str, str, len);
 	if (temp_ret != 0)
 	{
 		free(new_node);
@@ -32,7 +32,7 @@ int	add_substitued(char *str, size_t len, t_str_list **list)
 	return (0);
 }
 
-static int	substitute_str(char *dest, char *src, size_t len)
+static int	substitute_str(char **dest, char *src, size_t len)
 {
 	int		error;
 	char	*subed_str;
@@ -40,10 +40,13 @@ static int	substitute_str(char *dest, char *src, size_t len)
 	subed_str = ft_substr(src, 0, len);
 	if (subed_str == NULL)
 		return (MALLOC_ERROR);
-	dest = get_env_create(subed_str, &error);
-	if (dest == NULL && error == 0)
-		dest = ft_strdup("");
-	if (dest == NULL && error == 0)
+	if (ft_strchr(subed_str, '=') == NULL)
+		*dest = get_env(subed_str, &error);
+	else
+		*dest = get_env_create(subed_str, &error);
+	if (*dest == NULL && error == 0)
+		*dest = ft_strdup("");
+	if (*dest == NULL && error == 0)
 		error = MALLOC_ERROR;
 	free(subed_str);
 	return (error);

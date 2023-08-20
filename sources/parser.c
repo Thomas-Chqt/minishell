@@ -6,7 +6,7 @@
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 20:24:15 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/18 17:16:56 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/20 16:38:25 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,6 @@ t_ast	*parse_cmd(const char *cmd)
 			ft_lstclear((t_list **)&token_list, NULL);
 			if (expand_ast(ast) == 0)
 				return (ast);
-			set_last_error(1);
 			clean_ast(ast);
 		}
 		else
