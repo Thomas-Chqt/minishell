@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   external_functions.h                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 22:54:17 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/17 18:26:43 by sotanaka         ###   ########.fr       */
+/*   Updated: 2023/08/20 14:43:57 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	add_history(const char *str);
 void	*malloc(size_t size);
 void	free(void *ptr);
 
-// write
+long	write(int fildes, const void *buf, size_t nbyte);
 
 int		access(const char *path, int permision);
 
@@ -106,7 +106,7 @@ void	perror(const char *s);
 // ttyslot
 // ioctl,
 
-char	*getenv(const char *name);
+// char	*getenv(const char *name);
 
 // tcsetattr
 // tcgetattr

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 13:23:23 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/08/19 14:01:19 by sotanaka         ###   ########.fr       */
+/*   Updated: 2023/08/20 18:26:49 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 //-------include-------
 # include "exec.h"
-# include "env.h"
+# include "environment.h"
 
 //-------define-------
 # define BUILTIN_ECHO 1
@@ -32,7 +32,7 @@ int		built_in_cd(t_dexec *dexec);
 int		built_in_pwd(t_dexec *dexec);
 // int		built_in_export(t_dexec *dexec);
 // int		built_in_unset(t_dexec *dexec);
-// int		built_in_env(t_dexec *dexec);
+int		built_in_env(int argc, char *argv[]);
 int		built_in_exit(t_dexec *dexec, t_ast *node);
 int		is_builtin(t_dexec *dexec, t_ast *node);
 

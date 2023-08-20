@@ -5,13 +5,14 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/30 13:32:49 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/08/20 18:44:07 by sotanaka         ###   ########.fr       */
+/*   Created: Invalid date        by                   #+#    #+#             */
+/*   Updated: 2023/08/20 19:11:03 by sotanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+
 #include "exec.h"
-#include "env.h"
+#include "environment.h"
 #include "builtin.h"
 
 static int	is_standard(char *cmd_path, char **cmd_opts, char **envp)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_in_exit.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/18 14:38:58 by hotph             #+#    #+#             */
-/*   Updated: 2023/08/19 15:33:38 by sotanaka         ###   ########.fr       */
+/*   Updated: 2023/08/20 18:56:56 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static int	check_arg(char *str, int argc)
 
 static void	exit_parent(int status, t_ast *ast, t_dexec *dexec)
 {
-	clean_env();
+	clear_env();
 	clean_ast(ast);
 	free(dexec->cmd_path);
 	free(dexec->cmd_opts);
@@ -69,7 +69,7 @@ static int	exit_do_nonfork_or_child(t_dexec *dexec, t_ast *node)
 	else
 	{
 		if (status == 0 && dexec->cmd_opts[1] == NULL)
-			exit (get_last_error()); 
+			exit (get_last_error());
 		else if (status == 0)
 			exit ((t_uint8)ft_atoi(dexec->cmd_opts[1]));
 		else if (status == 2)

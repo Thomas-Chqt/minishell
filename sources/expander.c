@@ -6,85 +6,80 @@
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 21:31:43 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/14 13:55:23 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/20 16:42:14 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "expander.h"
 
-static char	*join_lst(t_exp_toklst *list);
+static int	expand_string(char **str_ptr);
+static char	*join_lst(t_str_list *list);
 
 int	expand_ast(t_ast *ast)
 {
+	int	temp_ret;
+
 	if (ast == NULL)
 		return (0);
 	if (ast->data != NULL && ast->data->type == TEXT)
 	{
-		if (expand_string(&ast->data->data) != 0)
-			return (1);
+		temp_ret = expand_string(&ast->data->data);
+		if (temp_ret != 0)
+		{
+			if (temp_ret == BAD_SUBSTITUTION)
+				set_last_error(1);
+			else
+				set_last_error(temp_ret);
+			return (temp_ret);
+		}
 	}
-	if (expand_ast(ast->right) != 0)
-		return (1);
-	if (expand_ast(ast->left) != 0)
-		return (1);
+	temp_ret = expand_ast(ast->right);
+	if (temp_ret != 0)
+		return (temp_ret);
+	temp_ret = expand_ast(ast->left);
+	if (temp_ret != 0)
+		return (temp_ret);
 	return (0);
 }
 
-int	expand_string(char **str_ptr)
+static int	expand_string(char **str_ptr)
 {
-	t_exp_toklst	*token_list;
-	int				return_val;
+	t_str_list	*str_list;
+	t_uint64	i;
+	int			temp_ret;
 
-	token_list = make_exp_toklst(*str_ptr);
-	if (token_list == NULL)
-		return (MALLOC_ERROR);
-	return_val = substitute_toklist(token_list);
-	if (return_val == 0)
+	str_list = NULL;
+	i = 0;
+	while ((*str_ptr)[i] != '\0')
 	{
-		free(*str_ptr);
-		*str_ptr = join_lst(token_list);
-		free_exp_toklst(&token_list);
-		if (*str_ptr == NULL)
-			return (MALLOC_ERROR);
-		return (0);
+		temp_ret = add_next_str(*str_ptr, &i, &str_list, false);
+		if (temp_ret != 0)
+			break ;
 	}
-	free_exp_toklst(&token_list);
-	return (return_val);
+	if ((*str_ptr)[i] != '\0')
+	{
+		ft_lstclear((t_list **)&str_list, &free_wrap);
+		return (temp_ret);
+	}
+	free(*str_ptr);
+	*str_ptr = join_lst(str_list);
+	ft_lstclear((t_list **)&str_list, &free_wrap);
+	if (*str_ptr == NULL)
+		return (MALLOC_ERROR);
+	return (0);
 }
 
-int	expand_dquote_string(char **str_ptr)
+static char	*join_lst(t_str_list *list)
 {
-	t_exp_toklst	*token_list;
-	int				return_val;
-
-	token_list = make_exp_toklst_no_quote(*str_ptr);
-	if (token_list == NULL)
-		return (MALLOC_ERROR);
-	return_val = substitute_toklist_no_print(token_list);
-	if (return_val == 0)
-	{
-		free(*str_ptr);
-		*str_ptr = join_lst(token_list);
-		free_exp_toklst(&token_list);
-		if (*str_ptr == NULL)
-			return (MALLOC_ERROR);
-		return (0);
-	}
-	free_exp_toklst(&token_list);
-	return (return_val);
-}
-
-static char	*join_lst(t_exp_toklst *list)
-{
-	t_uint64		str_len;
-	char			*str;
-	t_exp_toklst	*watched;
+	t_uint64	str_len;
+	char		*str;
+	t_str_list	*watched;
 
 	str_len = 0;
 	watched = list;
 	while (watched != NULL)
 	{
-		str_len += ft_strlen(watched->data->str);
+		str_len += ft_strlen(watched->str);
 		watched = watched->next;
 	}
 	str = ft_calloc(str_len + 1, sizeof(char));
@@ -93,7 +88,7 @@ static char	*join_lst(t_exp_toklst *list)
 	watched = list;
 	while (watched != NULL)
 	{
-		ft_strlcat(str, watched->data->str, str_len + 1);
+		ft_strlcat(str, watched->str, str_len + 1);
 		watched = watched->next;
 	}
 	return (str);

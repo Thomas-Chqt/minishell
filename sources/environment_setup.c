@@ -1,37 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signals_handler.c                                  :+:      :+:    :+:   */
+/*   environment_setup.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/16 23:03:15 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/18 13:28:44 by tchoquet         ###   ########.fr       */
+/*   Created: 2023/08/18 16:40:53 by tchoquet          #+#    #+#             */
+/*   Updated: 2023/08/19 18:28:43 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "signals.h"
 #include "environment.h"
 
-void	sigint_handler_new_line(int sig)
+void	lstenv_clear(void);
+
+int	init_env(char *envp[])
 {
-	set_last_error(1);
-	ft_putchar_fd('\n', STDOUT_FILENO);
-	ft_putstr_fd("✘ ", STDOUT_FILENO);
-	rl_on_new_line();
-	rl_replace_line("", 1);
-	rl_redisplay();
+	t_uint64	i;
+
+	i = 0;
+	while (envp[i] != NULL)
+	{
+		if (set_env_single_str(envp[i], true) == MALLOC_ERROR)
+		{
+			clear_env();
+			return (MALLOC_ERROR);
+		}
+		i++;
+	}
+	return (0);
 }
 
-void	sig_forwarding(int sig)
+void	clear_env(void)
 {
-	if (sig == SIGINT)
-		ft_putchar_fd('\n', STDOUT_FILENO);
-	if (sig == SIGQUIT)
-		ft_putstr_fd("Quit: 3\n", STDOUT_FILENO);
-}
-
-void	sigint_handler_exit(int sig)
-{
-	exit(1);
+	lstenv_clear();
 }
