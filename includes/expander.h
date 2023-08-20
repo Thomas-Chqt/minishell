@@ -6,61 +6,41 @@
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 21:29:07 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/14 14:04:16 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/20 17:02:53 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef EXPANDER_H
 # define EXPANDER_H
 
+# include "minishell.h"
+# include "error.h"
+# include "lexer.h"
 # include "parser.h"
-# include "env.h"
+# include "environment.h"
 
-typedef struct s_exp_token		t_exp_token;
-typedef enum e_tok_type			t_tok_type;
-typedef struct s_exp_toklist	t_exp_toklst;
+typedef struct s_str_list	t_str_list;
 
-enum e_tok_type
-{
-	normal,
-	substit,
-	dquote
-};
-
-struct s_exp_token
+struct s_str_list
 {
 	char		*str;
-	t_tok_type	type;
+	t_str_list	*next;
 };
 
-struct s_exp_toklist
-{
-	t_exp_token		*data;
-	t_exp_toklst	*next;
-};
+int		expand_ast(t_ast *ast);
 
-t_exp_toklst	*make_exp_toklst(char *str);
-t_exp_toklst	*make_exp_toklst_no_quote(char *str);
-void			free_exp_toklst(t_exp_toklst **lst);
-t_exp_toklst	*exp_toklst_new(char *str, t_uint64 len, t_tok_type type);
+int		exp_lstadd_quote(char *str, t_uint64 *i, t_str_list **list);
+int		exp_lstadd_dquote(char *str, t_uint64 *i, t_str_list **list);
+int		exp_lstadd_bracket(char *str, t_uint64 *i, t_str_list **list,
+			t_bool print);
+int		exp_lstadd_no_bracket(char *str, t_uint64 *i, t_str_list **list);
+int		exp_lstadd_last_error(char *str, t_uint64 *i, t_str_list **list);
+int		exp_lstadd_tilde(char *str, t_uint64 *i, t_str_list **list);
+int		exp_lstadd_normal(char *str, t_uint64 *i, t_str_list **list);
 
-int				exp_add_env(char *str, t_uint64 *i, t_exp_toklst **list);
-int				exp_add_dquote(char *str, t_uint64 *i, t_exp_toklst **list);
-int				exp_add_quote(char *str, t_uint64 *i, t_exp_toklst **list);
-int				exp_add_normal(char *str, t_uint64 *i, t_exp_toklst **list);
-int				exp_add_normal_no_quote(char *str, t_uint64 *i,
-					t_exp_toklst **list);
+t_bool	is_end_nomal_token(char c);
+int		add_next_str(char *str, t_uint64 *i, t_str_list **list, t_bool dquoted);
 
-int				exp_add_last_err(char *str, t_uint64 *i, t_exp_toklst **list);
-int				exp_add_env_brake(char *str, t_uint64 *i, t_exp_toklst **list);
-int				exp_add_env_no_brake(char *str, t_uint64 *i,
-					t_exp_toklst **list);
-
-int				substitute_toklist(t_exp_toklst *tok_lst);
-int				substitute_toklist_no_print(t_exp_toklst *tok_lst);
-int				substitute_token(t_exp_token *token);
-
-int				expand_string(char **str_ptr);
-int				expand_dquote_string(char **str_ptr);
+int		add_substitued(char *str, size_t len, t_str_list **list);
 
 #endif // EXPANDER_H

@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   built_in_cd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 12:31:07 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/08/17 17:58:58 by sotanaka         ###   ########.fr       */
+/*   Updated: 2023/08/20 17:15:53 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtin.h"
-#include "env.h"
+#include "environment.h"
 
 static int	cd_check_path(t_dexec *dexec)
 {
@@ -40,7 +40,7 @@ static int	set_env_pwd(void)
 	{
 		ft_strlcat(key_val, "PWD=", ft_strlen(cwd) + 5);
 		ft_strlcat(key_val, cwd, ft_strlen(cwd) + 5);
-		if (set_env(key_val, false) == 0)
+		if (set_env_single_str(key_val, false) == 0)
 		{
 			free(key_val);
 			free(cwd);
@@ -59,7 +59,7 @@ static int	cd_do_nonfork_or_child(char *path, int flag_pipe)
 	status = 0;
 	if (path == NULL)
 	{
-		path = get_env("HOME");
+		path = get_env("HOME", NULL);
 		if (chdir(path) != 0)
 			status = perror_wrap("minishell: cd: ", 1);
 		free(path);

@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   exec_do.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hotph <hotph@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/30 13:32:49 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/08/18 15:12:55 by hotph            ###   ########.fr       */
+/*   Updated: 2023/08/20 18:16:00 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
-#include "env.h"
+#include "environment.h"
 #include "builtin.h"
 
 static int	do_cmd(char *cmd_path, char **cmd_opts, char **envp)

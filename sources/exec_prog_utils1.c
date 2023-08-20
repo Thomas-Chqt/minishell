@@ -3,22 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   exec_prog_utils1.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 14:50:40 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/08/17 19:54:48 by sotanaka         ###   ########.fr       */
+/*   Updated: 2023/08/18 17:12:16 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
-#include "env.h"
+#include "environment.h"
 
 static char	**split_wrap(char **matrix, char token)
 {
 	size_t	i;
 	char	*tmp;
 
-	tmp = get_env("PATH");
+	tmp = get_env("PATH", NULL);
 	if (tmp == NULL)
 	{
 		print_error_msg("Error: 'PATH' not found", 1);

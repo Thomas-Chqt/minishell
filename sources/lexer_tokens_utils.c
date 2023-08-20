@@ -6,7 +6,7 @@
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 17:13:05 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/17 17:47:08 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/20 18:43:48 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static int	add_quote_sub_token_len(const char *cmd, size_t *len)
 	}
 	else if (cmd[*len] == '\"')
 	{
-		while (cmd[*len] != '\"' && cmd[*len] != '\0')
+		while (cmd[++(*len)] != '\"' && cmd[*len] != '\0')
 		{
 			temp_ret = add_bracket_sub_token_len(cmd, len);
 			if (temp_ret != 0)
