@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hotph <hotph@student.42.fr>                +#+  +:+       +#+        */
+/*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 13:23:23 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/08/18 11:21:01 by hotph            ###   ########.fr       */
+/*   Updated: 2023/08/19 14:01:19 by sotanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,11 @@
 //-------prototype-------
 int		built_in_echo(t_dexec *dexec);
 int		built_in_cd(t_dexec *dexec);
-// int		built_in_pwd(void);
+int		built_in_pwd(t_dexec *dexec);
 // int		built_in_export(t_dexec *dexec);
 // int		built_in_unset(t_dexec *dexec);
 // int		built_in_env(t_dexec *dexec);
-// int		built_in_exit(t_dexec *dexec);
-int		is_builtin(t_dexec *dexec);
+int		built_in_exit(t_dexec *dexec, t_ast *node);
+int		is_builtin(t_dexec *dexec, t_ast *node);
 
 #endif

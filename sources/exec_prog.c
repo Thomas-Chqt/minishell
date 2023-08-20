@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_prog.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hotph <hotph@student.42.fr>                +#+  +:+       +#+        */
+/*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/13 15:01:43 by hotph             #+#    #+#             */
-/*   Updated: 2023/08/18 11:23:12 by hotph            ###   ########.fr       */
+/*   Updated: 2023/08/19 13:53:29 by sotanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,7 @@ int	path_is_builtin(char *path, char *prog, t_dexec *dexec)
 	if (str_cmp("cd", prog) == 0)
 		dexec->flag_builtin = BUILTIN_CD;
 	if (str_cmp("pwd", prog) == 0)
-		ft_putstr_fd("Oh, waiting built in pwd....below is STDFUNC\n", 2);
-		// dexec->flag_builtin = BUILTIN_PWD;
+		dexec->flag_builtin = BUILTIN_PWD;
 	if (str_cmp("export", prog) == 0)
 		ft_putstr_fd("Oh, waiting built in export....below is STDFUNC\n", 2);
 		// dexec->flag_builtin = BUILTIN_EXPORT;
@@ -33,6 +32,8 @@ int	path_is_builtin(char *path, char *prog, t_dexec *dexec)
 	if (str_cmp("env", prog) == 0)
 		ft_putstr_fd("Oh, waiting built in env....below is STDFUNC\n", 2);
 	// 	dexec->flag_builtin = BUILTIN_ENV;
+	if (str_cmp("exit", prog) == 0)
+		dexec->flag_builtin = BUILTIN_EXIT;
 	if (dexec->flag_builtin == -1)
 		return (1);
 	else
