@@ -6,7 +6,7 @@
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/13 15:01:43 by hotph             #+#    #+#             */
-/*   Updated: 2023/08/21 14:10:24 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/21 19:52:39 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,12 +85,15 @@ int	scan_path_prog(t_dexec *dexec, t_ast *node)
 	char	*path;
 	char	*prog;
 	int		status;
+	int		error;
 
 	if (node->data != NULL && node->data->type == TEXT)
 	{
-		path = get_cmd_path(node);
-		prog = get_cmd_prog(node);
-		if (path == NULL && prog == NULL)
+		path = get_cmd_path(node, &error);
+		if (path == NULL && error == MALLOC_ERROR)
+			return (print_error(MALLOC_ERROR));
+		prog = get_cmd_prog(node, &error);
+		if (prog == NULL && error == MALLOC_ERROR)
 			return (print_error(MALLOC_ERROR));
 		status = get_fullpath(path, prog, dexec);
 		free_null((void **)&(path));
