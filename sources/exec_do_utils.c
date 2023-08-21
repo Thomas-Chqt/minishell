@@ -6,7 +6,7 @@
 /*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 15:00:18 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/08/21 11:46:04 by sotanaka         ###   ########.fr       */
+/*   Updated: 2023/08/21 12:19:35 by sotanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int	fd_close(int fd_in, int fd_out)
 
 int	set_redirect(t_dexec *dexec)
 {
-	if (dexec->fd_in != STDIN_FILENO && dexec->flag_builtin == 0)
+	if (dexec->fd_in != STDIN_FILENO && dexec->flag_builtin < 0)
 	{
 		if (dup2(dexec->fd_in, STDIN_FILENO) == -1)
 			return (perror_wrap("set_redirect dup2", 1));

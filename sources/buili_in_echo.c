@@ -6,7 +6,7 @@
 /*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/18 10:46:23 by hotph             #+#    #+#             */
-/*   Updated: 2023/08/21 11:47:32 by sotanaka         ###   ########.fr       */
+/*   Updated: 2023/08/21 12:30:01 by sotanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,11 @@ static void	echo_print(char **cmd_opts, int i)
 
 int	built_in_echo(t_dexec *dexec)
 {
-	int		exit_val;
 	int		i;
 	int		n_flag;
 
 	i = 1;
 	n_flag = 0;
-	exit_val = 0;
 	if (dexec->cmd_opts[i] && str_cmp(dexec->cmd_opts[i], "-n") == 0)
 	{
 		n_flag = 1;
@@ -41,6 +39,6 @@ int	built_in_echo(t_dexec *dexec)
 	if (n_flag == 0)
 		ft_putstr_fd("\n", STDOUT_FILENO);
 	if (dexec->flag_pipe == 0)
-		return (exit_val);
-	exit (exit_val);
+		return (0);
+	exit (0);
 }
