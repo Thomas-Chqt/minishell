@@ -6,15 +6,24 @@
 /*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 12:31:07 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/08/20 19:38:55 by sotanaka         ###   ########.fr       */
+/*   Updated: 2023/08/21 16:55:44 by sotanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtin.h"
 #include "environment.h"
 
+static int	return_or_exit(int val, int flag)
+{
+	if (flag == 0)
+		return (val);
+	exit(val);
+}
+
 static int	cd_check_path(t_dexec *dexec)
 {
+	if (dexec->cmd_opts[1] == NULL)
+		return (0);
 	if (ft_access_wrap(dexec->cmd_opts[1], ACCESS_FOK) == false)
 		return (printf_error_msg("minishell: cd: %: No such file or directory",
 				(dexec->cmd_opts + 1), EX_FILE_OPEN_ERR));
@@ -27,19 +36,21 @@ static int	cd_check_path(t_dexec *dexec)
 	return (0);
 }
 
-static int	set_env_pwd(void)
+static int	set_env_key(char *key)
 {
 	char	*cwd;
 	char	*key_val;
+	int		len_key;
 
 	cwd = getcwd(NULL, 0);
 	if (cwd == NULL)
 		return (perror_wrap("minishell: cd: ", 1));
-	key_val = ft_calloc(ft_strlen(cwd) + 5, sizeof(char));
+	len_key = ft_strlen(key);
+	key_val = ft_calloc(ft_strlen(cwd) + len_key + 1, sizeof(char));
 	if (key_val != NULL)
 	{
-		ft_strlcat(key_val, "PWD=", ft_strlen(cwd) + 5);
-		ft_strlcat(key_val, cwd, ft_strlen(cwd) + 5);
+		ft_strlcat(key_val, key, ft_strlen(cwd) + len_key + 1);
+		ft_strlcat(key_val, cwd, ft_strlen(cwd) + len_key + 1);
 		if (set_env_single_str(key_val, false) == 0)
 		{
 			free(key_val);
@@ -57,13 +68,12 @@ int	built_in_cd(t_dexec *dexec)
 	int		status;
 	char	*path;
 
-	if (dexec->cmd_opts[1] != NULL && cd_check_path(dexec) == EX_FILE_OPEN_ERR)
-	{
-		if (dexec->flag_pipe == 0)
-			return (1);
-		exit (1);
-	}
-	status = 0;
+	status = cd_check_path(dexec);
+	if (status != 0)
+		return (return_or_exit(status, dexec->flag_pipe));
+	status = set_env_key("OLDPWD=");
+	if (status != 0)
+		return (return_or_exit(status, dexec->flag_pipe));
 	if (dexec->cmd_opts[1] == NULL)
 	{
 		path = get_env("HOME", NULL);
@@ -73,8 +83,8 @@ int	built_in_cd(t_dexec *dexec)
 	}
 	else if (chdir(dexec->cmd_opts[1]) != 0)
 		status = perror_wrap("minishell: cd: ", 1);
-	status = set_env_pwd();
-	if (dexec->flag_pipe == 0)
-		return (status);
-	exit(status);
+	if (status != 0)
+		return (return_or_exit(status, dexec->flag_pipe));
+	status = set_env_key("PWD=");
+		return (return_or_exit(status, dexec->flag_pipe));
 }

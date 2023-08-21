@@ -6,7 +6,7 @@
 /*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2023/08/21 12:39:24 by sotanaka         ###   ########.fr       */
+/*   Updated: 2023/08/21 13:45:15 by sotanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,6 @@ static void	at_child(t_dexec *dexec, t_ast *node)
 			exit_val = is_builtin(dexec, node);
 		else
 			exit_val = is_standard(dexec->cmd_path, dexec->cmd_opts, get_envp());
-		// if (exit_val != 0)
-		// {
-		// 	free(dexec->cmd_path);
-		// 	free(dexec->cmd_opts);
-		// 	exit(exit_val);
-		// }
 	}
 	exit(exit_val);
 }
