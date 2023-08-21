@@ -6,11 +6,21 @@
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 19:35:46 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/12 19:53:12 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/21 12:16:14 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
+
+int	recurse_full_cmd(const char *cmd, t_uint64 *i, t_toklist **list);
+static int	recurse_simple_cmd(const char *cmd, t_uint64 *i, t_toklist **list);
+static int	recurse_io_list(const char *cmd, t_uint64 *i, t_toklist **list);
+static int	recurse_io_file(const char *cmd, t_uint64 *i, t_toklist **list);
+static int	recurse_text_list(const char *cmd, t_uint64 *i, t_toklist **list);
+
+int	toklist_text_new(const char *cmd, t_uint64 *i, t_toklist **list);
+int	toklist_pipe_new(const char *cmd, t_uint64 *i, t_toklist **list);
+int	toklist_io_new(const char *cmd, t_uint64 *i, t_toklist **list);
 
 int	recurse_full_cmd(const char *cmd, t_uint64 *i, t_toklist **list)
 {
@@ -40,7 +50,7 @@ int	recurse_full_cmd(const char *cmd, t_uint64 *i, t_toklist **list)
 	return (error);
 }
 
-int	recurse_simple_cmd(const char *cmd, t_uint64 *i, t_toklist **list)
+static int	recurse_simple_cmd(const char *cmd, t_uint64 *i, t_toklist **list)
 {
 	t_toklist	*new_list;
 	int			error;
@@ -69,7 +79,7 @@ int	recurse_simple_cmd(const char *cmd, t_uint64 *i, t_toklist **list)
 	return (error);
 }
 
-int	recurse_io_list(const char *cmd, t_uint64 *i, t_toklist **list)
+static int	recurse_io_list(const char *cmd, t_uint64 *i, t_toklist **list)
 {
 	t_toklist	*new_list;
 	int			error;
@@ -80,7 +90,7 @@ int	recurse_io_list(const char *cmd, t_uint64 *i, t_toklist **list)
 	{
 		while (cmd[*i] == ' ')
 			(*i)++;
-		error = recurse_io_file(cmd, i, &new_list);
+		error = recurse_io_list(cmd, i, &new_list);
 		if (error == 0 || error == PARSING_ERROR)
 		{
 			ft_lstadd_back((t_list **)list, (t_list *)new_list);
@@ -91,7 +101,7 @@ int	recurse_io_list(const char *cmd, t_uint64 *i, t_toklist **list)
 	return (error);
 }
 
-int	recurse_io_file(const char *cmd, t_uint64 *i, t_toklist **list)
+static int	recurse_io_file(const char *cmd, t_uint64 *i, t_toklist **list)
 {
 	t_toklist	*new_list;
 	int			error;
@@ -116,7 +126,7 @@ int	recurse_io_file(const char *cmd, t_uint64 *i, t_toklist **list)
 	return (error);
 }
 
-int	recurse_text_list(const char *cmd, t_uint64 *i, t_toklist **list)
+static int	recurse_text_list(const char *cmd, t_uint64 *i, t_toklist **list)
 {
 	t_toklist	*new_list;
 	int			error;

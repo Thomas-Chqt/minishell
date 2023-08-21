@@ -6,12 +6,14 @@
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 15:12:11 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/18 13:27:42 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/21 12:21:48 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
 #include "environment.h"
+
+int		recurse_full_cmd(const char *cmd, t_uint64 *i, t_toklist **list);
 
 t_toklist	*make_toklist(const char *cmd)
 {
