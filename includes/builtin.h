@@ -6,7 +6,7 @@
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 13:23:23 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/08/20 18:26:49 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/21 14:44:07 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 # define BUILTIN_H
 
 //-------include-------
+# include "minishell.h"
+# include "error.h"
 # include "exec.h"
 # include "environment.h"
 
@@ -30,8 +32,8 @@
 int		built_in_echo(t_dexec *dexec);
 int		built_in_cd(t_dexec *dexec);
 int		built_in_pwd(t_dexec *dexec);
-// int		built_in_export(t_dexec *dexec);
-// int		built_in_unset(t_dexec *dexec);
+int		built_in_export(int argc, char *argv[]);
+int		built_in_unset(int argc, char *argv[]);
 int		built_in_env(int argc, char *argv[]);
 int		built_in_exit(t_dexec *dexec, t_ast *node);
 int		is_builtin(t_dexec *dexec, t_ast *node);

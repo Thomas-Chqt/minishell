@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_in_cd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 12:31:07 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/08/21 16:55:44 by sotanaka         ###   ########.fr       */
+/*   Updated: 2023/08/21 17:14:31 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,5 +86,5 @@ int	built_in_cd(t_dexec *dexec)
 	if (status != 0)
 		return (return_or_exit(status, dexec->flag_pipe));
 	status = set_env_key("PWD=");
-		return (return_or_exit(status, dexec->flag_pipe));
+	return (return_or_exit(status, dexec->flag_pipe));
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_do_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 15:00:18 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/08/21 13:44:39 by sotanaka         ###   ########.fr       */
+/*   Updated: 2023/08/21 17:13:12 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,29 +28,30 @@ static int	with_redirect(t_dexec *dexec, t_ast *node)
 		status = built_in_echo(dexec);
 	else if (dexec->flag_builtin == BUILTIN_PWD)
 		status = built_in_pwd(dexec);
+	else if (dexec->flag_builtin == BUILTIN_EXPORT)
+		status = built_in_export(arrstr_len(dexec->cmd_opts), dexec->cmd_opts);
 	else if (dexec->flag_builtin == BUILTIN_ENV)
 		status = built_in_env(arrstr_len(dexec->cmd_opts), dexec->cmd_opts);
 	if (dexec->fd_out > 2 && dexec->flag_pipe == 0)
 	{
-		if (dup2(copy_stdout, STDOUT_FILENO) == -1)
-			return (perror_wrap("dup2: ", 1));
-		if (close(copy_stdout) == -1)
-			return (perror_wrap("close: ", 1));
+		if (dup2(copy_stdout, STDOUT_FILENO) == -1
+			|| close(copy_stdout) == -1)
+			return (perror_wrap("dup2/close: ", 1));
 	}
 	return (status);
 }
 
 int	is_builtin(t_dexec *dexec, t_ast *node)
 {
-	if (dexec->flag_builtin == BUILTIN_ECHO || dexec->flag_builtin == BUILTIN_PWD
-		|| dexec->flag_builtin == BUILTIN_ENV)
+	if (dexec->flag_builtin == BUILTIN_ECHO
+		|| dexec->flag_builtin == BUILTIN_PWD
+		|| dexec->flag_builtin == BUILTIN_ENV
+		|| dexec->flag_builtin == BUILTIN_EXPORT)
 		return (with_redirect(dexec, node));
 	else if (dexec->flag_builtin == BUILTIN_CD)
 		return (built_in_cd(dexec));
-	// if (dexec->flag_builtin == BUILTIN_EXPORT)
-	// 	return (built_in_export(dexec));
-	// if (dexec->flag_builtin == BUILTIN_UNSET)
-	// 	return (built_in_unset(dexec));
+	if (dexec->flag_builtin == BUILTIN_UNSET)
+		return (built_in_unset(arrstr_len(dexec->cmd_opts), dexec->cmd_opts));
 	else if (dexec->flag_builtin == BUILTIN_EXIT)
 		return (built_in_exit(dexec, node));
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/13 15:01:43 by hotph             #+#    #+#             */
-/*   Updated: 2023/08/20 18:18:24 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/21 14:10:24 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,9 @@ int	path_is_builtin(char *path, char *prog, t_dexec *dexec)
 	if (str_cmp("pwd", prog) == 0)
 		dexec->flag_builtin = BUILTIN_PWD;
 	if (str_cmp("export", prog) == 0)
-		ft_putstr_fd("Oh, waiting built in export....below is STDFUNC\n", 2);
-		// dexec->flag_builtin = BUILTIN_EXPORT;
+		dexec->flag_builtin = BUILTIN_EXPORT;
 	if (str_cmp("unset", prog) == 0)
-		ft_putstr_fd("Oh, waiting built in unset....below is STDFUNC\n", 2);
-		// dexec->flag_builtin = BUILTIN_UNSET;
+		dexec->flag_builtin = BUILTIN_UNSET;
 	if (str_cmp("env", prog) == 0)
 		dexec->flag_builtin = BUILTIN_ENV;
 	if (str_cmp("exit", prog) == 0)

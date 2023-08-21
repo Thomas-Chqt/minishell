@@ -6,13 +6,12 @@
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 18:55:31 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/20 16:23:52 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/21 15:20:35 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "environment.h"
 
-t_env_list	**get_lstenv(void);
 t_bool		is_env_key_equal(void *entry, void *key);
 char		*env_entry_to_str(t_env_entry entry);
 t_env_entry	str_to_env_entry(const char *str);
@@ -83,22 +82,4 @@ t_env_list	*lstenv_chr(const char *key, t_bool create)
 void	lstenv_add_back(t_env_list	*new_node)
 {
 	ft_lstadd_back((t_list **)get_lstenv(), (t_list *)new_node);
-}
-
-void	lstenv_clear(void)
-{
-	t_env_list	*watched;
-	t_env_list	*temp;
-
-	watched = *(get_lstenv());
-	while (watched != NULL)
-	{
-		free(watched->data->key);
-		free(watched->data->value);
-		free(watched->data);
-		temp = watched->next;
-		free(watched);
-		watched = temp;
-	}
-	(*(get_lstenv())) = NULL;
 }

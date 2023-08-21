@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_do.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2023/08/21 13:45:15 by sotanaka         ###   ########.fr       */
+/*   Created: 2023/07/30 13:32:49 by sotanaka          #+#    #+#             */
+/*   Updated: 2023/08/21 17:13:46 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,8 @@ static void	at_child(t_dexec *dexec, t_ast *node)
 		if (dexec->flag_builtin > 0)
 			exit_val = is_builtin(dexec, node);
 		else
-			exit_val = is_standard(dexec->cmd_path, dexec->cmd_opts, get_envp());
+			exit_val = is_standard(dexec->cmd_path, dexec->cmd_opts,
+					get_envp());
 	}
 	exit(exit_val);
 }
