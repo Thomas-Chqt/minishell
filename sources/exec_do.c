@@ -6,10 +6,9 @@
 /*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2023/08/20 19:11:03 by sotanaka         ###   ########.fr       */
+/*   Updated: 2023/08/21 12:39:24 by sotanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "exec.h"
 #include "environment.h"
