@@ -6,11 +6,15 @@
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 15:31:29 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/17 17:14:18 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/21 12:22:14 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
+
+t_toklist	*toklist_new(t_token_type type, char *data);
+
+int			set_text_token_len(const char *cmd, size_t *len);
 
 int	toklist_text_new(const char *cmd, t_uint64 *i, t_toklist **list)
 {

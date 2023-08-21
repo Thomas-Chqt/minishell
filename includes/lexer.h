@@ -6,7 +6,7 @@
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 14:51:42 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/17 17:15:03 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/21 12:21:43 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,20 +41,7 @@ struct s_toklist
 	t_toklist	*next;
 };
 
-t_toklist	*toklist_new(t_token_type type, char *data);
 void		free_token(void *token);
-
-int			toklist_text_new(const char *cmd, t_uint64 *i, t_toklist **list);
-int			toklist_pipe_new(const char *cmd, t_uint64 *i, t_toklist **list);
-int			toklist_io_new(const char *cmd, t_uint64 *i, t_toklist **list);
-
-int			set_text_token_len(const char *cmd, size_t *len);
-
-int			recurse_full_cmd(const char *cmd, t_uint64 *i, t_toklist **list);
-int			recurse_simple_cmd(const char *cmd, t_uint64 *i, t_toklist **list);
-int			recurse_io_list(const char *cmd, t_uint64 *i, t_toklist **list);
-int			recurse_io_file(const char *cmd, t_uint64 *i, t_toklist **list);
-int			recurse_text_list(const char *cmd, t_uint64 *i, t_toklist **list);
 
 t_toklist	*make_toklist(const char *cmd);
 void		clean_toklist(t_toklist **token_list);

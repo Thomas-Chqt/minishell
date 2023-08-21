@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_redirect.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/13 12:21:58 by hotph             #+#    #+#             */
-/*   Updated: 2023/08/17 19:55:01 by sotanaka         ###   ########.fr       */
+/*   Updated: 2023/08/21 11:28:04 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,11 +45,10 @@ static int	ft_here_doc(char *delimiter, int *fd_in)
 	int		pid;
 	int		status;
 
-	if (*fd_in > 2)
-	{
-		if (close(*fd_in) == -1)
-			return (perror_wrap("here_doc close", 1));
-	}
+	if (sig_heredoc_parent_mode() != 0)
+		return (print_error(SIGACTION_ERROR));
+	if (*fd_in > 2 && close(*fd_in) == -1)
+		return (perror_wrap("here_doc close", 1));
 	if (pipe(fd_pipe) == -1)
 		return (perror_wrap("heredoc create", 1));
 	*fd_in = fd_pipe[0];
@@ -60,7 +59,8 @@ static int	ft_here_doc(char *delimiter, int *fd_in)
 		ft_readline(fd_pipe, delimiter);
 	else
 	{
-		if (waitpid(pid, &status, 0) == -1 || close(fd_pipe[1]) == -1)
+		if (waitpid(pid, &status, 0) == -1 || close(fd_pipe[1]) == -1
+			|| sig_forwarding_mode() != 0)
 			return (perror_wrap("here_doc", 1));
 		if (WIFEXITED(status))
 			return (WEXITSTATUS(status));

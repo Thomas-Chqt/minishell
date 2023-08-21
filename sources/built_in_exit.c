@@ -6,11 +6,12 @@
 /*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/18 14:38:58 by hotph             #+#    #+#             */
-/*   Updated: 2023/08/21 12:23:45 by sotanaka         ###   ########.fr       */
+/*   Updated: 2023/08/21 12:38:13 by sotanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtin.h"
+#include "parser.h"
 
 static int	str_isdigit(char *str)
 {
