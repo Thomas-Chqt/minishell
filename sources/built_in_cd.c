@@ -6,7 +6,7 @@
 /*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 12:31:07 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/08/21 14:27:58 by sotanaka         ###   ########.fr       */
+/*   Updated: 2023/08/21 16:55:44 by sotanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ static int	return_or_exit(int val, int flag)
 
 static int	cd_check_path(t_dexec *dexec)
 {
+	if (dexec->cmd_opts[1] == NULL)
+		return (0);
 	if (ft_access_wrap(dexec->cmd_opts[1], ACCESS_FOK) == false)
 		return (printf_error_msg("minishell: cd: %: No such file or directory",
 				(dexec->cmd_opts + 1), EX_FILE_OPEN_ERR));
