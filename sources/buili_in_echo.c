@@ -6,13 +6,13 @@
 /*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/18 10:46:23 by hotph             #+#    #+#             */
-/*   Updated: 2023/08/20 18:58:13 by sotanaka         ###   ########.fr       */
+/*   Updated: 2023/08/21 11:33:00 by sotanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtin.h"
 
-static void echo_print(char **cmd_opts, int i)
+static void	echo_print(char **cmd_opts, int i)
 {
 	while (cmd_opts[i])
 	{
@@ -29,12 +29,6 @@ int	built_in_echo(t_dexec *dexec)
 	int		i;
 	int		n_flag;
 
-	if (dexec->flag_pipe == 0)
-	{
-		exit_val = set_redirect(dexec);
-		if (exit_val != 0)
-				return (exit_val);
-	}
 	i = 1;
 	n_flag = 0;
 	if (dexec->cmd_opts[i] && str_cmp(dexec->cmd_opts[i], "-n") == 0)
