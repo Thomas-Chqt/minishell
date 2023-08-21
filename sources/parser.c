@@ -6,13 +6,17 @@
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 20:24:15 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/20 16:38:25 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/21 11:37:00 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 #include "environment.h"
 #include "expander.h"
+
+int		add_cmd_back(t_token *token, t_ast *tree);
+int		add_io_back(t_toklist **token_lst, t_ast *tree);
+int		add_separator(t_token *token, t_ast **tree);
 
 t_ast	*make_ast(t_toklist *toklist)
 {
@@ -27,7 +31,7 @@ t_ast	*make_ast(t_toklist *toklist)
 	{
 		if (add_cmd_back(toklist_current->data, tree) == MALLOC_ERROR)
 			break ;
-		if (add_io(&toklist_current, tree) == MALLOC_ERROR)
+		if (add_io_back(&toklist_current, tree) == MALLOC_ERROR)
 			break ;
 		if (add_separator(toklist_current->data, &tree) == MALLOC_ERROR)
 			break ;
@@ -42,16 +46,6 @@ t_ast	*make_ast(t_toklist *toklist)
 void	clean_ast(t_ast *ast)
 {
 	btr_clear(btr_get_root((t_btree *)ast), &free_token);
-}
-
-t_bool	is_io_token(t_token *token)
-{
-	return (
-		token->type == DLESS
-		|| token->type == DGREAT
-		|| token->type == LESS
-		|| token->type == GREAT
-	);
 }
 
 t_ast	*parse_cmd(const char *cmd)

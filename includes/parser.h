@@ -6,12 +6,15 @@
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 15:01:56 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/06 21:00:54 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/21 11:38:46 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSER_H
 # define PARSER_H
+
+# include "minishell.h"
+# include "error.h"
 
 # include "lexer.h"
 
@@ -25,13 +28,7 @@ struct s_ast
 	t_ast	*right;
 };
 
-int		add_cmd_back(t_token *token, t_ast *tree);
-int		add_io(t_toklist **token_lst, t_ast *tree);
-int		add_io_back(t_toklist **token_lst, t_ast *tree);
-int		add_io_front(t_toklist **token_lst, t_ast *tree);
-int		add_separator(t_token *token, t_ast **tree);
-
 t_ast	*make_ast(t_toklist *toklist);
-t_bool	is_io_token(t_token *token);
+void	clean_ast(t_ast *ast);
 
 #endif // PARSER_H
