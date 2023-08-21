@@ -6,7 +6,7 @@
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 18:55:31 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/21 14:15:26 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/21 15:20:35 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,22 +82,4 @@ t_env_list	*lstenv_chr(const char *key, t_bool create)
 void	lstenv_add_back(t_env_list	*new_node)
 {
 	ft_lstadd_back((t_list **)get_lstenv(), (t_list *)new_node);
-}
-
-void	lstenv_clear(void)
-{
-	t_env_list	*watched;
-	t_env_list	*temp;
-
-	watched = *(get_lstenv());
-	while (watched != NULL)
-	{
-		free(watched->data->key);
-		free(watched->data->value);
-		free(watched->data);
-		temp = watched->next;
-		free(watched);
-		watched = temp;
-	}
-	(*(get_lstenv())) = NULL;
 }

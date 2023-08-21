@@ -6,7 +6,7 @@
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 14:04:08 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/21 14:57:56 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/21 15:28:13 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,8 @@ static int	check_args(int argc, char *argv[])
 		ft_putstr_fd("minshell: export: -", STDERR_FILENO);
 		ft_putchar_fd(argv[1][1], STDERR_FILENO);
 		ft_putstr_fd(": invalid option\n", STDERR_FILENO);
-		ft_putendl_fd("export: usage: export [name[=value] ...]", STDERR_FILENO);
+		ft_putendl_fd("export: usage: export [name[=value] ...]",
+			STDERR_FILENO);
 		return (1);
 	}
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/05 17:27:31 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/18 17:03:51 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/21 15:28:21 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,4 +65,14 @@ t_env_entry	str_to_env_entry(const char *str)
 		return ((t_env_entry){.key = NULL, .value = NULL});
 	}
 	return ((t_env_entry){.key = key, .value = val});
+}
+
+void	delete_entry(void *v_entry)
+{
+	t_env_entry	*entry;
+
+	entry = (t_env_entry *)v_entry;
+	free(entry->key);
+	free(entry->value);
+	free(entry);
 }

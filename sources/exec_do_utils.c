@@ -6,7 +6,7 @@
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 15:00:18 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/08/21 17:12:49 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/21 17:13:12 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,17 +34,17 @@ static int	with_redirect(t_dexec *dexec, t_ast *node)
 		status = built_in_env(arrstr_len(dexec->cmd_opts), dexec->cmd_opts);
 	if (dexec->fd_out > 2 && dexec->flag_pipe == 0)
 	{
-		if (dup2(copy_stdout, STDOUT_FILENO) == -1)
-			return (perror_wrap("dup2: ", 1));
-		if (close(copy_stdout) == -1)
-			return (perror_wrap("close: ", 1));
+		if (dup2(copy_stdout, STDOUT_FILENO) == -1
+			|| close(copy_stdout) == -1)
+			return (perror_wrap("dup2/close: ", 1));
 	}
 	return (status);
 }
 
 int	is_builtin(t_dexec *dexec, t_ast *node)
 {
-	if (dexec->flag_builtin == BUILTIN_ECHO || dexec->flag_builtin == BUILTIN_PWD
+	if (dexec->flag_builtin == BUILTIN_ECHO
+		|| dexec->flag_builtin == BUILTIN_PWD
 		|| dexec->flag_builtin == BUILTIN_ENV
 		|| dexec->flag_builtin == BUILTIN_EXPORT)
 		return (with_redirect(dexec, node));

@@ -6,21 +6,21 @@
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 19:35:46 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/21 12:16:14 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/21 15:32:13 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
 
-int	recurse_full_cmd(const char *cmd, t_uint64 *i, t_toklist **list);
+int			recurse_full_cmd(const char *cmd, t_uint64 *i, t_toklist **list);
 static int	recurse_simple_cmd(const char *cmd, t_uint64 *i, t_toklist **list);
 static int	recurse_io_list(const char *cmd, t_uint64 *i, t_toklist **list);
 static int	recurse_io_file(const char *cmd, t_uint64 *i, t_toklist **list);
 static int	recurse_text_list(const char *cmd, t_uint64 *i, t_toklist **list);
 
-int	toklist_text_new(const char *cmd, t_uint64 *i, t_toklist **list);
-int	toklist_pipe_new(const char *cmd, t_uint64 *i, t_toklist **list);
-int	toklist_io_new(const char *cmd, t_uint64 *i, t_toklist **list);
+int			toklist_text_new(const char *cmd, t_uint64 *i, t_toklist **list);
+int			toklist_pipe_new(const char *cmd, t_uint64 *i, t_toklist **list);
+int			toklist_io_new(const char *cmd, t_uint64 *i, t_toklist **list);
 
 int	recurse_full_cmd(const char *cmd, t_uint64 *i, t_toklist **list)
 {
