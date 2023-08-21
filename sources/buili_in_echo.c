@@ -6,7 +6,7 @@
 /*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/18 10:46:23 by hotph             #+#    #+#             */
-/*   Updated: 2023/08/21 11:33:00 by sotanaka         ###   ########.fr       */
+/*   Updated: 2023/08/21 11:47:32 by sotanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ int	built_in_echo(t_dexec *dexec)
 
 	i = 1;
 	n_flag = 0;
+	exit_val = 0;
 	if (dexec->cmd_opts[i] && str_cmp(dexec->cmd_opts[i], "-n") == 0)
 	{
 		n_flag = 1;

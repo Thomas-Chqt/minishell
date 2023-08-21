@@ -6,7 +6,7 @@
 /*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 15:00:18 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/08/21 11:30:54 by sotanaka         ###   ########.fr       */
+/*   Updated: 2023/08/21 11:46:04 by sotanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@ static int	with_redirect(t_dexec *dexec, t_ast *node)
 	int	status;
 	int	copy_stdout;
 
-	copy_stdout = dup(STDOUT_FILENO);
-	if (dexec->fd_out > 2)
+	if (dexec->fd_out != 1 && dexec->flag_pipe == 0)
 	{
+		copy_stdout = dup(STDOUT_FILENO);
 		status = set_redirect(dexec);
 		if (status != 0)
 			return (0);
@@ -30,12 +30,12 @@ static int	with_redirect(t_dexec *dexec, t_ast *node)
 		status = built_in_pwd(dexec);
 	else if (dexec->flag_builtin == BUILTIN_ENV)
 		status = built_in_env(arrstr_len(dexec->cmd_opts), dexec->cmd_opts);
-	if (dexec->fd_out > 2)
+	if (dexec->fd_out > 2 && dexec->flag_pipe == 0)
 	{
-	if (dup2(copy_stdout, STDOUT_FILENO) == -1)
-		return (perror_wrap("dup2: ", 1));
-	if (close(copy_stdout) == -1)
-		return (perror_wrap("close: ", 1));
+		if (dup2(copy_stdout, STDOUT_FILENO) == -1)
+			return (perror_wrap("dup2: ", 1));
+		if (close(copy_stdout) == -1)
+			return (perror_wrap("close: ", 1));
 	}
 	return (status);
 }
@@ -44,7 +44,7 @@ int	is_builtin(t_dexec *dexec, t_ast *node)
 {
 	if (dexec->flag_builtin == BUILTIN_ECHO || dexec->flag_builtin == BUILTIN_PWD
 		|| dexec->flag_builtin == BUILTIN_ENV)
-		return (with_redirect);
+		return (with_redirect(dexec, node));
 	else if (dexec->flag_builtin == BUILTIN_CD)
 		return (built_in_cd(dexec));
 	// if (dexec->flag_builtin == BUILTIN_EXPORT)
