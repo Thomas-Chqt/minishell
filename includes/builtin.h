@@ -6,7 +6,7 @@
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 13:23:23 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/08/21 14:10:40 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/21 14:44:07 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 # define BUILTIN_H
 
 //-------include-------
+# include "minishell.h"
+# include "error.h"
 # include "exec.h"
 # include "environment.h"
 

@@ -6,7 +6,7 @@
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 19:59:47 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/20 17:16:21 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/21 14:15:48 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 t_env_list	*lstenv_chr(const char *key, t_bool create);
 
-t_env_list	**get_lstenv(void);
 char		*env_entry_to_str(t_env_entry entry);
 
 t_bool		is_valid_env_key(const char *str);

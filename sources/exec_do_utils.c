@@ -6,7 +6,7 @@
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 15:00:18 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/08/21 17:12:01 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/21 17:12:49 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,8 @@ static int	with_redirect(t_dexec *dexec, t_ast *node)
 int	is_builtin(t_dexec *dexec, t_ast *node)
 {
 	if (dexec->flag_builtin == BUILTIN_ECHO || dexec->flag_builtin == BUILTIN_PWD
-		|| dexec->flag_builtin == BUILTIN_ENV)
+		|| dexec->flag_builtin == BUILTIN_ENV
+		|| dexec->flag_builtin == BUILTIN_EXPORT)
 		return (with_redirect(dexec, node));
 	else if (dexec->flag_builtin == BUILTIN_CD)
 		return (built_in_cd(dexec));

@@ -6,13 +6,12 @@
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 18:55:31 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/20 16:23:52 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/21 14:15:26 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "environment.h"
 
-t_env_list	**get_lstenv(void);
 t_bool		is_env_key_equal(void *entry, void *key);
 char		*env_entry_to_str(t_env_entry entry);
 t_env_entry	str_to_env_entry(const char *str);

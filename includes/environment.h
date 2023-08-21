@@ -6,7 +6,7 @@
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/04 11:26:37 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/19 17:27:27 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/21 14:15:10 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ struct s_env_list
 	t_env_entry	*data;
 	t_env_list	*next;
 };
+
+t_env_list	**get_lstenv(void);
 
 int			init_env(char *envp[]);
 void		clear_env(void);
