@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   external_functions.h                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 22:54:17 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/20 14:43:57 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/21 11:31:36 by sotanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,8 +89,7 @@ int		stat(const char *path, struct stat *buf);
 
 int		execve(const char *path, char *const argv[], char *const envp[]);
 
-// dup
-
+int		dup(int fildes);
 int		dup2(int fildes, int fildes2);
 int		pipe(int pipefd[2]);
 

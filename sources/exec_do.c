@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_do.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/30 13:32:49 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/08/20 18:16:00 by tchoquet         ###   ########.fr       */
+/*   Created: Invalid date        by                   #+#    #+#             */
+/*   Updated: 2023/08/21 12:39:24 by sotanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "environment.h"
 #include "builtin.h"
 
-static int	do_cmd(char *cmd_path, char **cmd_opts, char **envp)
+static int	is_standard(char *cmd_path, char **cmd_opts, char **envp)
 {
 	if (execve(cmd_path, cmd_opts, envp) == -1)
 	{
@@ -38,13 +38,16 @@ static void	at_child(t_dexec *dexec, t_ast *node)
 		exit(exit_val);
 	if (node->data != NULL && node->data->type == TEXT)
 	{
-		exit_val = do_cmd(dexec->cmd_path, dexec->cmd_opts, get_envp());
-		if (exit_val != 0)
-		{
-			free(dexec->cmd_path);
-			free(dexec->cmd_opts);
-			exit(exit_val);
-		}
+		if (dexec->flag_builtin > 0)
+			exit_val = is_builtin(dexec, node);
+		else
+			exit_val = is_standard(dexec->cmd_path, dexec->cmd_opts, get_envp());
+		// if (exit_val != 0)
+		// {
+		// 	free(dexec->cmd_path);
+		// 	free(dexec->cmd_opts);
+		// 	exit(exit_val);
+		// }
 	}
 	exit(exit_val);
 }
@@ -73,12 +76,8 @@ int	exec_do(t_dexec *dexec, t_ast *node, int flag)
 
 	pid = 0;
 	status = 0;
-	if (dexec->flag_builtin > 0)
-	{
-		pid = is_builtin(dexec, node);
-		if (pid == -1)
-			return (1);
-	}
+	if (dexec->flag_pipe == 0 && dexec->flag_builtin > 0)
+		status = is_builtin(dexec, node);
 	else
 	{
 		pid = fork();

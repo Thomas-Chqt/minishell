@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_in_exit.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/18 14:38:58 by hotph             #+#    #+#             */
-/*   Updated: 2023/08/21 11:39:27 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/21 12:38:13 by sotanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static void	exit_parent(int status, t_ast *ast, t_dexec *dexec)
 	exit (get_last_error());
 }
 
-static int	exit_do_nonfork_or_child(t_dexec *dexec, t_ast *node)
+int	built_in_exit(t_dexec *dexec, t_ast *node)
 {
 	int	status;
 
@@ -78,17 +78,4 @@ static int	exit_do_nonfork_or_child(t_dexec *dexec, t_ast *node)
 		exit (1);
 	}
 	return (0);
-}
-
-int	built_in_exit(t_dexec *dexec, t_ast *node)
-{
-	int		pid;
-
-	pid = 0;
-	if (dexec->flag_pipe == 1)
-		pid = fork();
-	if (pid == 0)
-		return (exit_do_nonfork_or_child(dexec, node));
-	else
-		return (pid);
 }

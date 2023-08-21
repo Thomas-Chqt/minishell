@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_in_cd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 12:31:07 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/08/20 17:15:53 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/20 19:38:55 by sotanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,39 +52,29 @@ static int	set_env_pwd(void)
 	return (print_error(MALLOC_ERROR));
 }
 
-static int	cd_do_nonfork_or_child(char *path, int flag_pipe)
+int	built_in_cd(t_dexec *dexec)
 {
 	int		status;
+	char	*path;
 
+	if (dexec->cmd_opts[1] != NULL && cd_check_path(dexec) == EX_FILE_OPEN_ERR)
+	{
+		if (dexec->flag_pipe == 0)
+			return (1);
+		exit (1);
+	}
 	status = 0;
-	if (path == NULL)
+	if (dexec->cmd_opts[1] == NULL)
 	{
 		path = get_env("HOME", NULL);
 		if (chdir(path) != 0)
 			status = perror_wrap("minishell: cd: ", 1);
 		free(path);
 	}
-	else if (chdir(path) != 0)
+	else if (chdir(dexec->cmd_opts[1]) != 0)
 		status = perror_wrap("minishell: cd: ", 1);
-	set_env_pwd();
-	if (flag_pipe == 1)
-		exit(status);
-	else if (status != 0)
-		return (-1);
-	return (status);
-}
-
-int	built_in_cd(t_dexec *dexec)
-{
-	int		pid;
-
-	pid = 0;
-	if (dexec->cmd_opts[1] != NULL && cd_check_path(dexec) == EX_FILE_OPEN_ERR)
-		return (-1);
-	if (dexec->flag_pipe == 1)
-		pid = fork();
-	if (pid == 0)
-		return (cd_do_nonfork_or_child(dexec->cmd_opts[1], dexec->flag_pipe));
-	else
-		return (pid);
+	status = set_env_pwd();
+	if (dexec->flag_pipe == 0)
+		return (status);
+	exit(status);
 }
