@@ -6,7 +6,7 @@
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 17:24:55 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/22 15:19:26 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/22 15:33:54 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ t_bool	is_valid_keyval(const char *str)
 			return (false);
 		i++;
 	}
-	if (str[i] != '=')
+	if (i == 0 || str[i] != '=')
 		return (false);
 	return (true);
 }
