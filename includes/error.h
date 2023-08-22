@@ -6,7 +6,7 @@
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 18:31:32 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/18 20:16:36 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/22 10:46:28 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@
 # define BAD_SUBSTITUTION 7777
 # define SIGACTION_ERROR 8888
 # define BAD_ENVIRONMENT_KEY 9999
+# define NULL_ENVIRONMENT_VAL 1010
 
 int		print_error_msg(char *msg, int return_val);
 int		print_error(int code);

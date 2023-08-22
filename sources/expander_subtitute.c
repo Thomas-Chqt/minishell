@@ -6,7 +6,7 @@
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/19 16:08:40 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/20 13:49:42 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/22 11:18:13 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,13 +40,12 @@ static int	substitute_str(char **dest, char *src, size_t len)
 	subed_str = ft_substr(src, 0, len);
 	if (subed_str == NULL)
 		return (MALLOC_ERROR);
-	if (ft_strchr(subed_str, '=') == NULL)
+	*dest = get_env_create(subed_str, &error);
+	if (error == NULL_ENVIRONMENT_VAL)
 		*dest = get_env(subed_str, &error);
-	else
-		*dest = get_env_create(subed_str, &error);
 	if (*dest == NULL && error == 0)
 		*dest = ft_strdup("");
-	if (*dest == NULL && error == 0)
+	if (*dest == NULL)
 		error = MALLOC_ERROR;
 	free(subed_str);
 	return (error);
