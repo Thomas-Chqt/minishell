@@ -6,7 +6,7 @@
 /*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 18:17:56 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/08/21 19:05:19 by sotanaka         ###   ########.fr       */
+/*   Updated: 2023/08/22 14:43:45 by sotanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,11 @@ static int	scan_simple_cmd(int fd_in, int fd_out, t_ast *node, t_intr intr)
 		return (cmd_only_redirection(&dexec, status));
 	if (fd_out == dexec.fd_out && fd_out != STDOUT_FILENO)
 		dexec.flag_pipe_close = 1;
+	status = scan_environment(node);
+	if (status == 1 && node->right != NULL)
+		node = node->right;
+	else if (status == 1)
+		return (0);
 	status = scan_path_prog(&dexec, node);
 	if (status != 0)
 	{

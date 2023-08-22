@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/06 21:58:21 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/21 19:44:36 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/22 14:29:44 by sotanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ int		get_argc(t_ast *node);
 //exec_utils2
 void	init_dexec(int fd_in, int fd_out, t_dexec *dexec, t_intr *intr);
 int		cmd_only_redirection(t_dexec *dexec, int status);
+int		scan_environment(t_ast *node);
 //do
 int		exec_do(t_dexec *dexec, t_ast *node, int flag);
 //do utils
