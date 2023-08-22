@@ -6,7 +6,7 @@
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 17:24:55 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/22 10:49:40 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/22 15:19:26 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,4 +60,20 @@ char	*set_error_return(int *error, int value)
 	if (error != NULL)
 		*error = value;
 	return (NULL);
+}
+
+t_bool	is_valid_keyval(const char *str)
+{
+	t_uint64	i;
+
+	i = 0;
+	while (str[i] != '\0' && str[i] != '=')
+	{
+		if (!ft_isalnum(str[i]) && str[i] != '_')
+			return (false);
+		i++;
+	}
+	if (str[i] != '=')
+		return (false);
+	return (true);
 }
