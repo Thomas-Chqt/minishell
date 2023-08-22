@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_in_cd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 12:31:07 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/08/21 17:14:31 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/22 18:46:42 by sotanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,28 +39,19 @@ static int	cd_check_path(t_dexec *dexec)
 static int	set_env_key(char *key)
 {
 	char	*cwd;
-	char	*key_val;
-	int		len_key;
+	int		status;
 
 	cwd = getcwd(NULL, 0);
 	if (cwd == NULL)
 		return (perror_wrap("minishell: cd: ", 1));
-	len_key = ft_strlen(key);
-	key_val = ft_calloc(ft_strlen(cwd) + len_key + 1, sizeof(char));
-	if (key_val != NULL)
-	{
-		ft_strlcat(key_val, key, ft_strlen(cwd) + len_key + 1);
-		ft_strlcat(key_val, cwd, ft_strlen(cwd) + len_key + 1);
-		if (set_env_single_str(key_val, false) == 0)
-		{
-			free(key_val);
-			free(cwd);
-			return (0);
-		}
-		free(key_val);
-	}
+	status = set_env(key, cwd, true);
 	free(cwd);
-	return (print_error(MALLOC_ERROR));
+	if (status == MALLOC_ERROR)
+			return (print_error(MALLOC_ERROR));
+	else if (status == BAD_ENVIRONMENT_KEY)
+			printf_error_msg("minshell: cd: %': not a\
+valid identifier", &key, 1);
+	return (status);
 }
 
 int	built_in_cd(t_dexec *dexec)
@@ -71,7 +62,7 @@ int	built_in_cd(t_dexec *dexec)
 	status = cd_check_path(dexec);
 	if (status != 0)
 		return (return_or_exit(status, dexec->flag_pipe));
-	status = set_env_key("OLDPWD=");
+	status = set_env_key("OLDPWD");
 	if (status != 0)
 		return (return_or_exit(status, dexec->flag_pipe));
 	if (dexec->cmd_opts[1] == NULL)
@@ -85,6 +76,6 @@ int	built_in_cd(t_dexec *dexec)
 		status = perror_wrap("minishell: cd: ", 1);
 	if (status != 0)
 		return (return_or_exit(status, dexec->flag_pipe));
-	status = set_env_key("PWD=");
+	status = set_env_key("PWD");
 	return (return_or_exit(status, dexec->flag_pipe));
 }
