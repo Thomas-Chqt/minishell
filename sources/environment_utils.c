@@ -6,7 +6,7 @@
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 17:24:55 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/20 15:55:43 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/22 15:33:54 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,12 @@ int	analize_keyval(const char *keyval, t_env_entry *result)
 		free(input.value);
 		return (BAD_ENVIRONMENT_KEY);
 	}
+	if (input.value == NULL)
+	{
+		free(input.key);
+		free(input.value);
+		return (NULL_ENVIRONMENT_VAL);
+	}
 	*result = input;
 	return (0);
 }
@@ -54,4 +60,20 @@ char	*set_error_return(int *error, int value)
 	if (error != NULL)
 		*error = value;
 	return (NULL);
+}
+
+t_bool	is_valid_keyval(const char *str)
+{
+	t_uint64	i;
+
+	i = 0;
+	while (str[i] != '\0' && str[i] != '=')
+	{
+		if (!ft_isalnum(str[i]) && str[i] != '_')
+			return (false);
+		i++;
+	}
+	if (i == 0 || str[i] != '=')
+		return (false);
+	return (true);
 }
