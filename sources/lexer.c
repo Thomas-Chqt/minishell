@@ -6,7 +6,7 @@
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 15:12:11 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/22 16:45:41 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/22 17:27:04 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,11 @@ t_toklist	*make_toklist(const char *cmd)
 	if (error_code == 0)
 	{
 		error_code = exec_first_node(&new_lst);
-		if (new_lst == NULL)
+		if (error_code != 0)
+		{
+			clean_toklist(&new_lst);
 			set_last_error(print_error(error_code));
+		}
 		return (new_lst);
 	}
 	set_last_error(print_error(error_code));
@@ -46,19 +49,12 @@ static int	exec_first_node(t_toklist **new_lst)
 	t_toklist	*first_node;
 	int			temp_ret;
 
-	if ((*new_lst)->data->data == NULL)
+	if ((*new_lst)->data->data == NULL || (*new_lst)->next != NULL)
 		return (0);
 	if (is_valid_keyval((*new_lst)->data->data) == false)
 		return (0);
 	first_node = (t_toklist *)lst_rmvfrst((t_list **)new_lst);
-	if (*new_lst != NULL)
-	{
-		clean_toklist(&first_node);
-		return (0);
-	}
 	temp_ret = set_env_single_str(first_node->data->data, false);
-	if (temp_ret != 0)
-		clean_toklist(new_lst);
 	clean_toklist(&first_node);
 	return (temp_ret);
 }
