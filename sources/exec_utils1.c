@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec_utils.c                                       :+:      :+:    :+:   */
+/*   exec_utils1.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 17:35:15 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/07 21:59:29 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/21 19:51:30 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,27 +14,40 @@
 
 static int	argv_fill_option(char **argv, t_ast *node);
 
-char	*get_cmd_path(t_ast *node)
+char	*get_cmd_path(t_ast *node, int *error)
 {
+	char	*return_value;
+
+	if (error != NULL)
+		*error = 0;
 	if (node->data->type != TEXT || node->data->data == NULL)
 		return (NULL);
 	if (ft_strchr(node->data->data, '/') == NULL)
 		return (NULL);
-	return (
-		ft_substr(node->data->data, 0,
-			ft_strrchr(node->data->data, '/') + 1 - node->data->data)
-	);
+	return_value = ft_substr(node->data->data, 0,
+			ft_strrchr(node->data->data, '/') + 1 - node->data->data);
+	if (return_value == NULL && error != NULL)
+		*error = MALLOC_ERROR;
+	return (return_value);
 }
 
-char	*get_cmd_prog(t_ast *node)
+char	*get_cmd_prog(t_ast *node, int *error)
 {
+	char	*return_value;
+
+	if (error != NULL)
+		*error = 0;
 	if (node->data->type != TEXT || node->data->data == NULL)
 		return (NULL);
-	if (ft_strchr(node->data->data, '/') == NULL)
-		return (ft_strdup(node->data->data));
 	if (node->data->data[ft_strlen(node->data->data) - 1] == '/')
 		return (NULL);
-	return (ft_strdup(ft_strrchr(node->data->data, '/') + 1));
+	if (ft_strchr(node->data->data, '/') == NULL)
+		return_value = ft_strdup(node->data->data);
+	else
+		return_value = ft_strdup(ft_strrchr(node->data->data, '/') + 1);
+	if (return_value == NULL && error != NULL)
+		*error = MALLOC_ERROR;
+	return (return_value);
 }
 
 int	get_argc(t_ast *node)
