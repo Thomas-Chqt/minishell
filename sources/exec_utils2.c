@@ -6,11 +6,12 @@
 /*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 18:16:36 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/08/22 14:52:27 by sotanaka         ###   ########.fr       */
+/*   Updated: 2023/08/22 15:56:15 by sotanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
+#include "environment.h"
 
 void	init_dexec(int fd_in, int fd_out, t_dexec *dexec, t_intr *intr)
 {
@@ -34,28 +35,10 @@ int	end_with_fd_close(t_dexec *dexec, int status)
 
 int	scan_environment(t_ast *node)
 {
-	int		i;
-	char	*equal;
-
 	if (node->data != NULL && node->data->type == TEXT)
 	{
-		equal = ft_strchr(node->data->data, '=');
-		if (equal != NULL && node->data->data[0] != '=')
-		{
-			i = equal - node->data->data;
-			while (i > 0)
-			{
-				if (ft_isalnum(node->data->data[i - 1]) == 1
-					|| ft_strchr("_", node->data->data[i - 1]) != NULL)
-					;
-				else
-					break ;
-				i--;
-			}
-			if (i == 0)
-				return (1);
-			return (0);
-		}
+		if (is_valid_keyval(node->data->data) == true)
+			return (1);
 	}
 	return (0);
 }
