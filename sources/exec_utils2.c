@@ -6,7 +6,7 @@
 /*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 18:16:36 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/08/22 14:34:58 by sotanaka         ###   ########.fr       */
+/*   Updated: 2023/08/22 14:52:27 by sotanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	init_dexec(int fd_in, int fd_out, t_dexec *dexec, t_intr *intr)
 	dexec->flag_builtin = -1;
 }
 
-int	cmd_only_redirection(t_dexec *dexec, int status)
+int	end_with_fd_close(t_dexec *dexec, int status)
 {
 	if (fd_close(dexec->fd_in, dexec->fd_out) != 0)
 		return (perror_wrap("scan cmd fd_close", 1));

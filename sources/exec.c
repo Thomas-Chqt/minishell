@@ -6,7 +6,7 @@
 /*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 18:17:56 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/08/22 14:43:45 by sotanaka         ###   ########.fr       */
+/*   Updated: 2023/08/22 14:53:37 by sotanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,20 +33,19 @@ static int	scan_simple_cmd(int fd_in, int fd_out, t_ast *node, t_intr intr)
 	init_dexec(fd_in, fd_out, &dexec, &intr);
 	status = scan_btree_io(&dexec, node->left);
 	if (status != 0 || node->data == NULL)
-		return (cmd_only_redirection(&dexec, status));
+		return (end_with_fd_close(&dexec, status));
 	if (fd_out == dexec.fd_out && fd_out != STDOUT_FILENO)
 		dexec.flag_pipe_close = 1;
 	status = scan_environment(node);
 	if (status == 1 && node->right != NULL)
 		node = node->right;
 	else if (status == 1)
-		return (0);
+		return (end_with_fd_close(&dexec, 0));
 	status = scan_path_prog(&dexec, node);
 	if (status != 0)
 	{
-		fd_close(dexec.fd_in, dexec.fd_out);
 		free_null((void **)&(dexec.cmd_path));
-		return (status);
+		return (end_with_fd_close(&dexec, status));
 	}
 	status = exec_do(&dexec, node, intr.flag_wait);
 	free_null((void **)&(dexec.cmd_path));
