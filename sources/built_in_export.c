@@ -6,7 +6,7 @@
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 14:04:08 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/21 15:28:13 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/22 11:07:29 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,13 @@ int	built_in_export(int argc, char *argv[])
 		while (i < (t_uint64)argc)
 		{
 			temp_ret = set_env_single_str(argv[i], true);
-			if (temp_ret == BAD_ENVIRONMENT_KEY)
-				return (
-					printf_error_msg("minshell: export: `%': not a\
-valid identifier", argv + i, 1));
+			if (temp_ret == NULL_ENVIRONMENT_VAL)
+				temp_ret = export_env(argv[i]);
+			else if (temp_ret == BAD_ENVIRONMENT_KEY)
+				printf_error_msg("minshell: export: `%': not a\
+valid identifier", argv + i, 1);
+			else if (temp_ret != 0)
+				return (temp_ret);
 			i++;
 		}
 	}

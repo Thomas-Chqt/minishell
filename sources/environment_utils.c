@@ -6,7 +6,7 @@
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 17:24:55 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/20 15:55:43 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/22 10:49:40 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,12 @@ int	analize_keyval(const char *keyval, t_env_entry *result)
 		free(input.key);
 		free(input.value);
 		return (BAD_ENVIRONMENT_KEY);
+	}
+	if (input.value == NULL)
+	{
+		free(input.key);
+		free(input.value);
+		return (NULL_ENVIRONMENT_VAL);
 	}
 	*result = input;
 	return (0);
