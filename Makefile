@@ -6,83 +6,76 @@
 #    By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/23 21:17:34 by tchoquet          #+#    #+#              #
-#    Updated: 2023/07/23 23:28:02 by tchoquet         ###   ########.fr        #
+#    Updated: 2023/08/29 11:42:05 by tchoquet         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-ROOT			= .
-SRCS_DIR		= ${ROOT}/sources
-INCLUDES_DIR 	= ${ROOT}/includes
-BUILD_DIR		= ${ROOT}/.build
+ROOT				= .
+SRCS_DIR			= ${ROOT}/sources
+INCLUDES_DIR		= ${ROOT}/includes
+BUILD_DIR			= ${ROOT}/build
+LIBFT_DIR			= ${ROOT}/Libft
 
 SRC			= ${wildcard ${SRCS_DIR}/*.c}
 OBJ			= ${patsubst ${SRCS_DIR}%, ${BUILD_DIR}%, ${SRC:.c=.o}}
-OBJ_DEBUG	= ${OBJ:.o=_debug.o}
 
-CC						= gcc
+LIBFT			= ${LIBFT_DIR}/libft.a
+LIBFT_MEMCHEK	= ${LIBFT_DIR}/libft_memcheck.a
+
+CC						= cc
 CFLAGS					= -Wall -Wextra -Werror
-debug: CFLAGS			= -g -D MEMCHECK
-EXTERNAL_LIBS			= -l ft -l readline
-debug: EXTERNAL_LIBS	= -l ft_debug -l memory_leak_detector -l readline
-
+memcheck: CFLAGS 		+= -D MEMCHECK
+EXTERNAL_LIBS			= -l readline
+memcheck: EXTERNAL_LIBS += -l memory_leak_detector
 
 NAME		= ${ROOT}/minishell
-NAME_DEBUG	= ${ROOT}/minishell_debug
 
 
-.PHONY: all clean fclean re debug cleandebug fcleandebug redebug norm cleanbuild
+.PHONY: all memcheck clean fclean re 
 
 
 all: ${NAME}
 
-${NAME}: ${OBJ}
+${NAME}: ${LIBFT} ${OBJ}
 	@${CC} -o $@ $^ ${EXTERNAL_LIBS}
 	@echo "Executable created at $@."
 
+
+memcheck: ${LIBFT_MEMCHEK} ${OBJ}
+	@${CC} -o ${NAME} $^ ${EXTERNAL_LIBS}
+	@echo "Executable created at ${NAME}."
+
+
 clean:
-	@rm -rf ${OBJ}
-	@echo "Release object files in ${BUILD_DIR} deleted."
+	@make -C ${LIBFT_DIR} clean
+	@rm -rf ${BUILD_DIR}
+	@echo "${BUILD_DIR} deleted. (minishell)"
+
 
 fclean: clean
+	@rm -rf ${LIBFT}
+	@echo "${LIBFT} deleted."
+	@rm -rf ${LIBFT_MEMCHEK}
+	@echo "${LIBFT_MEMCHEK} deleted."
+	@rm -rf ${LIBFT_DIR}/libft.h
+	@echo "${LIBFT_DIR}/libft.h deleted."
 	@rm -rf ${NAME}
 	@echo "${NAME} deleted."
+
 
 re: fclean all
 
 
+${BUILD_DIR}/%.o: ${SRCS_DIR}/%.c | ${BUILD_DIR}
+	${CC} ${CFLAGS} -o $@ -c $< -I${INCLUDES_DIR} -I${LIBFT_DIR}
 
 
-debug: ${NAME_DEBUG}
+#Libft
+${LIBFT}:
+	@make -C ${LIBFT_DIR} all
 
-${NAME_DEBUG}: ${OBJ_DEBUG}
-	@${CC} -o $@ $^ ${EXTERNAL_LIBS}
-	@echo "Executable created at $@."
-
-cleandebug:
-	@rm -rf ${OBJ_DEBUG}
-	@echo "Debug object files in ${BUILD_DIR} deleted."
-
-fcleandebug: cleandebug
-	@rm -rf ${NAME_DEBUG}
-	@echo "${NAME_DEBUG} deleted."
-
-redebug: fcleandebug debug
-
-
-
-
-norm:
-	@norminette ${SRCS_DIR} ${INCLUDES_DIR}
-
-
-cleanbuild:
-	@rm -rf ${BUILD_DIR}
-	@echo "Build folder deleted."
-
-
-
-${BUILD_DIR}/%_debug.o ${BUILD_DIR}/%.o: ${SRCS_DIR}/%.c | ${BUILD_DIR}
-	${CC} ${CFLAGS} -o $@ -c $< -I${INCLUDES_DIR}
+${LIBFT_MEMCHEK}:
+	@make -C ${LIBFT_DIR} memcheck
 
 
 #folders
