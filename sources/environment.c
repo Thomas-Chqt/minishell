@@ -6,7 +6,7 @@
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 19:59:47 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/21 14:15:48 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/23 10:58:40 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ int	set_env(const char *key, const char *val, t_bool export)
 	founded = lstenv_chr(key, true);
 	if (founded == NULL)
 		return (MALLOC_ERROR);
+	free(founded->data->value);
 	founded->data->value = ft_strdup(val);
 	if (val != NULL && founded->data->value == NULL)
 		return (MALLOC_ERROR);
