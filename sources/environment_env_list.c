@@ -6,7 +6,7 @@
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 18:55:31 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/21 15:20:35 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/23 13:37:25 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ t_env_list	*lstenv_new(char *key, char *val, t_bool is_export)
 	{
 		new_node->data = malloc(sizeof(t_env_entry));
 		if (new_node->data != NULL)
-		{	
+		{
 			new_node->data->key = key;
 			new_node->data->value = val;
 			new_node->data->is_export = is_export;
@@ -45,7 +45,7 @@ t_env_list	*lstenv_new_single_str(const char *keyval, t_bool is_export)
 	{
 		new_node->data = malloc(sizeof(t_env_entry));
 		if (new_node->data != NULL)
-		{	
+		{
 			*(new_node->data) = str_to_env_entry(keyval);
 			new_node->data->is_export = is_export;
 			if (new_node->data->key != NULL)
