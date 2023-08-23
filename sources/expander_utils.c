@@ -6,14 +6,13 @@
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/19 15:38:06 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/20 18:57:27 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/23 13:19:22 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "expander.h"
 
-static int	add_next_str_2(char *str, t_uint64 *i, t_str_list **list,
-				t_bool dquoted);
+static int	add_next_str_2(char *str, t_uint64 *i, t_str_list **list);
 
 t_bool	is_end_nomal_token(char c)
 {
@@ -44,11 +43,10 @@ int	add_next_str(char *str, t_uint64 *i, t_str_list **list, t_bool dquoted)
 	temp_ret = exp_lstadd_bracket(str, i, list, !dquoted);
 	if (temp_ret != PARSING_ERROR)
 		return (temp_ret);
-	return (add_next_str_2(str, i, list, dquoted));
+	return (add_next_str_2(str, i, list));
 }
 
-static int	add_next_str_2(char *str, t_uint64 *i, t_str_list **list,
-				t_bool dquoted)
+static int	add_next_str_2(char *str, t_uint64 *i, t_str_list **list)
 {
 	int	temp_ret;
 

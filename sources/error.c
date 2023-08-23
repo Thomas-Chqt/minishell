@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 18:32:01 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/17 19:53:38 by sotanaka         ###   ########.fr       */
+/*   Updated: 2023/08/23 13:13:17 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "error.h"
-
-static char	*get_error_msg_buffer(void);
 
 int	print_error_msg(char *msg, int return_val)
 {

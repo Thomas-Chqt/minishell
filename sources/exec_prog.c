@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_prog.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hotph <hotph@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/13 15:01:43 by hotph             #+#    #+#             */
-/*   Updated: 2023/08/23 09:49:03 by hotph            ###   ########.fr       */
+/*   Updated: 2023/08/23 13:17:45 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ static int	get_fullpath(char *path, char *prog, t_exe *exe)
 	}
 	if (status != 0)
 		return (status);
-	status = check_cmdpath_hub(exe, prog);
+	status = check_cmdpath_hub(exe);
 	if (status != 0)
 		free_null((void **)&(exe->cmd_path));
 	return (status);

@@ -6,7 +6,7 @@
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 14:04:08 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/22 11:07:29 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/23 13:12:34 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "environment.h"
 
 static void	print_entry(void *v_entry);
-static int	check_args(int argc, char *argv[]);
+static int	check_args(char *argv[]);
 
 int	built_in_export(int argc, char *argv[])
 {
@@ -25,7 +25,7 @@ int	built_in_export(int argc, char *argv[])
 		ft_lstiter((t_list *)*(get_lstenv()), &print_entry);
 	else
 	{
-		if (check_args(argc, argv) != 0)
+		if (check_args(argv) != 0)
 			return (2);
 		i = 1;
 		while (i < (t_uint64)argc)
@@ -44,7 +44,7 @@ valid identifier", argv + i, 1);
 	return (0);
 }
 
-static int	check_args(int argc, char *argv[])
+static int	check_args(char *argv[])
 {
 	if (argv[1][0] == '-' && argv[1][1] != '\0')
 	{

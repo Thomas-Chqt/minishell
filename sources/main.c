@@ -6,7 +6,7 @@
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 20:57:27 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/18 17:16:26 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/23 13:19:47 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,9 @@ static void	destructor(void)
 #endif // MEMCHECK
 
 int	main(int argc, char *argv[], char *envp[])
-{
+{	
+	(void)argc;
+	(void)argv;
 	if (sig_interactive_mode() != 0)
 		return (print_error(SIGACTION_ERROR));
 	if (init_env(envp) != 0)

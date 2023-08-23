@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hotph <hotph@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/06 21:58:21 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/23 09:48:47 by hotph            ###   ########.fr       */
+/*   Updated: 2023/08/23 13:17:35 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int		path_is_envp(char *cmd, t_exe *exe);
 int		ft_access_wrap(char *path, int flag);
 int		ft_stat_wrap(char *path, int flag);
 int		check_cmdpath(char *cmd_path, int flag);
-int		check_cmdpath_hub(t_exe *exe, char *prog);
+int		check_cmdpath_hub(t_exe *exe);
 //exec_utils1
 char	*get_cmd_path(t_ast *node, int *error);
 char	*get_cmd_prog(t_ast *node, int *error);

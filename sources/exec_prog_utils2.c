@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_prog_utils2.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hotph <hotph@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/04 17:42:46 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/08/23 09:49:02 by hotph            ###   ########.fr       */
+/*   Updated: 2023/08/23 13:17:40 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ int	check_cmdpath(char *cmd_path, int flag)
 	return (1);
 }
 
-int	check_cmdpath_hub(t_exe *exe, char *prog)
+int	check_cmdpath_hub(t_exe *exe)
 {
 	if (check_cmdpath(exe->cmd_path, ACCESS_FOK) == 1)
 		return (printf_error_msg("minishell: %: No such file or directory",

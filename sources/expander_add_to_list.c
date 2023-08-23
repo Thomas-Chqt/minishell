@@ -6,7 +6,7 @@
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/19 13:33:02 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/20 18:50:45 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/23 13:18:46 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,6 @@ int	exp_lstadd_no_bracket(char *str, t_uint64 *i, t_str_list **list)
 {
 	size_t	token_len;
 	int		temp_ret;
-	char	temp_str;
 
 	if (str[*i] != '$' || (!ft_isalnum(str[(*i) + 1]) && str[(*i) + 1] != '_'))
 		return (PARSING_ERROR);
