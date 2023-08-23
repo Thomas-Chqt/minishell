@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 20:57:27 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/23 13:31:13 by sotanaka         ###   ########.fr       */
+/*   Updated: 2023/08/23 13:37:14 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static void	destructor(void)
 #endif // MEMCHECK
 
 int	main(int argc, char *argv[], char *envp[])
-{	
+{
 	(void)argc;
 	(void)argv;
 	if (sig_interactive_mode() != 0)
