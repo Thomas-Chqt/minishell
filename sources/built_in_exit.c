@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_in_exit.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hotph <hotph@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/18 14:38:58 by hotph             #+#    #+#             */
-/*   Updated: 2023/08/23 09:48:55 by hotph            ###   ########.fr       */
+/*   Updated: 2023/08/23 13:07:06 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ static void	exit_parent(int status, t_ast *ast, t_exe *exe)
 	clean_ast(ast);
 	free(exe->cmd_path);
 	free(exe->cmd_opts);
+	ft_putstr_fd("exit\n", 1);
 	if (status != -1)
 		exit(status);
 	exit (get_last_error());
