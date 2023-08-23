@@ -6,25 +6,24 @@
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 14:09:39 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/21 15:25:48 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/23 13:13:02 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtin.h"
 #include "environment.h"
 
-static int	check_args(int argc, char *argv[]);
+static int	check_args(char *argv[]);
 
 int	built_in_unset(int argc, char *argv[])
 {
 	t_uint64	i;
-	int			temp_ret;
 
 	if (argc <= 1)
 		return (0);
 	else
 	{
-		if (check_args(argc, argv) != 0)
+		if (check_args(argv) != 0)
 			return (2);
 		i = 1;
 		while (i < (t_uint64)argc)
@@ -39,7 +38,7 @@ valid identifier", argv + i, 1));
 	return (0);
 }
 
-static int	check_args(int argc, char *argv[])
+static int	check_args(char *argv[])
 {
 	if (argv[1][0] == '-' && argv[1][1] != '\0')
 	{

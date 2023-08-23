@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   exec_do_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hotph <hotph@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 15:00:18 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/08/23 09:48:58 by hotph            ###   ########.fr       */
+/*   Updated: 2023/08/23 13:14:18 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtin.h"
 
-static int	with_redirect(t_exe *exe, t_ast *node)
+static int	with_redirect(t_exe *exe)
 {
 	int	status;
 	int	copy_stdout;
@@ -47,7 +47,7 @@ int	is_builtin(t_exe *exe, t_ast *node)
 		|| exe->flag_builtin == BUILTIN_PWD
 		|| exe->flag_builtin == BUILTIN_ENV
 		|| exe->flag_builtin == BUILTIN_EXPORT)
-		return (with_redirect(exe, node));
+		return (with_redirect(exe));
 	else if (exe->flag_builtin == BUILTIN_CD)
 		return (built_in_cd(exe));
 	if (exe->flag_builtin == BUILTIN_UNSET)
