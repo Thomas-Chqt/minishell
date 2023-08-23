@@ -3,26 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   exec_prog_utils1.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 14:50:40 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/08/23 13:16:09 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/23 20:38:40 by sotanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 #include "environment.h"
 
-static char	**split_wrap(char **matrix, char token)
+static char	**split_wrap(char **matrix, char token, int *error_code)
 {
 	char	*tmp;
 
-	tmp = get_env("PATH", NULL);
+	tmp = get_env("PATH", error_code);
 	if (tmp == NULL)
-	{
-		print_error_msg("Error: 'PATH' not found", 1);
 		return (NULL);
-	}
 	matrix = ft_split(tmp, token);
 	if (matrix == NULL)
 	{
@@ -51,16 +48,28 @@ static int	make_potential_path(t_exe *exe, char *envpath, char *cmd)
 	return (0);
 }
 
+static int	key_path_notfound(int error_code, char *cmd, char **cmd_path)
+{
+	if (error_code == MALLOC_ERROR)
+		return (1);
+	else
+		*cmd_path = ft_strdup(cmd);
+	if (*cmd_path == NULL)
+		return (print_error(MALLOC_ERROR));
+	return (0);
+}
+
 int	path_is_envp(char *cmd, t_exe *exe)
 {
 	size_t	i;
+	int		error_code;
 
 	if (*cmd == '\0')
 		return (CMD_NOTFOUND);
 	i = 0;
-	exe->matrix_envpath = split_wrap(exe->matrix_envpath, ':');
+	exe->matrix_envpath = split_wrap(exe->matrix_envpath, ':', &error_code);
 	if (exe->matrix_envpath == NULL)
-		return (1);
+		return (key_path_notfound(error_code, cmd, &(exe->cmd_path)));
 	while (exe->matrix_envpath[i] != NULL)
 	{
 		if (make_potential_path(exe, exe->matrix_envpath[i++], cmd) != 0)
