@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_redirect.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: hotph <hotph@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/13 12:21:58 by hotph             #+#    #+#             */
-/*   Updated: 2023/08/21 11:28:04 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/23 09:49:06 by hotph            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ static int	ft_open_file(char *file_redirect, int flag_redirect, int *fd_io)
 	}
 }
 
-int	scan_btree_io(t_dexec *dexec, t_ast *node)
+int	scan_btree_io(t_exe *exe, t_ast *node)
 {
 	int	status;
 
@@ -103,17 +103,17 @@ int	scan_btree_io(t_dexec *dexec, t_ast *node)
 		return (0);
 	if (node->data->type == LESS)
 		status
-			= ft_open_file(node->left->data->data, LESS, &(dexec->fd_in));
+			= ft_open_file(node->left->data->data, LESS, &(exe->fd_in));
 	else if (node->data->type == GREAT)
 		status
-			= ft_open_file(node->left->data->data, GREAT, &(dexec->fd_out));
+			= ft_open_file(node->left->data->data, GREAT, &(exe->fd_out));
 	else if (node->data->type == DGREAT)
 		status
-			= ft_open_file(node->left->data->data, DGREAT, &(dexec->fd_out));
+			= ft_open_file(node->left->data->data, DGREAT, &(exe->fd_out));
 	else if (node->data->type == DLESS)
 		status
-			= ft_here_doc(node->left->data->data, &(dexec->fd_in));
+			= ft_here_doc(node->left->data->data, &(exe->fd_in));
 	if (status != 0)
 		return (status);
-	return (scan_btree_io(dexec, node->right));
+	return (scan_btree_io(exe, node->right));
 }
