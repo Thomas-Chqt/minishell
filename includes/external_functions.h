@@ -6,7 +6,7 @@
 /*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 22:54:17 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/21 11:31:36 by sotanaka         ###   ########.fr       */
+/*   Updated: 2023/08/23 13:11:56 by sotanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@
 # define STDIN_FILENO 0
 # define STDOUT_FILENO 1
 # define STDERR_FILENO 2
-
 # define F_OK 0
 # define X_OK 1
 # define W_OK 2
@@ -41,33 +40,25 @@ int		system(const char *command);
 typedef int	t_pid;
 
 char	*readline(const char *prompt);
-
 // rl_clear_history
 
 int		rl_on_new_line(void);
 void	rl_replace_line(const char *text, int clear_undo);
 void	rl_redisplay(void);
 void	add_history(const char *str);
-
-// printf
-
+int		printf(const char *format, ...);
 void	*malloc(size_t size);
 void	free(void *ptr);
-
 long	write(int fildes, const void *buf, size_t nbyte);
-
 int		access(const char *path, int permision);
-
 // int		open(const char *pathname, int flags);
 // read,
 
 int		close(int fildes);
 t_pid	fork(void);
-
 // wait
 
 pid_t	waitpid(pid_t pid, int *stat_loc, int options);
-
 // wait3
 // wait4
 // signal,
@@ -78,39 +69,31 @@ pid_t	waitpid(pid_t pid, int *stat_loc, int options);
 
 void	exit(int status);
 char	*getcwd(char *buf, size_t size);
-
 int		chdir(const char *path);
-
 int		stat(const char *path, struct stat *buf);
-
 // lstat
 // fstat
 // unlink
 
 int		execve(const char *path, char *const argv[], char *const envp[]);
-
 int		dup(int fildes);
 int		dup2(int fildes, int fildes2);
 int		pipe(int pipefd[2]);
-
 // opendir
 // readdir
-// closedir,
+// closedir
+
 char	*strerror(int errnum);
-
 void	perror(const char *s);
-
 // isatty
 // ttyname
 // ttyslot
-// ioctl,
-
+// ioctl
 // char	*getenv(const char *name);
-
 // tcsetattr
 // tcgetattr
 // tgetent
-// tgetflag,
+// tgetflag
 // tgetnum
 // tgetstr
 // tgoto

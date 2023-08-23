@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_in_export.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 14:04:08 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/22 11:07:29 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/23 13:05:54 by sotanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,9 +65,9 @@ static void	print_entry(void *v_entry)
 	entry = (t_env_entry *)v_entry;
 	if (entry->is_export == true)
 	{
-		ft_printf("declare -x %s", entry->key);
+		printf("declare -x %s", entry->key);
 		if (entry->value != NULL)
-			ft_printf("=\"%s\"", entry->value);
-		ft_printf("\n");
+			printf("=\"%s\"", entry->value);
+		printf("\n");
 	}
 }
