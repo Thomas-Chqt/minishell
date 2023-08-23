@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   built_in_pwd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hotph <hotph@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/19 13:52:27 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/08/21 12:24:42 by sotanaka         ###   ########.fr       */
+/*   Updated: 2023/08/23 09:48:57 by hotph            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtin.h"
 
-int	built_in_pwd(t_dexec *dexec)
+int	built_in_pwd(t_exe *exe)
 {
 	char	*cwd;
 
@@ -21,7 +21,7 @@ int	built_in_pwd(t_dexec *dexec)
 		exit (perror_wrap("minishell: cd: ", 1));
 	ft_printf("%s\n", cwd);
 	free(cwd);
-	if (dexec->flag_pipe == 0)
+	if (exe->flag_pipe == 0)
 		return (0);
 	exit (0);
 }

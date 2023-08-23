@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_do.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: hotph <hotph@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/30 13:32:49 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/08/21 17:13:46 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/23 09:48:59 by hotph            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,29 +29,29 @@ static int	is_standard(char *cmd_path, char **cmd_opts, char **envp)
 	return (1);
 }
 
-static void	at_child(t_dexec *dexec, t_ast *node)
+static void	at_child(t_exe *exe, t_ast *node)
 {
 	int		exit_val;
 
-	exit_val = set_redirect(dexec);
+	exit_val = set_redirect(exe);
 	if (exit_val != 0)
 		exit(exit_val);
 	if (node->data != NULL && node->data->type == TEXT)
 	{
-		if (dexec->flag_builtin > 0)
-			exit_val = is_builtin(dexec, node);
+		if (exe->flag_builtin > 0)
+			exit_val = is_builtin(exe, node);
 		else
-			exit_val = is_standard(dexec->cmd_path, dexec->cmd_opts,
+			exit_val = is_standard(exe->cmd_path, exe->cmd_opts,
 					get_envp());
 	}
 	exit(exit_val);
 }
 
-static int	at_parent(t_dexec *dexec, int pid, int flag)
+static int	at_parent(t_exe *exe, int pid, int flag)
 {
 	int	status;
 
-	status = fd_close(dexec->fd_in, dexec->fd_out);
+	status = fd_close(exe->fd_in, exe->fd_out);
 	if (status != 0)
 		return (perror_wrap("at_parent fd_close", 1));
 	if (flag <= 1)
@@ -64,24 +64,24 @@ static int	at_parent(t_dexec *dexec, int pid, int flag)
 	return (status);
 }
 
-int	exec_do(t_dexec *dexec, t_ast *node, int flag)
+int	exec_do(t_exe *exe, t_ast *node, int flag)
 {
 	int		pid;
 	int		status;
 
 	pid = 0;
 	status = 0;
-	if (dexec->flag_pipe == 0 && dexec->flag_builtin > 0)
-		status = is_builtin(dexec, node);
+	if (exe->flag_pipe == 0 && exe->flag_builtin > 0)
+		status = is_builtin(exe, node);
 	else
 	{
 		pid = fork();
 		if (pid == -1)
 			return (perror_wrap("exec_do fork", 1));
 		else if (pid == 0)
-			at_child(dexec, node);
+			at_child(exe, node);
 	}
 	if (pid > 0)
-		status = at_parent(dexec, pid, flag);
+		status = at_parent(exe, pid, flag);
 	return (status);
 }

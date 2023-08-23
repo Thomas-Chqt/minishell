@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_prog_utils1.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: hotph <hotph@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 14:50:40 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/08/18 17:12:16 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/23 09:49:00 by hotph            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,15 +35,15 @@ static char	**split_wrap(char **matrix, char token)
 	return (matrix);
 }
 
-static int	make_potential_path(t_dexec *dexec, char *envpath, char *cmd)
+static int	make_potential_path(t_exe *exe, char *envpath, char *cmd)
 {
 	char	*pre_path;
 
 	pre_path = ft_strjoin(envpath, "/");
 	if (pre_path == NULL)
 		return (print_error(MALLOC_ERROR));
-	dexec->cmd_path = ft_strjoin(pre_path, cmd);
-	if (dexec->cmd_path == NULL)
+	exe->cmd_path = ft_strjoin(pre_path, cmd);
+	if (exe->cmd_path == NULL)
 	{
 		free(pre_path);
 		return (print_error(MALLOC_ERROR));
@@ -52,23 +52,23 @@ static int	make_potential_path(t_dexec *dexec, char *envpath, char *cmd)
 	return (0);
 }
 
-int	path_is_envp(char *cmd, t_dexec *dexec)
+int	path_is_envp(char *cmd, t_exe *exe)
 {
 	size_t	i;
 
 	if (*cmd == '\0')
 		return (CMD_NOTFOUND);
 	i = 0;
-	dexec->matrix_envpath = split_wrap(dexec->matrix_envpath, ':');
-	if (dexec->matrix_envpath == NULL)
+	exe->matrix_envpath = split_wrap(exe->matrix_envpath, ':');
+	if (exe->matrix_envpath == NULL)
 		return (1);
-	while (dexec->matrix_envpath[i] != NULL)
+	while (exe->matrix_envpath[i] != NULL)
 	{
-		if (make_potential_path(dexec, dexec->matrix_envpath[i++], cmd) != 0)
+		if (make_potential_path(exe, exe->matrix_envpath[i++], cmd) != 0)
 			return (1);
-		if (check_cmdpath(dexec->cmd_path, ACCESS_FOK) == 0)
+		if (check_cmdpath(exe->cmd_path, ACCESS_FOK) == 0)
 			return (0);
-		free_null((void **)&(dexec->cmd_path));
+		free_null((void **)&(exe->cmd_path));
 	}
 	return (CMD_NOTFOUND);
 }

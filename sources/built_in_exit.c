@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_in_exit.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hotph <hotph@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/18 14:38:58 by hotph             #+#    #+#             */
-/*   Updated: 2023/08/21 12:38:13 by sotanaka         ###   ########.fr       */
+/*   Updated: 2023/08/23 09:48:55 by hotph            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,38 +41,38 @@ static int	check_arg(char *str, int argc)
 	return (status);
 }
 
-static void	exit_parent(int status, t_ast *ast, t_dexec *dexec)
+static void	exit_parent(int status, t_ast *ast, t_exe *exe)
 {
 	clear_env();
 	clean_ast(ast);
-	free(dexec->cmd_path);
-	free(dexec->cmd_opts);
+	free(exe->cmd_path);
+	free(exe->cmd_opts);
 	if (status != -1)
 		exit(status);
 	exit (get_last_error());
 }
 
-int	built_in_exit(t_dexec *dexec, t_ast *node)
+int	built_in_exit(t_exe *exe, t_ast *node)
 {
 	int	status;
 
-	status = check_arg(dexec->cmd_opts[1], get_argc(node));
-	if (dexec->flag_pipe == 0)
+	status = check_arg(exe->cmd_opts[1], get_argc(node));
+	if (exe->flag_pipe == 0)
 	{
-		if (status == 0 && dexec->cmd_opts[1] == NULL)
-			exit_parent (-1, node, dexec);
+		if (status == 0 && exe->cmd_opts[1] == NULL)
+			exit_parent (-1, node, exe);
 		else if (status == 0)
-			exit_parent ((t_uint8)ft_atoi(dexec->cmd_opts[1]), node, dexec);
+			exit_parent ((t_uint8)ft_atoi(exe->cmd_opts[1]), node, exe);
 		else if (status == 2)
-			exit_parent (2, node, dexec);
+			exit_parent (2, node, exe);
 		return (-1);
 	}
 	else
 	{
-		if (status == 0 && dexec->cmd_opts[1] == NULL)
+		if (status == 0 && exe->cmd_opts[1] == NULL)
 			exit (get_last_error());
 		else if (status == 0)
-			exit ((t_uint8)ft_atoi(dexec->cmd_opts[1]));
+			exit ((t_uint8)ft_atoi(exe->cmd_opts[1]));
 		else if (status == 2)
 			exit (2);
 		exit (1);

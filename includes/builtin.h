@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: hotph <hotph@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 13:23:23 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/08/21 14:44:07 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/23 09:48:46 by hotph            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,13 @@
 # define BUILTIN_EXIT 7
 
 //-------prototype-------
-int		built_in_echo(t_dexec *dexec);
-int		built_in_cd(t_dexec *dexec);
-int		built_in_pwd(t_dexec *dexec);
+int		built_in_echo(t_exe *exe);
+int		built_in_cd(t_exe *exe);
+int		built_in_pwd(t_exe *exe);
 int		built_in_export(int argc, char *argv[]);
 int		built_in_unset(int argc, char *argv[]);
 int		built_in_env(int argc, char *argv[]);
-int		built_in_exit(t_dexec *dexec, t_ast *node);
-int		is_builtin(t_dexec *dexec, t_ast *node);
+int		built_in_exit(t_exe *exe, t_ast *node);
+int		is_builtin(t_exe *exe, t_ast *node);
 
 #endif

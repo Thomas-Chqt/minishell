@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hotph <hotph@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/06 21:58:21 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/22 14:52:26 by sotanaka         ###   ########.fr       */
+/*   Updated: 2023/08/23 09:48:47 by hotph            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@
 # include "signals.h"
 
 //-------typedef-------
-typedef struct s_dexec
+typedef struct s_exe
 {
 	char	**matrix_envpath;
 	char	*cmd_path;
@@ -44,41 +44,41 @@ typedef struct s_dexec
 	int		flag_pipe;
 	int		flag_pipe_close;
 	int		flag_builtin;
-}	t_dexec;
+}	t_exe;
 
 typedef struct s_intr
 {
 	int		*pipe;
-	int		flag_wait;
 	int		flag_pipe;
 }	t_intr;
 
 //-------prototype-------
 //redirect
-int		scan_btree_io(t_dexec *dexec, t_ast *node);
+int		scan_btree_io(t_exe *exe, t_ast *node);
 //prog
-int		scan_path_prog(t_dexec *dexec, t_ast *node);
+int		scan_path_prog(t_exe *exe, t_ast *node);
 //prog util1
 int		directory_is(char *path);
-int		path_is_envp(char *cmd, t_dexec *dexec);
+int		path_is_envp(char *cmd, t_exe *exe);
 //prog util2
 int		ft_access_wrap(char *path, int flag);
 int		ft_stat_wrap(char *path, int flag);
 int		check_cmdpath(char *cmd_path, int flag);
-int		check_cmdpath_hub(t_dexec *dexec, char *prog);
+int		check_cmdpath_hub(t_exe *exe, char *prog);
 //exec_utils1
 char	*get_cmd_path(t_ast *node, int *error);
 char	*get_cmd_prog(t_ast *node, int *error);
 char	**get_argv(t_ast *node);
 int		get_argc(t_ast *node);
 //exec_utils2
-void	init_dexec(int fd_in, int fd_out, t_dexec *dexec, t_intr *intr);
-int		end_with_fd_close(t_dexec *dexec, int status);
+void	init_intr(t_intr *intr, int flag_pipe);
+void	init_exe(int fd_in, int fd_out, t_exe *exe, t_intr *intr);
+int		end_with_fd_close(t_exe *exe, int status);
 int		scan_environment(t_ast *node);
 //do
-int		exec_do(t_dexec *dexec, t_ast *node, int flag);
+int		exec_do(t_exe *exe, t_ast *node, int flag);
 //do utils
 int		fd_close(int fd_in, int fd_out);
-int		set_redirect(t_dexec *dexec);
+int		set_redirect(t_exe *exe);
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_in_cd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hotph <hotph@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 12:31:07 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/08/22 18:46:42 by sotanaka         ###   ########.fr       */
+/*   Updated: 2023/08/23 10:26:38 by hotph            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,19 +20,19 @@ static int	return_or_exit(int val, int flag)
 	exit(val);
 }
 
-static int	cd_check_path(t_dexec *dexec)
+static int	cd_check_path(t_exe *exe)
 {
-	if (dexec->cmd_opts[1] == NULL)
+	if (exe->cmd_opts[1] == NULL)
 		return (0);
-	if (ft_access_wrap(dexec->cmd_opts[1], ACCESS_FOK) == false)
+	if (ft_access_wrap(exe->cmd_opts[1], ACCESS_FOK) == false)
 		return (printf_error_msg("minishell: cd: %: No such file or directory",
-				(dexec->cmd_opts + 1), EX_FILE_OPEN_ERR));
-	else if (ft_stat_wrap(dexec->cmd_opts[1], STAT_ISDIR) == false)
+				(exe->cmd_opts + 1), EX_FILE_OPEN_ERR));
+	else if (ft_stat_wrap(exe->cmd_opts[1], STAT_ISDIR) == false)
 		return (printf_error_msg("minishell: cd: %: Not a directory",
-				(dexec->cmd_opts + 1), EX_FILE_OPEN_ERR));
-	else if (ft_access_wrap(dexec->cmd_opts[1], ACCESS_XOK) == false)
+				(exe->cmd_opts + 1), EX_FILE_OPEN_ERR));
+	else if (ft_access_wrap(exe->cmd_opts[1], ACCESS_XOK) == false)
 		return (printf_error_msg("minishell: cd: %: Permission denied",
-				(dexec->cmd_opts + 1), EX_FILE_OPEN_ERR));
+				(exe->cmd_opts + 1), EX_FILE_OPEN_ERR));
 	return (0);
 }
 
@@ -47,35 +47,35 @@ static int	set_env_key(char *key)
 	status = set_env(key, cwd, true);
 	free(cwd);
 	if (status == MALLOC_ERROR)
-			return (print_error(MALLOC_ERROR));
+		return (print_error(MALLOC_ERROR));
 	else if (status == BAD_ENVIRONMENT_KEY)
-			printf_error_msg("minshell: cd: %': not a\
+		printf_error_msg("minshell: cd: %': not a\
 valid identifier", &key, 1);
 	return (status);
 }
 
-int	built_in_cd(t_dexec *dexec)
+int	built_in_cd(t_exe *exe)
 {
 	int		status;
 	char	*path;
 
-	status = cd_check_path(dexec);
+	status = cd_check_path(exe);
 	if (status != 0)
-		return (return_or_exit(status, dexec->flag_pipe));
+		return (return_or_exit(status, exe->flag_pipe));
 	status = set_env_key("OLDPWD");
 	if (status != 0)
-		return (return_or_exit(status, dexec->flag_pipe));
-	if (dexec->cmd_opts[1] == NULL)
+		return (return_or_exit(status, exe->flag_pipe));
+	if (exe->cmd_opts[1] == NULL)
 	{
 		path = get_env("HOME", NULL);
 		if (chdir(path) != 0)
 			status = perror_wrap("minishell: cd: ", 1);
 		free(path);
 	}
-	else if (chdir(dexec->cmd_opts[1]) != 0)
+	else if (chdir(exe->cmd_opts[1]) != 0)
 		status = perror_wrap("minishell: cd: ", 1);
 	if (status != 0)
-		return (return_or_exit(status, dexec->flag_pipe));
+		return (return_or_exit(status, exe->flag_pipe));
 	status = set_env_key("PWD");
-	return (return_or_exit(status, dexec->flag_pipe));
+	return (return_or_exit(status, exe->flag_pipe));
 }

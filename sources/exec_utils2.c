@@ -3,32 +3,38 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hotph <hotph@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 18:16:36 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/08/22 15:56:15 by sotanaka         ###   ########.fr       */
+/*   Updated: 2023/08/23 09:49:07 by hotph            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 #include "environment.h"
 
-void	init_dexec(int fd_in, int fd_out, t_dexec *dexec, t_intr *intr)
+void	init_intr(t_intr *intr, int flag_pipe)
 {
-	dexec->matrix_envpath = NULL;
-	dexec->cmd_path = NULL;
-	dexec->cmd_opts = NULL;
-	dexec->fd_in = fd_in;
-	dexec->fd_out = fd_out;
-	dexec->flag_pipe_close = 0;
-	dexec->pipe = intr->pipe;
-	dexec->flag_pipe = intr->flag_pipe;
-	dexec->flag_builtin = -1;
+	intr->flag_pipe = flag_pipe;
+	intr->pipe = NULL;
 }
 
-int	end_with_fd_close(t_dexec *dexec, int status)
+void	init_exe(int fd_in, int fd_out, t_exe *exe, t_intr *intr)
 {
-	if (fd_close(dexec->fd_in, dexec->fd_out) != 0)
+	exe->matrix_envpath = NULL;
+	exe->cmd_path = NULL;
+	exe->cmd_opts = NULL;
+	exe->fd_in = fd_in;
+	exe->fd_out = fd_out;
+	exe->flag_pipe_close = 0;
+	exe->pipe = intr->pipe;
+	exe->flag_pipe = intr->flag_pipe;
+	exe->flag_builtin = -1;
+}
+
+int	end_with_fd_close(t_exe *exe, int status)
+{
+	if (fd_close(exe->fd_in, exe->fd_out) != 0)
 		return (perror_wrap("scan cmd fd_close", 1));
 	return (status);
 }
