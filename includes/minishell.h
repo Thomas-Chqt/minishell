@@ -6,7 +6,7 @@
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 20:57:41 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/21 11:38:36 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/23 18:47:28 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,15 +20,11 @@
 #  include <memory_leak_detector.h>
 # endif // MEMCHECK
 
-typedef struct s_toklist	t_toklist;
-typedef struct s_ast		t_ast;
+typedef struct s_ast	t_ast;
 
 void		minishell_loop(void);
 
 t_ast		*parse_cmd(const char *cmd);
 int			execute_ast(t_ast *ast);
-
-int			env(int argc, char *argv[]);
-int			export(int argc, char *argv[]);
 
 #endif // MINISHELL_H

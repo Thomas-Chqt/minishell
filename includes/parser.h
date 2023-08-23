@@ -6,7 +6,7 @@
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 15:01:56 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/21 11:38:46 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/23 18:47:21 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 
 # include "lexer.h"
 
-typedef struct s_ast		t_ast;
+typedef struct s_ast	t_ast;
 
 struct s_ast
 {

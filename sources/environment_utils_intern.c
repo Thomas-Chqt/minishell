@@ -1,32 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   environment_env_list_utils.c                       :+:      :+:    :+:   */
+/*   environment_utils_intern.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/05 17:27:31 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/21 15:28:21 by tchoquet         ###   ########.fr       */
+/*   Created: 2023/08/24 12:14:55 by tchoquet          #+#    #+#             */
+/*   Updated: 2023/08/24 14:22:56 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "environment.h"
 
-t_env_list	**get_lstenv(void)
+t_bool	is_valid_env_key(const char *str)
 {
-	static t_env_list	*env_list = NULL;
+	size_t	key_len;
 
-	return (&env_list);
+	key_len = valid_key_len(str);
+	if (key_len == 0 || str[key_len - 1] != '\0')
+		return (false);
+	return (true);
 }
 
-t_bool	is_env_key_equal(void *v_entry, void *v_key)
+char	*set_error_return(int *error, int value)
 {
-	t_env_entry	*entry;
-	char		*key;
-
-	entry = (t_env_entry *)v_entry;
-	key = (char *)v_key;
-	return (str_cmp(entry->key, key) == 0);
+	if (error != NULL)
+		*error = value;
+	return (NULL);
 }
 
 char	*env_entry_to_str(t_env_entry entry)
@@ -65,14 +65,4 @@ t_env_entry	str_to_env_entry(const char *str)
 		return ((t_env_entry){.key = NULL, .value = NULL});
 	}
 	return ((t_env_entry){.key = key, .value = val});
-}
-
-void	delete_entry(void *v_entry)
-{
-	t_env_entry	*entry;
-
-	entry = (t_env_entry *)v_entry;
-	free(entry->key);
-	free(entry->value);
-	free(entry);
 }

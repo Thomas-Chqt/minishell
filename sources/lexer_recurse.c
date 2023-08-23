@@ -6,7 +6,7 @@
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 19:35:46 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/21 15:32:13 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/23 18:41:21 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	recurse_full_cmd(const char *cmd, t_uint64 *i, t_toklist **list)
 		}
 	}
 	if (error != 0)
-		clean_toklist(&new_list);
+		ft_lstclear((t_list **)new_list, &free_token);
 	else
 		ft_lstadd_back((t_list **)list, (t_list *)new_list);
 	return (error);
@@ -75,7 +75,7 @@ static int	recurse_simple_cmd(const char *cmd, t_uint64 *i, t_toklist **list)
 			return (0);
 		}
 	}
-	clean_toklist(&new_list);
+	ft_lstclear((t_list **)new_list, &free_token);
 	return (error);
 }
 
@@ -96,7 +96,7 @@ static int	recurse_io_list(const char *cmd, t_uint64 *i, t_toklist **list)
 			ft_lstadd_back((t_list **)list, (t_list *)new_list);
 			return (0);
 		}
-		clean_toklist(&new_list);
+		ft_lstclear((t_list **)new_list, &free_token);
 	}
 	return (error);
 }
@@ -120,7 +120,7 @@ static int	recurse_io_file(const char *cmd, t_uint64 *i, t_toklist **list)
 			ft_lstadd_back((t_list **)list, (t_list *)new_list);
 			return (0);
 		}
-		clean_toklist(&new_list);
+		ft_lstclear((t_list **)new_list, &free_token);
 		(*i) = save_i;
 	}
 	return (error);
@@ -143,7 +143,7 @@ static int	recurse_text_list(const char *cmd, t_uint64 *i, t_toklist **list)
 			ft_lstadd_back((t_list **)list, (t_list *)new_list);
 			return (0);
 		}
-		clean_toklist(&new_list);
+		ft_lstclear((t_list **)new_list, &free_token);
 	}
 	return (error);
 }

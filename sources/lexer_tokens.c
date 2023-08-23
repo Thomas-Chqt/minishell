@@ -6,15 +6,15 @@
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 15:31:29 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/21 12:22:14 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/23 18:52:00 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
 
-t_toklist	*toklist_new(t_token_type type, char *data);
+static t_toklist	*toklist_new(t_token_type type, char *data);
 
-int			set_text_token_len(const char *cmd, size_t *len);
+int					set_text_token_len(const char *cmd, size_t *len);
 
 int	toklist_text_new(const char *cmd, t_uint64 *i, t_toklist **list)
 {
@@ -72,4 +72,25 @@ int	toklist_io_new(const char *cmd, t_uint64 *i, t_toklist **list)
 		(*i)++;
 	ft_lstadd_back((t_list **)list, (t_list *)new_node);
 	return (0);
+}
+
+static t_toklist	*toklist_new(t_token_type type, char *data)
+{
+	t_token		*new_token;
+	t_toklist	*new_node;
+
+	if (type == TEXT && data == NULL)
+		return (NULL);
+	new_token = malloc(sizeof(t_token));
+	if (new_token != NULL)
+	{
+		new_token->type = type;
+		new_token->data = data;
+		new_node = (t_toklist *)ft_lstnew((void *)new_token);
+		if (new_node != NULL)
+			return (new_node);
+		free(new_token);
+	}
+	free(data);
+	return (NULL);
 }

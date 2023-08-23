@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hotph <hotph@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 18:16:36 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/08/23 09:49:07 by hotph            ###   ########.fr       */
+/*   Updated: 2023/08/24 14:28:40 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	scan_environment(t_ast *node)
 {
 	if (node->data != NULL && node->data->type == TEXT)
 	{
-		if (is_valid_keyval(node->data->data) == true)
+		if (is_valid_keyval(node->data->data) == 0)
 			return (1);
 	}
 	return (0);
