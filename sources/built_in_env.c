@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_in_env.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/05 14:45:34 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/20 15:56:28 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/23 13:05:54 by sotanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	built_in_env(int argc, char *argv[])
 		}
 		return (0);
 	}
-	ft_printf("env: %s: No such file or directory", argv[1]);
+	printf("env: %s: No such file or directory", argv[1]);
 	return (NO_SUCH_FILE_DIR);
 }
 
@@ -48,7 +48,7 @@ static int	print_envp(void)
 	i = 0;
 	while (envp[i] != NULL)
 	{
-		ft_printf("%s\n", envp[i]);
+		printf("%s\n", envp[i]);
 		free(envp[i]);
 		i++;
 	}
