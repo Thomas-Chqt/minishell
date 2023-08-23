@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_redirect.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hotph <hotph@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/13 12:21:58 by hotph             #+#    #+#             */
-/*   Updated: 2023/08/23 09:49:06 by hotph            ###   ########.fr       */
+/*   Updated: 2023/08/23 13:18:34 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,7 @@ int	scan_btree_io(t_exe *exe, t_ast *node)
 {
 	int	status;
 
+	status = 0;
 	if (node == NULL)
 		return (0);
 	if (node->data->type == LESS)

@@ -6,7 +6,7 @@
 /*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 20:57:27 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/23 13:05:54 by sotanaka         ###   ########.fr       */
+/*   Updated: 2023/08/23 13:31:13 by sotanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,9 @@ static void	destructor(void)
 #endif // MEMCHECK
 
 int	main(int argc, char *argv[], char *envp[])
-{
+{	
+	(void)argc;
+	(void)argv;
 	if (sig_interactive_mode() != 0)
 		return (print_error(SIGACTION_ERROR));
 	if (init_env(envp) != 0)

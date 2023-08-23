@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_prog_utils1.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hotph <hotph@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 14:50:40 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/08/23 09:49:00 by hotph            ###   ########.fr       */
+/*   Updated: 2023/08/23 13:16:09 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 
 static char	**split_wrap(char **matrix, char token)
 {
-	size_t	i;
 	char	*tmp;
 
 	tmp = get_env("PATH", NULL);
@@ -78,6 +77,7 @@ int	directory_is(char *path)
 	int		status;
 	char	*cpy;
 
+	status = 0;
 	cpy = ft_strdup(path);
 	if (cpy == NULL)
 		return (print_error(MALLOC_ERROR));
