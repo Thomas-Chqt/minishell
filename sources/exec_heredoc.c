@@ -6,7 +6,7 @@
 /*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/24 13:24:07 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/08/24 20:02:03 by sotanaka         ###   ########.fr       */
+/*   Updated: 2023/08/24 20:13:12 by sotanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,12 +55,12 @@ int	ft_here_doc(char *delimiter, int *fd_in)
 {
 	int		pid;
 	int		status;
-	char	filename[16];
+	char	filename[15];
 
 	if (sig_heredoc_parent_mode() != 0)
 		return (print_error(SIGACTION_ERROR));
 	if (ft_open_file(get_temporary_name10
-			(filename, "tmp_minishell", 16), GREAT, fd_in) == 1)
+			(filename, ".TMPminishell", 15), GREAT, fd_in) == 1)
 		return (1);
 	pid = fork();
 	if (pid == -1)

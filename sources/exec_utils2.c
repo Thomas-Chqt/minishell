@@ -6,7 +6,7 @@
 /*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 18:16:36 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/08/24 17:55:04 by sotanaka         ###   ########.fr       */
+/*   Updated: 2023/08/24 20:13:26 by sotanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,9 @@ int	scan_environment(t_ast *node)
 void	minishell_unlink(void)
 {
 	int		i;
-	char	filename[16];
+	char	filename[15];
 
 	i = 10;
 	while (i--)
-		unlink(get_temporary_name10(filename, "tmp_minishell", 16));
+		unlink(get_temporary_name10(filename, ".TMPminishell", 15));
 }
