@@ -1,19 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexer_tokens_utils.c                               :+:      :+:    :+:   */
+/*   tokenizer_add_token_utils.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/17 17:13:05 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/20 18:43:48 by tchoquet         ###   ########.fr       */
+/*   Created: 2023/08/24 15:19:27 by tchoquet          #+#    #+#             */
+/*   Updated: 2023/08/24 16:22:50 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lexer.h"
+#include "tokenizer.h"
 
 static int	add_quote_sub_token_len(const char *cmd, size_t *len);
 static int	add_bracket_sub_token_len(const char *cmd, size_t *len);
+
+t_toklist	*toklist_new(t_token_type type, char *data)
+{
+	t_token		*new_token;
+	t_toklist	*new_node;
+
+	if (type >= TEXT && data == NULL)
+		return (NULL);
+	new_token = malloc(sizeof(t_token));
+	if (new_token != NULL)
+	{
+		new_token->type = type;
+		new_token->data = data;
+		new_node = (t_toklist *)ft_lstnew((void *)new_token);
+		if (new_node != NULL)
+			return (new_node);
+		free(new_token);
+	}
+	free(data);
+	return (NULL);
+}
 
 int	set_text_token_len(const char *cmd, size_t *len)
 {
