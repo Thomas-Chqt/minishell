@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_in_exit.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/18 14:38:58 by hotph             #+#    #+#             */
-/*   Updated: 2023/08/23 13:07:06 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/24 12:29:35 by sotanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,14 +28,18 @@ static int	str_isdigit(char *str)
 	return (0);
 }
 
-static int	check_arg(char *str, int argc)
+static int	check_arg(char *str, int argc, int flag_pipe)
 {
 	int	status;
 
 	status = 0;
 	if (str != NULL && str_isdigit(str) == -1)
+	{
+		if (flag_pipe == 0)
+			ft_putstr_fd("exit\n", 1);
 		status = printf_error_msg
 			("minishell: exit: %: numeric argument required", &str, 2);
+	}
 	else if (argc > 2)
 		status = print_error_msg("minishell: exit: too many arguments", 1);
 	return (status);
@@ -47,7 +51,6 @@ static void	exit_parent(int status, t_ast *ast, t_exe *exe)
 	clean_ast(ast);
 	free(exe->cmd_path);
 	free(exe->cmd_opts);
-	ft_putstr_fd("exit\n", 1);
 	if (status != -1)
 		exit(status);
 	exit (get_last_error());
@@ -57,7 +60,7 @@ int	built_in_exit(t_exe *exe, t_ast *node)
 {
 	int	status;
 
-	status = check_arg(exe->cmd_opts[1], get_argc(node));
+	status = check_arg(exe->cmd_opts[1], get_argc(node), exe->flag_pipe);
 	if (exe->flag_pipe == 0)
 	{
 		if (status == 0 && exe->cmd_opts[1] == NULL)
