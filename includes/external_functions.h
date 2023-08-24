@@ -6,7 +6,7 @@
 /*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 22:54:17 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/23 13:11:56 by sotanaka         ###   ########.fr       */
+/*   Updated: 2023/08/24 14:39:28 by sotanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,8 @@ int		chdir(const char *path);
 int		stat(const char *path, struct stat *buf);
 // lstat
 // fstat
-// unlink
 
+int		unlink(const char *pathname);
 int		execve(const char *path, char *const argv[], char *const envp[]);
 int		dup(int fildes);
 int		dup2(int fildes, int fildes2);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/06 21:58:21 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/23 13:17:35 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/24 17:46:32 by sotanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,11 @@ typedef struct s_intr
 
 //-------prototype-------
 //redirect
+int		ft_open_file(char *file_redirect, int flag_redirect, int *fd_io);
 int		scan_btree_io(t_exe *exe, t_ast *node);
+//heredoc
+char	*get_temporary_name10(char *namespace, char *name, int size_space);
+int		ft_here_doc(char *delimiter, int *fd_in);
 //prog
 int		scan_path_prog(t_exe *exe, t_ast *node);
 //prog util1
@@ -75,6 +79,7 @@ void	init_intr(t_intr *intr, int flag_pipe);
 void	init_exe(int fd_in, int fd_out, t_exe *exe, t_intr *intr);
 int		end_with_fd_close(t_exe *exe, int status);
 int		scan_environment(t_ast *node);
+void	minishell_unlink(void);
 //do
 int		exec_do(t_exe *exe, t_ast *node, int flag);
 //do utils

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hotph <hotph@student.42.fr>                +#+  +:+       +#+        */
+/*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 18:16:36 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/08/23 09:49:07 by hotph            ###   ########.fr       */
+/*   Updated: 2023/08/24 17:55:04 by sotanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,4 +47,14 @@ int	scan_environment(t_ast *node)
 			return (1);
 	}
 	return (0);
+}
+
+void	minishell_unlink(void)
+{
+	int		i;
+	char	filename[16];
+
+	i = 10;
+	while (i--)
+		unlink(get_temporary_name10(filename, "tmp_minishell", 16));
 }
