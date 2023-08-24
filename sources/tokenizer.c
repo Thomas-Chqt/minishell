@@ -6,11 +6,12 @@
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/24 15:06:05 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/24 18:10:05 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/25 17:03:54 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "tokenizer.h"
+#include "environment.h"
 
 static t_bool	should_break(int error, int *returned);
 
@@ -20,6 +21,7 @@ t_toklist	*make_toklist(const char *cmd)
 	t_uint64	i;
 	int			error;
 
+	i = 0;
 	token_list = NULL;
 	while (cmd[i] != '\0')
 	{
@@ -33,7 +35,10 @@ t_toklist	*make_toklist(const char *cmd)
 			break ;
 	}
 	if (cmd[i] != '\0')
-		ft_lstclear((t_list **)token_list, &free_token);
+	{
+		set_last_error(print_error(error));
+		ft_lstclear((t_list **)&token_list, &free_token);
+	}
 	return (token_list);
 }
 

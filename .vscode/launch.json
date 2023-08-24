@@ -12,7 +12,7 @@
 			"cwd": "${workspaceFolder}",
 			"preLaunchTask": "Build Debug",
 			"preRunCommands": [
-				"command script import /Users/tchoquet/Documents/42Projects/minishell/minishell/breakpoint_scripts.py",
+				"command script import ${workspaceFolder}/breakpoint_scripts.py",
 				"breakpoint set -f minishell.c -l 37 --auto-continue true",
 				"breakpoint command add --script-type python -F breakpoint_scripts.print_token_list"
 			],
