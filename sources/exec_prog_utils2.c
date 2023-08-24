@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_prog_utils2.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: hotph <hotph@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/04 17:42:46 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/08/23 13:17:40 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/24 10:50:16 by hotph            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	ft_stat_wrap(char *path, int flag)
 	if (stat(path, &buf) == -1)
 	{
 		perror_wrap("stat", 1);
-		return (255);
+		return (1);
 	}
 	if (flag == STAT_ISDIR)
 	{

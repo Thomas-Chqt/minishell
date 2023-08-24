@@ -6,7 +6,7 @@
 /*   By: hotph <hotph@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/30 13:32:49 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/08/23 09:48:59 by hotph            ###   ########.fr       */
+/*   Updated: 2023/08/24 10:47:14 by hotph            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,8 @@ static int	at_parent(t_exe *exe, int pid, int flag)
 			return (perror_wrap("at_parant waitpid", 1));
 		if (WIFEXITED(status))
 			return (WEXITSTATUS(status));
+		if (WIFSIGNALED(status))
+			return (128 + WTERMSIG(status));
 	}
 	return (status);
 }

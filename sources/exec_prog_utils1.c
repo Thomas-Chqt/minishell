@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_prog_utils1.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hotph <hotph@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 14:50:40 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/08/23 20:38:40 by sotanaka         ###   ########.fr       */
+/*   Updated: 2023/08/24 10:50:00 by hotph            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,8 +100,8 @@ int	directory_is(char *path)
 	else if (ft_stat_wrap(path, STAT_ISREG) == true)
 		status = printf_error_msg("minishell: %: %",
 				(char *[2]){cpy, "Not a directory"}, CMD_CANT_EXEC);
-	else if (ft_stat_wrap(path, 0) == 255)
-		status = 255;
+	else if (ft_stat_wrap(path, 0) == 1)
+		status = 1;
 	free(cpy);
 	return (status);
 }
