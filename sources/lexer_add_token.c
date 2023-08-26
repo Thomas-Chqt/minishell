@@ -1,16 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tokenizer_add_token.c                              :+:      :+:    :+:   */
+/*   lexer_add_token.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/24 15:08:05 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/26 17:02:48 by tchoquet         ###   ########.fr       */
+/*   Created: 2023/08/03 15:31:29 by tchoquet          #+#    #+#             */
+/*   Updated: 2023/08/26 17:29:28 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "tokenizer.h"
+#include "lexer.h"
+
+t_toklist	*toklist_new(t_token_type type, char *data);
+
+int			set_text_token_len(const char *cmd, size_t *len);
 
 static int	add_quote_token(const char *cmd, t_uint64 *i, t_toklist **list);
 static int	add_dquote_token(const char *cmd, t_uint64 *i, t_toklist **list);

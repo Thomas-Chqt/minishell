@@ -6,7 +6,7 @@
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 15:01:56 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/24 15:00:32 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/26 17:26:17 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include "minishell.h"
 # include "error.h"
 
-# include "tokenizer.h"
+# include "lexer.h"
 
 typedef struct s_ast	t_ast;
 
