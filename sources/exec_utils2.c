@@ -6,7 +6,7 @@
 /*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 18:16:36 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/08/26 14:47:08 by sotanaka         ###   ########.fr       */
+/*   Updated: 2023/08/26 17:12:53 by sotanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,17 +41,24 @@ int	end_with_fd_close(t_exe *exe, int status)
 
 int	skip_if_environment(t_ast **node)
 {
-	if ((*node)->data != NULL && (*node)->data->type == TEXT)
+	int	status;
+
+	if (is_valid_keyval((*node)->data->data) == true)
 	{
-		if (is_valid_keyval((*node)->data->data) == true)
+		if (((*node)->right != NULL)
+			&& skip_if_environment(&((*node)->right)) == true)
 		{
-			if ((*node)->right != NULL)
-				skip_if_environment(&((*node)->right));
 			*node = (*node)->right;
-			return (1);
+			return (true);
 		}
+		status = set_env_single_str((*node)->data->data, false);
+		*node = (*node)->right;
+		if (status == MALLOC_ERROR)
+			return (print_error(MALLOC_ERROR));
+		return (false);
 	}
-	return (0);
+	else
+		return (true);
 }
 
 void	minishell_unlink(void)

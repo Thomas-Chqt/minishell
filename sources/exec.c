@@ -6,7 +6,7 @@
 /*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 18:17:56 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/08/26 14:29:46 by sotanaka         ###   ########.fr       */
+/*   Updated: 2023/08/26 17:06:12 by sotanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@ static int	scan_simple_cmd(int fd_in, int fd_out, t_ast *node, t_intr intr)
 	if (fd_out == exe.fd_out && fd_out != STDOUT_FILENO)
 		exe.flag_pipe_close = 1;
 	status = skip_if_environment(&node);
-	if (status == 1 && node == NULL)
-		return (end_with_fd_close(&exe, 0));
+	if (status != true)
+		return (end_with_fd_close(&exe, status));
 	status = scan_path_prog(&exe, node);
 	if (status != 0)
 	{
