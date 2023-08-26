@@ -6,7 +6,7 @@
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/24 15:06:05 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/25 17:03:54 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/26 17:03:00 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ void	free_token(void *token)
 static t_bool	should_break(int error, int *returned)
 {
 	*returned = error;
-
 	if (error == MALLOC_ERROR)
 		return (true);
 	if (error == MISSING_SQUOTE)

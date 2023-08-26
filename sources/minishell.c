@@ -6,7 +6,7 @@
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/06 22:20:59 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/25 22:49:49 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/26 17:02:15 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,18 +30,6 @@ void	minishell_loop(void)
 		if (cmd[0] != '\0')
 		{
 			add_history(cmd);
-			
-			set_env("on", "o -n", false);
-			int error;
-			t_toklist *abc = make_toklist(cmd);
-			t_toklist *token_list = NULL;
-			if (abc != NULL)
-				token_list = make_expanded_toklist(*(abc->data), &error);
-			
-
-
-			ft_lstclear((t_list **)&token_list, &free_token);
-			ft_lstclear((t_list **)&abc, &free_token);
 		}
 		free((void *)cmd);
 	}

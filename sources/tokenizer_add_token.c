@@ -6,7 +6,7 @@
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/24 15:08:05 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/24 18:10:43 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/26 17:02:48 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,8 @@ static int	add_quote_token(const char *cmd, t_uint64 *i, t_toklist **list)
 	if (next_quote == NULL)
 		return (MISSING_SQUOTE);
 	token_len = next_quote - (cmd + *i + 1);
-	if ((cmd + *i + 1)[token_len + 1] != ' ' && (cmd + *i + 1)[token_len + 1] != '\0')
+	if ((cmd + *i + 1)[token_len + 1] != ' '
+		&& (cmd + *i + 1)[token_len + 1] != '\0')
 		return (PARSING_ERROR);
 	new_node = toklist_new(QUOTED, ft_substr(cmd, (*i) + 1, token_len));
 	if (new_node == NULL)
@@ -113,7 +114,8 @@ static int	add_dquote_token(const char *cmd, t_uint64 *i, t_toklist **list)
 	if (next_quote == NULL)
 		return (MISSING_DQUOTE);
 	token_len = next_quote - (cmd + *i + 1);
-	if ((cmd + *i + 1)[token_len + 1] != ' ' && (cmd + *i + 1)[token_len + 1] != '\0')
+	if ((cmd + *i + 1)[token_len + 1] != ' '
+		&& (cmd + *i + 1)[token_len + 1] != '\0')
 		return (PARSING_ERROR);
 	new_node = toklist_new(DQUOTED, ft_substr(cmd, (*i) + 1, token_len));
 	if (new_node == NULL)
