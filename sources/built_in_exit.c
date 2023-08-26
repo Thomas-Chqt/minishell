@@ -6,7 +6,7 @@
 /*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/18 14:38:58 by hotph             #+#    #+#             */
-/*   Updated: 2023/08/24 20:26:04 by sotanaka         ###   ########.fr       */
+/*   Updated: 2023/08/26 11:08:55 by sotanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ static void	exit_parent(int status, t_ast *ast, t_exe *exe)
 	clean_ast(ast);
 	free(exe->cmd_path);
 	free(exe->cmd_opts);
+	minishell_unlink();
 	if (status != -1)
 		exit(status);
 	exit (get_last_error());
