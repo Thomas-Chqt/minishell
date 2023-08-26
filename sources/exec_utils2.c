@@ -6,7 +6,7 @@
 /*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 18:16:36 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/08/24 20:13:26 by sotanaka         ###   ########.fr       */
+/*   Updated: 2023/08/26 14:47:08 by sotanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,17 @@ int	end_with_fd_close(t_exe *exe, int status)
 	return (status);
 }
 
-int	scan_environment(t_ast *node)
+int	skip_if_environment(t_ast **node)
 {
-	if (node->data != NULL && node->data->type == TEXT)
+	if ((*node)->data != NULL && (*node)->data->type == TEXT)
 	{
-		if (is_valid_keyval(node->data->data) == true)
+		if (is_valid_keyval((*node)->data->data) == true)
+		{
+			if ((*node)->right != NULL)
+				skip_if_environment(&((*node)->right));
+			*node = (*node)->right;
 			return (1);
+		}
 	}
 	return (0);
 }
