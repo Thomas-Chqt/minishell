@@ -6,7 +6,7 @@
 /*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/24 13:24:07 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/08/24 20:13:12 by sotanaka         ###   ########.fr       */
+/*   Updated: 2023/08/26 11:03:19 by sotanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,10 @@ static int	ft_readline(int *fd_tmphere, char *delimiter)
 				exit(perror_wrap("readline", 1));
 			break ;
 		}
-		ft_putstr_fd(line, *fd_tmphere);
-		ft_putstr_fd("\n", *fd_tmphere);
+		if (*line == '\0')
+			ft_putstr_fd("\n", *fd_tmphere);
+		else
+			ft_putendl_fd(line, *fd_tmphere);
 		free(line);
 	}
 	exit(0);
