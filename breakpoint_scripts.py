@@ -1,12 +1,16 @@
+import lldb
 
+def print_token_list(frame:lldb.SBFrame, bp_loc, internal_dict):
+	error:lldb.SBValue = frame.EvaluateExpression('error')
 
-def print_token_list(frame, bp_loc, internal_dict):
+	print('error : ', error.unsigned)
+
 	head = frame.EvaluateExpression('token_list')
 	if head.unsigned == 0:
 		print('NULL list')
 		print('')
 		return
-	watched = head
+	watched:lldb.SBValue = head
 	while watched.unsigned != 0:
 		if watched.GetChildMemberWithName('data').GetChildMemberWithName('type').unsigned == 1:
 			print('DLESS', end=" : ")
