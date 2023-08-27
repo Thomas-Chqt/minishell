@@ -6,55 +6,16 @@
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/17 18:55:31 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/23 13:37:25 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/26 16:54:07 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "environment.h"
 
-t_bool		is_env_key_equal(void *entry, void *key);
-char		*env_entry_to_str(t_env_entry entry);
-t_env_entry	str_to_env_entry(const char *str);
+static t_env_list	*lstenv_new(char *key, char *val, t_bool is_export);
+static t_bool		is_env_key_equal(void *v_entry, void *v_key);
 
-t_env_list	*lstenv_new(char *key, char *val, t_bool is_export)
-{
-	t_env_list	*new_node;
-
-	new_node = (t_env_list *)ft_lstnew(NULL);
-	if (new_node != NULL)
-	{
-		new_node->data = malloc(sizeof(t_env_entry));
-		if (new_node->data != NULL)
-		{
-			new_node->data->key = key;
-			new_node->data->value = val;
-			new_node->data->is_export = is_export;
-			return (new_node);
-		}
-		free(new_node);
-	}
-	return (NULL);
-}
-
-t_env_list	*lstenv_new_single_str(const char *keyval, t_bool is_export)
-{
-	t_env_list	*new_node;
-
-	new_node = (t_env_list *)ft_lstnew(NULL);
-	if (new_node != NULL)
-	{
-		new_node->data = malloc(sizeof(t_env_entry));
-		if (new_node->data != NULL)
-		{
-			*(new_node->data) = str_to_env_entry(keyval);
-			new_node->data->is_export = is_export;
-			if (new_node->data->key != NULL)
-				return (new_node);
-		}
-		free(new_node);
-	}
-	return (NULL);
-}
+void				free_entry(void *v_entry);
 
 t_env_list	*lstenv_chr(const char *key, t_bool create)
 {
@@ -79,7 +40,48 @@ t_env_list	*lstenv_chr(const char *key, t_bool create)
 	return (NULL);
 }
 
-void	lstenv_add_back(t_env_list	*new_node)
+void	delete_entry(const char *key)
 {
-	ft_lstadd_back((t_list **)get_lstenv(), (t_list *)new_node);
+	lst_delif((t_list **)(get_lstenv()), &free_entry, &is_env_key_equal,
+		(void *)key);
+}
+
+void	free_entry(void *v_entry)
+{
+	t_env_entry	*entry;
+
+	entry = (t_env_entry *)v_entry;
+	free(entry->key);
+	free(entry->value);
+	free(entry);
+}
+
+static t_env_list	*lstenv_new(char *key, char *val, t_bool is_export)
+{
+	t_env_list	*new_node;
+
+	new_node = (t_env_list *)ft_lstnew(NULL);
+	if (new_node != NULL)
+	{
+		new_node->data = malloc(sizeof(t_env_entry));
+		if (new_node->data != NULL)
+		{
+			new_node->data->key = key;
+			new_node->data->value = val;
+			new_node->data->is_export = is_export;
+			return (new_node);
+		}
+		free(new_node);
+	}
+	return (NULL);
+}
+
+static t_bool	is_env_key_equal(void *v_entry, void *v_key)
+{
+	t_env_entry	*entry;
+	char		*key;
+
+	entry = (t_env_entry *)v_entry;
+	key = (char *)v_key;
+	return (str_cmp(entry->key, key) == 0);
 }

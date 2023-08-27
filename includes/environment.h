@@ -6,7 +6,7 @@
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/04 11:26:37 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/22 14:28:21 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/24 14:27:59 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,22 +31,23 @@ struct s_env_list
 	t_env_list	*next;
 };
 
-t_env_list	**get_lstenv(void);
-
 int			init_env(char *envp[]);
 void		clear_env(void);
 
-t_bool		is_valid_keyval(const char *str);
-
 int			set_env(const char *key, const char *val, t_bool export);
-int			set_env_single_str(const char *keyval, t_bool export);
 char		*get_env(const char *key, int *error_code);
-char		*get_env_create(const char *keyval, int *error_code);
+int			delete_env(const char *key);
 char		**get_envp(void);
 int			export_env(const char *key);
-int			delete_env(const char *key);
+
+int			set_env_single_str(const char *keyval, t_bool export);
+char		*get_env_create(const char *keyval, int *error_code);
 
 void		set_last_error(int code);
 int			get_last_error(void);
+
+t_env_list	**get_lstenv(void);
+int			is_valid_keyval(const char *str);
+size_t		valid_key_len(const char *str);
 
 #endif // ENVIRONMENT_H

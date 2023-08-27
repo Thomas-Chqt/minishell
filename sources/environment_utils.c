@@ -6,74 +6,39 @@
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 17:24:55 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/22 15:33:54 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/24 23:43:55 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "environment.h"
 
-t_env_entry		str_to_env_entry(const char *str);
-
-t_bool	is_valid_env_key(const char *str)
+t_env_list	**get_lstenv(void)
 {
-	t_uint64	i;
+	static t_env_list	*env_list = NULL;
 
-	if (str == NULL)
-		return (false);
-	i = 0;
-	while (str[i] != '\0')
-	{
-		if (!ft_isalnum(str[i]) && str[i] != '_')
-			return (false);
-		i++;
-	}
-	if (i == 0)
-		return (false);
-	return (true);
+	return (&env_list);
 }
 
-int	analize_keyval(const char *keyval, t_env_entry *result)
+size_t	valid_key_len(const char *str)
 {
-	t_env_entry	input;
+	size_t	len;
 
-	input = str_to_env_entry(keyval);
-	if (input.key == NULL)
-		return (MALLOC_ERROR);
-	if (is_valid_env_key(input.key) == false)
-	{
-		free(input.key);
-		free(input.value);
+	len = 0;
+	if (!ft_isalpha(str[len]) && str[len] != '_')
+		return (0);
+	while (ft_isalnum(str[len]) || str[len] == '_')
+		len++;
+	return (len);
+}
+
+int	is_valid_keyval(const char *str)
+{
+	size_t	key_len;
+
+	key_len = valid_key_len(str);
+	if (key_len == 0 || str[key_len] != '=')
 		return (BAD_ENVIRONMENT_KEY);
-	}
-	if (input.value == NULL)
-	{
-		free(input.key);
-		free(input.value);
+	if (str[key_len] == '\0')
 		return (NULL_ENVIRONMENT_VAL);
-	}
-	*result = input;
 	return (0);
-}
-
-char	*set_error_return(int *error, int value)
-{
-	if (error != NULL)
-		*error = value;
-	return (NULL);
-}
-
-t_bool	is_valid_keyval(const char *str)
-{
-	t_uint64	i;
-
-	i = 0;
-	while (str[i] != '\0' && str[i] != '=')
-	{
-		if (!ft_isalnum(str[i]) && str[i] != '_')
-			return (false);
-		i++;
-	}
-	if (i == 0 || str[i] != '=')
-		return (false);
-	return (true);
 }

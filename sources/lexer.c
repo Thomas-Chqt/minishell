@@ -6,7 +6,7 @@
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 15:12:11 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/22 17:27:04 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/27 10:40:37 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,27 @@
 #include "environment.h"
 
 int			recurse_full_cmd(const char *cmd, t_uint64 *i, t_toklist **list);
-static int	exec_first_node(t_toklist **new_lst);
+
+t_toklist	*toklist_new(t_token_type type, char *data)
+{
+	t_token		*new_token;
+	t_toklist	*new_node;
+
+	if (type == TEXT && data == NULL)
+		return (NULL);
+	new_token = malloc(sizeof(t_token));
+	if (new_token != NULL)
+	{
+		new_token->type = type;
+		new_token->data = data;
+		new_node = (t_toklist *)ft_lstnew((void *)new_token);
+		if (new_node != NULL)
+			return (new_node);
+		free(new_token);
+	}
+	free(data);
+	return (NULL);
+}
 
 t_toklist	*make_toklist(const char *cmd)
 {
@@ -24,37 +44,21 @@ t_toklist	*make_toklist(const char *cmd)
 
 	i = 0;
 	new_lst = NULL;
+	while (is_whitespace(cmd[i]))
+		i++;
+	if (cmd[i] == '\0')
+		return (NULL);
 	error_code = recurse_full_cmd(cmd, &i, &new_lst);
 	if (error_code == 0)
-	{
-		error_code = exec_first_node(&new_lst);
-		if (error_code != 0)
-		{
-			clean_toklist(&new_lst);
-			set_last_error(print_error(error_code));
-		}
 		return (new_lst);
-	}
 	set_last_error(print_error(error_code));
 	return (NULL);
 }
 
-void	clean_toklist(t_toklist **token_list)
+void	free_token(void *token)
 {
-	ft_lstclear((t_list **)token_list, &free_token);
-}
-
-static int	exec_first_node(t_toklist **new_lst)
-{
-	t_toklist	*first_node;
-	int			temp_ret;
-
-	if ((*new_lst)->data->data == NULL || (*new_lst)->next != NULL)
-		return (0);
-	if (is_valid_keyval((*new_lst)->data->data) == false)
-		return (0);
-	first_node = (t_toklist *)lst_rmvfrst((t_list **)new_lst);
-	temp_ret = set_env_single_str(first_node->data->data, false);
-	clean_toklist(&first_node);
-	return (temp_ret);
+	if (token == NULL)
+		return ;
+	free(((t_token *)token)->data);
+	free(token);
 }

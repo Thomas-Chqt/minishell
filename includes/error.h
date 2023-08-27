@@ -6,7 +6,7 @@
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 18:31:32 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/22 10:46:28 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/24 17:02:42 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@
 
 # define MALLOC_ERROR 1111
 # define PARSING_ERROR 2222
-# define MISSING_QUOTE 3333
 # define MISSING_SQUOTE 4444
 # define MISSING_DQUOTE 5555
 # define MISSING_CLOSE_BRACKET 6666

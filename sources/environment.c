@@ -6,19 +6,19 @@
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 19:59:47 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/23 10:58:40 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/24 14:26:56 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "environment.h"
 
-t_env_list	*lstenv_chr(const char *key, t_bool create);
-
-char		*env_entry_to_str(t_env_entry entry);
-
 t_bool		is_valid_env_key(const char *str);
-int			analize_keyval(const char *keyval, t_env_entry *result);
 char		*set_error_return(int *error, int value);
+char		*env_entry_to_str(t_env_entry entry);
+t_env_entry	str_to_env_entry(const char *str);
+
+t_env_list	*lstenv_chr(const char *key, t_bool create);
+void		delete_entry(const char *key);
 
 int	set_env(const char *key, const char *val, t_bool export)
 {
@@ -33,29 +33,6 @@ int	set_env(const char *key, const char *val, t_bool export)
 	founded->data->value = ft_strdup(val);
 	if (val != NULL && founded->data->value == NULL)
 		return (MALLOC_ERROR);
-	if (export == true)
-		founded->data->is_export = true;
-	return (0);
-}
-
-int	set_env_single_str(const char *keyval, t_bool export)
-{
-	t_env_entry	input;
-	t_env_list	*founded;
-	int			temp_ret;
-
-	temp_ret = analize_keyval(keyval, &input);
-	if (temp_ret != 0)
-		return (temp_ret);
-	founded = lstenv_chr(input.key, true);
-	free(input.key);
-	if (founded == NULL)
-	{
-		free(input.value);
-		return (MALLOC_ERROR);
-	}
-	free(founded->data->value);
-	founded->data->value = input.value;
 	if (export == true)
 		founded->data->is_export = true;
 	return (0);
@@ -77,6 +54,14 @@ char	*get_env(const char *key, int *error_code)
 	if (founded->data->value == NULL || str != NULL)
 		return (str);
 	return (set_error_return(error_code, MALLOC_ERROR));
+}
+
+int	delete_env(const char *key)
+{
+	if (is_valid_env_key(key) == false)
+		return (BAD_ENVIRONMENT_KEY);
+	delete_entry(key);
+	return (0);
 }
 
 char	**get_envp(void)
