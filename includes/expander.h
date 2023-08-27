@@ -22,5 +22,6 @@ typedef t_token		t_pre_token;
 typedef t_toklist	t_pre_toklist;
 
 int	expand_toklist(t_toklist **token_list);
+int	put_expanded_file_fd(int fd_in, size_t len, int fd_out);
 
 #endif // EXPANDER_H
