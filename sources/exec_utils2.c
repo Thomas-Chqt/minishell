@@ -6,7 +6,7 @@
 /*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 18:16:36 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/08/27 11:35:24 by sotanaka         ###   ########.fr       */
+/*   Updated: 2023/08/27 11:35:48 by sotanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	skip_if_environment(t_ast **node)
 {
 	int	status;
 
-	if (is_valid_keyval((*node)->data->data) == true)
+	if (is_valid_keyval((*node)->data->data) == 0)
 	{
 		if (((*node)->right != NULL)
 			&& skip_if_environment(&((*node)->right)) == true)
