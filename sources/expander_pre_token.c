@@ -18,11 +18,12 @@ int			add_pre_token_brace(char *str, t_uint64 *i, t_pre_toklist **list);
 int			add_pre_token_no_brace(char *str, t_uint64 *i,
 				t_pre_toklist **list);
 int			add_pre_token_tilde(char *str, t_uint64 *i, t_pre_toklist **list);
+int			add_pre_token_special(char *str, t_uint64 *i, t_pre_toklist **list);
+int			add_pre_token_normal(char *str, t_uint64 *i, t_pre_toklist **list);
+int			add_pre_token_empty(t_pre_toklist **list);
 
 static int	add_pre_token_next(char *str, t_uint64 *i, t_pre_toklist **list,
 				t_bool dquoted);
-static int	add_pre_token_normal(char *str, t_uint64 *i, t_pre_toklist **list);
-static int	add_pre_token_empty(t_pre_toklist **list);
 static int	join_dquoted_pre_toklist(t_pre_toklist **token_list);
 
 t_pre_toklist	*make_pre_toklist(t_token token, int *error)
@@ -57,15 +58,15 @@ static int	add_pre_token_next(char *str, t_uint64 *i, t_pre_toklist **list,
 	int			temp_ret;
 	int			j;
 	static int	(*funcs_dquoted[])(char *, t_uint64 *, t_pre_toklist **) = {
-		&add_pre_token_no_brace, &add_pre_token_brace
+		&add_pre_token_special, &add_pre_token_no_brace, &add_pre_token_brace
 	};
 	static int	(*funcs[])(char *, t_uint64 *, t_pre_toklist **) = {
 		&add_pre_token_tilde, &add_pre_token_quote, &add_pre_token_dquote,
-		&add_pre_token_no_brace, &add_pre_token_brace
+		&add_pre_token_special, &add_pre_token_no_brace, &add_pre_token_brace
 	};
 
 	j = 0;
-	while (j < 2 + ((dquoted == false) * 3))
+	while (j < 3 + ((dquoted == false) * 3))
 	{
 		if (dquoted)
 			temp_ret = funcs_dquoted[j](str, i, list);
@@ -76,36 +77,6 @@ static int	add_pre_token_next(char *str, t_uint64 *i, t_pre_toklist **list,
 		j++;
 	}
 	return (add_pre_token_normal(str, i, list));
-}
-
-static int	add_pre_token_normal(char *str, t_uint64 *i, t_pre_toklist **list)
-{
-	size_t			token_len;
-	t_pre_toklist	*new_node;
-
-	token_len = 1;
-	while ((str + *i)[token_len] != '\0'
-			&& (str + *i)[token_len] != '\''
-			&& (str + *i)[token_len] != '\"'
-			&& (str + *i)[token_len] != '$')
-		token_len++;
-	new_node = toklist_new(TEXT, ft_substr(str, (*i), token_len));
-	if (new_node == NULL)
-		return (MALLOC_ERROR);
-	(*i) += token_len;
-	ft_lstadd_back((t_list **)list, (t_list *)new_node);
-	return (0);
-}
-
-static int	add_pre_token_empty(t_pre_toklist **list)
-{
-	t_pre_toklist	*new_node;
-
-	new_node = toklist_new(TEXT, ft_strdup(""));
-	if (new_node == NULL)
-		return (MALLOC_ERROR);
-	ft_lstadd_back((t_list **)list, (t_list *)new_node);
-	return (0);
 }
 
 static int	join_dquoted_pre_toklist(t_pre_toklist **token_list)
