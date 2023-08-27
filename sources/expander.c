@@ -30,7 +30,7 @@ int	expand_toklist(t_toklist **token_list)
 	watched = *token_list;
 	while (watched != NULL)
 	{
-		if (watched->data->type >= TEXT)
+		if (watched->data->type == TEXT || watched->data->type == DQUOTED)
 			error = add_expanded_token(*(watched->data), &expanded_toklist);
 		else
 			error = add_duped_token(*(watched->data), &expanded_toklist);
@@ -78,6 +78,9 @@ static int	add_duped_token(t_token token, t_toklist **token_list)
 {
 	t_toklist	*duped_token;
 
+	if (token.type >= TEXT)
+		duped_token = toklist_new(TEXT, ft_strdup(token.data));
+	else
 		duped_token = toklist_new(token.type, ft_strdup(token.data));
 	if (duped_token == NULL)
 		return (MALLOC_ERROR);
