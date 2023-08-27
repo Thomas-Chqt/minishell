@@ -6,13 +6,13 @@
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/18 16:40:53 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/21 15:14:43 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/24 14:24:37 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "environment.h"
 
-void	delete_entry(void *v_entry);
+void	free_entry(void *v_entry);
 
 int	init_env(char *envp[])
 {
@@ -33,5 +33,5 @@ int	init_env(char *envp[])
 
 void	clear_env(void)
 {
-	ft_lstclear((t_list **)get_lstenv(), &delete_entry);
+	ft_lstclear((t_list **)get_lstenv(), &free_entry);
 }

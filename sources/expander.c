@@ -5,91 +5,85 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/09 21:31:43 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/20 16:42:14 by tchoquet         ###   ########.fr       */
+/*   Created: 2023/08/25 17:06:42 by tchoquet          #+#    #+#             */
+/*   Updated: 2023/08/27 14:02:19 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "expander.h"
 
-static int	expand_string(char **str_ptr);
-static char	*join_lst(t_str_list *list);
+t_pre_toklist	*make_pre_toklist(t_token token, int *error);
 
-int	expand_ast(t_ast *ast)
+int				add_retokenized_pre_token(t_pre_token pre_token,
+					t_toklist **token_list);
+
+static int		add_expanded_token(t_token token, t_toklist **token_list);
+static int		add_duped_token(t_token token, t_toklist **token_list);
+
+int	expand_toklist(t_toklist **token_list)
 {
-	int	temp_ret;
+	t_toklist	*watched;
+	t_toklist	*expanded_toklist;
+	int			error;
 
-	if (ast == NULL)
-		return (0);
-	if (ast->data != NULL && ast->data->type == TEXT)
+	expanded_toklist = NULL;
+	watched = *token_list;
+	while (watched != NULL)
 	{
-		temp_ret = expand_string(&ast->data->data);
-		if (temp_ret != 0)
-		{
-			if (temp_ret == BAD_SUBSTITUTION)
-				set_last_error(1);
-			else
-				set_last_error(temp_ret);
-			return (temp_ret);
-		}
-	}
-	temp_ret = expand_ast(ast->right);
-	if (temp_ret != 0)
-		return (temp_ret);
-	temp_ret = expand_ast(ast->left);
-	if (temp_ret != 0)
-		return (temp_ret);
-	return (0);
-}
-
-static int	expand_string(char **str_ptr)
-{
-	t_str_list	*str_list;
-	t_uint64	i;
-	int			temp_ret;
-
-	str_list = NULL;
-	i = 0;
-	while ((*str_ptr)[i] != '\0')
-	{
-		temp_ret = add_next_str(*str_ptr, &i, &str_list, false);
-		if (temp_ret != 0)
+		if (watched->data->type == TEXT || watched->data->type == DQUOTED)
+			error = add_expanded_token(*(watched->data), &expanded_toklist);
+		else
+			error = add_duped_token(*(watched->data), &expanded_toklist);
+		if (error != 0)
 			break ;
+		watched = watched->next;
 	}
-	if ((*str_ptr)[i] != '\0')
-	{
-		ft_lstclear((t_list **)&str_list, &free_wrap);
-		return (temp_ret);
-	}
-	free(*str_ptr);
-	*str_ptr = join_lst(str_list);
-	ft_lstclear((t_list **)&str_list, &free_wrap);
-	if (*str_ptr == NULL)
-		return (MALLOC_ERROR);
-	return (0);
+	if (error != 0)
+		ft_lstclear((t_list **)&expanded_toklist, &free_token);
+	if (error == 0)
+		ft_lstclear((t_list **)token_list, &free_token);
+	if (error == 0)
+		*token_list = expanded_toklist;
+	if (error != 1)
+		return (print_error(error));
+	return (error);
 }
 
-static char	*join_lst(t_str_list *list)
+static int	add_expanded_token(t_token token, t_toklist **token_list)
 {
-	t_uint64	str_len;
-	char		*str;
-	t_str_list	*watched;
+	t_pre_toklist	*pre_toklist;
+	t_pre_toklist	*watched;
+	t_toklist		*retoken_list;
+	int				error;
 
-	str_len = 0;
-	watched = list;
+	pre_toklist = make_pre_toklist(token, &error);
+	if (error != 0)
+		return (error);
+	retoken_list = NULL;
+	watched = pre_toklist;
 	while (watched != NULL)
 	{
-		str_len += ft_strlen(watched->str);
+		error = add_retokenized_pre_token(*(watched->data), &retoken_list);
+		if (error != 0)
+			break ;
 		watched = watched->next;
 	}
-	str = ft_calloc(str_len + 1, sizeof(char));
-	if (str == NULL)
-		return (NULL);
-	watched = list;
-	while (watched != NULL)
-	{
-		ft_strlcat(str, watched->str, str_len + 1);
-		watched = watched->next;
-	}
-	return (str);
+	ft_lstclear((t_list **)&pre_toklist, &free_token);
+	if (error == 0)
+		ft_lstadd_back((t_list **)token_list, (t_list *)retoken_list);
+	return (error);
+}
+
+static int	add_duped_token(t_token token, t_toklist **token_list)
+{
+	t_toklist	*duped_token;
+
+	if (token.type >= TEXT)
+		duped_token = toklist_new(TEXT, ft_strdup(token.data));
+	else
+		duped_token = toklist_new(token.type, ft_strdup(token.data));
+	if (duped_token == NULL)
+		return (MALLOC_ERROR);
+	ft_lstadd_back((t_list **)token_list, (t_list *)duped_token);
+	return (0);
 }

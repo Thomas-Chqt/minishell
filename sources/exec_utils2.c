@@ -43,7 +43,7 @@ int	scan_environment(t_ast *node)
 {
 	if (node->data != NULL && node->data->type == TEXT)
 	{
-		if (is_valid_keyval(node->data->data) == true)
+		if (is_valid_keyval(node->data->data) == 0)
 			return (1);
 	}
 	return (0);
