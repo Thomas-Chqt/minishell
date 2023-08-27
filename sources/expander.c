@@ -6,7 +6,7 @@
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 17:06:42 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/27 13:15:44 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/27 14:02:19 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ static int	add_duped_token(t_token token, t_toklist **token_list)
 {
 	t_toklist	*duped_token;
 
-	duped_token = toklist_new(token.type, ft_strdup(token.data));
+		duped_token = toklist_new(token.type, ft_strdup(token.data));
 	if (duped_token == NULL)
 		return (MALLOC_ERROR);
 	ft_lstadd_back((t_list **)token_list, (t_list *)duped_token);

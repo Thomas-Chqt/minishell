@@ -6,7 +6,7 @@
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/26 14:13:43 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/27 13:06:30 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/27 14:04:26 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int			add_pre_token_tilde(char *str, t_uint64 *i, t_pre_toklist **list);
 static int	add_pre_token_next(char *str, t_uint64 *i, t_pre_toklist **list,
 				t_bool dquoted);
 static int	add_pre_token_normal(char *str, t_uint64 *i, t_pre_toklist **list);
-
+static int	add_pre_token_empty(t_pre_toklist **list);
 static int	join_dquoted_pre_toklist(t_pre_toklist **token_list);
 
 t_pre_toklist	*make_pre_toklist(t_token token, int *error)
@@ -32,7 +32,9 @@ t_pre_toklist	*make_pre_toklist(t_token token, int *error)
 
 	token_list = NULL;
 	i = 0;
-	while (token.data[i] != 0)
+	if (token.data[i] == '\0')
+		*error = add_pre_token_empty(&token_list);
+	while (token.data[i] != '\0')
 	{
 		*error = add_pre_token_next(token.data, &i, &token_list,
 				token.type == DQUOTED);
@@ -91,6 +93,17 @@ static int	add_pre_token_normal(char *str, t_uint64 *i, t_pre_toklist **list)
 	if (new_node == NULL)
 		return (MALLOC_ERROR);
 	(*i) += token_len;
+	ft_lstadd_back((t_list **)list, (t_list *)new_node);
+	return (0);
+}
+
+static int	add_pre_token_empty(t_pre_toklist **list)
+{
+	t_pre_toklist	*new_node;
+
+	new_node = toklist_new(TEXT, ft_strdup(""));
+	if (new_node == NULL)
+		return (MALLOC_ERROR);
 	ft_lstadd_back((t_list **)list, (t_list *)new_node);
 	return (0);
 }
