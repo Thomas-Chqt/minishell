@@ -6,7 +6,7 @@
 /*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/05 14:45:34 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/23 13:05:54 by sotanaka         ###   ########.fr       */
+/*   Updated: 2023/08/27 20:10:08 by sotanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static int	print_envp(void)
 
 	envp = get_envp();
 	if (envp == NULL)
-		return (MALLOC_ERROR);
+		return (print_error(MALLOC_ERROR));
 	i = 0;
 	while (envp[i] != NULL)
 	{
