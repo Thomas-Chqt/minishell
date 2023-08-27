@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hotph <hotph@student.42.fr>                +#+  +:+       +#+        */
+/*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 18:17:56 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/08/23 10:28:08 by hotph            ###   ########.fr       */
+/*   Updated: 2023/08/24 17:37:55 by sotanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ int	execute_ast(t_ast *ast)
 	val = scan_btree_pipe(&std_in, STDOUT_FILENO, ast, 0);
 	while (wait(NULL) > 0)
 		;
+	minishell_unlink();
 	if (sig_interactive_mode() != 0)
 		return (print_error(SIGACTION_ERROR));
 	return (val);

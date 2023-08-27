@@ -3,72 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   exec_redirect.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/13 12:21:58 by hotph             #+#    #+#             */
-/*   Updated: 2023/08/23 13:18:34 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/24 20:05:44 by sotanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 
-static int	ft_readline(int fd_pipe[2], char *delimiter)
-{
-	char	*line;
-
-	if (sig_heredoc_mode() != 0)
-		exit(print_error(SIGACTION_ERROR));
-	if (close(fd_pipe[0]) == -1)
-		exit(perror_wrap("readline pipe[0]", 1));
-	while (1)
-	{
-		line = readline("> ");
-		if (line == NULL)
-			break ;
-		if (str_cmp(line, delimiter) == 0)
-		{
-			free(line);
-			if (close(fd_pipe[1]) == -1)
-				exit(perror_wrap("readline pipe[1]", 1));
-			break ;
-		}
-		ft_putstr_fd(line, fd_pipe[1]);
-		ft_putstr_fd("\n", fd_pipe[1]);
-		free(line);
-	}
-	exit(0);
-}
-
-static int	ft_here_doc(char *delimiter, int *fd_in)
-{
-	int		fd_pipe[2];
-	int		pid;
-	int		status;
-
-	if (sig_heredoc_parent_mode() != 0)
-		return (print_error(SIGACTION_ERROR));
-	if (*fd_in > 2 && close(*fd_in) == -1)
-		return (perror_wrap("here_doc close", 1));
-	if (pipe(fd_pipe) == -1)
-		return (perror_wrap("heredoc create", 1));
-	*fd_in = fd_pipe[0];
-	pid = fork();
-	if (pid == -1)
-		return (perror_wrap("here_doc fork", 1));
-	if (pid == 0)
-		ft_readline(fd_pipe, delimiter);
-	else
-	{
-		if (waitpid(pid, &status, 0) == -1 || close(fd_pipe[1]) == -1
-			|| sig_forwarding_mode() != 0)
-			return (perror_wrap("here_doc", 1));
-		if (WIFEXITED(status))
-			return (WEXITSTATUS(status));
-	}
-	return (0);
-}
-
-static int	ft_open_file(char *file_redirect, int flag_redirect, int *fd_io)
+int	ft_open_file(char *file_redirect, int flag_redirect, int *fd_io)
 {
 	int	fd;
 
