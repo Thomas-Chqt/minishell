@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/25 17:06:42 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/27 11:56:27 by tchoquet         ###   ########.fr       */
+/*   Created: 2023/08/09 21:31:43 by tchoquet          #+#    #+#             */
+/*   Updated: 2023/08/27 16:01:49 by sotanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	expand_toklist(t_toklist **token_list)
 	watched = *token_list;
 	while (watched != NULL)
 	{
-		if (watched->data->type >= TEXT)
+		if (watched->data->type == TEXT || watched->data->type == DQUOTED)
 			error = add_expanded_token(*(watched->data), &expanded_toklist);
 		else
 			error = add_duped_token(*(watched->data), &expanded_toklist);
@@ -39,12 +39,12 @@ int	expand_toklist(t_toklist **token_list)
 		watched = watched->next;
 	}
 	if (error != 0)
-		ft_lstclear((t_list **)&expanded_toklist, &free_token);		
+		ft_lstclear((t_list **)&expanded_toklist, &free_token);
 	if (error == 0)
 		ft_lstclear((t_list **)token_list, &free_token);
 	if (error == 0)
 		*token_list = expanded_toklist;
-	if (error != -69)
+	if (error != 1)
 		return (print_error(error));
 	return (error);
 }
@@ -78,7 +78,10 @@ static int	add_duped_token(t_token token, t_toklist **token_list)
 {
 	t_toklist	*duped_token;
 
-	duped_token = toklist_new(token.type, ft_strdup(token.data));
+	if (token.type >= TEXT)
+		duped_token = toklist_new(TEXT, ft_strdup(token.data));
+	else
+		duped_token = toklist_new(token.type, ft_strdup(token.data));
 	if (duped_token == NULL)
 		return (MALLOC_ERROR);
 	ft_lstadd_back((t_list **)token_list, (t_list *)duped_token);
