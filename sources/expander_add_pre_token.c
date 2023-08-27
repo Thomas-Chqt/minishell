@@ -69,55 +69,46 @@ int	add_pre_token_dquote(char *str, t_uint64 *i, t_pre_toklist **list)
 int	add_pre_token_brace(char *str, t_uint64 *i, t_pre_toklist **list)
 {
 	size_t	key_len;
-	size_t	added_len;
 	char	*close_brace;
 	int		error;
 
 	if (str[*i] != '$' || str[*i + 1] != 123)
 		return (PARSING_ERROR);
-	added_len = 3;
 	close_brace = ft_strchr(str + *i + 2, 125);
 	if (close_brace == NULL)
 		return (PARSING_ERROR);
 	key_len = close_brace - (str + *i + 2);
-	added_len += key_len;
 	error = add_pre_token_subst(str + *i + 2, key_len, list);
 	if (error == 0)
-		*i += added_len;
+		*i += key_len + 3;
 	return (error);
 }
 
 int	add_pre_token_no_brace(char *str, t_uint64 *i, t_pre_toklist **list)
 {
 	size_t	key_len;
-	size_t	added_len;
 	char	*close_brace;
 	int		error;
 
 	if (str[*i] != '$')
 		return (PARSING_ERROR);
-	if (!ft_isalnum(str[*i + 1]) && str[*i + 1] != '_' && str[*i + 1] != '?')
+	key_len = valid_key_len(str + *i + 1);
+	if (key_len == 0)
 		return (PARSING_ERROR);
-	added_len = 1;
-	key_len = 1;
-	key_len += valid_key_len(str + *i + 2);
-	added_len += key_len;
 	error = add_pre_token_subst(str + *i + 1, key_len, list);
 	if (error == 0)
-		*i += added_len;
+		*i += key_len + 1;
 	return (error);
 }
 
-int	add_pre_token_tilde(char *str, t_uint64 *i, t_pre_toklist **list)
+int	add_pre_token_special(char *str, t_uint64 *i, t_pre_toklist **list)
 {
-	int		error;
+	int	error;
 
-	if (*i != 0)
+	if (str[*i] != '$' || (!ft_isdigit(str[*i + 1]) && str[*i + 1] != '?'))
 		return (PARSING_ERROR);
-	if (ft_memcmp(str, "~\0", 2) != 0 && ft_memcmp(str, "~/", 2) != 0)
-		return (PARSING_ERROR);
-	error = add_pre_token_subst("HOME", 4, list);
+	error = add_pre_token_subst(str + *i + 1, 1, list);
 	if (error == 0)
-		(*i)++;
+		*i += 2;
 	return (error);
 }
