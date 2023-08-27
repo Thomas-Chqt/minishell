@@ -87,7 +87,6 @@ int	add_pre_token_brace(char *str, t_uint64 *i, t_pre_toklist **list)
 int	add_pre_token_no_brace(char *str, t_uint64 *i, t_pre_toklist **list)
 {
 	size_t	key_len;
-	char	*close_brace;
 	int		error;
 
 	if (str[*i] != '$')

@@ -12,7 +12,7 @@
 
 #include "exec.h"
 
-char	*get_temporary_name10(char *namespace, char *name, int size_space)
+char	*get_temporary_name10(char *namespace, char *name, size_t size_space)
 {
 	static char	name_lotate;
 

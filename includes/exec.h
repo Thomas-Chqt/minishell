@@ -58,7 +58,7 @@ typedef struct s_intr
 int		ft_open_file(char *file_redirect, int flag_redirect, int *fd_io);
 int		scan_btree_io(t_exe *exe, t_ast *node);
 //heredoc
-char	*get_temporary_name10(char *namespace, char *name, int size_space);
+char	*get_temporary_name10(char *namespace, char *name, size_t size_space);
 int		ft_here_doc(char *delimiter, int *fd_in);
 //prog
 int		scan_path_prog(t_exe *exe, t_ast *node);
