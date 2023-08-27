@@ -6,7 +6,7 @@
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/06 22:20:59 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/27 13:13:35 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/27 13:28:14 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,8 @@ t_ast	*parse_cmd(const char *cmd)
 static const char	*readline_minishell(void)
 {
 	if (get_last_error() == 0)
-		ft_putstr_fd("✔︎ ", STDOUT_FILENO);
+		ft_putstr_fd("\033[0;32m✔︎\033[0m ", STDOUT_FILENO);
 	else
-		ft_putstr_fd("✘ ", STDOUT_FILENO);
+		ft_putstr_fd("\033[0;31m✘\033[0m ", STDOUT_FILENO);
 	return ((const char *)readline("minishell > "));
 }
