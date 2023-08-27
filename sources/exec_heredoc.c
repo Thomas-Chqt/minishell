@@ -6,7 +6,7 @@
 /*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/24 13:24:07 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/08/27 19:12:21 by sotanaka         ###   ########.fr       */
+/*   Updated: 2023/08/27 19:30:42 by sotanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,14 @@ static int	here_doc_expand(char *filename_in, size_t len_here)
 	return (print_error(status));
 }
 
+static void	putstr_to_fd(char *line, int *fd)
+{
+	if (*line == '\0')
+		ft_putstr_fd("\n", *fd);
+	else
+		ft_putendl_fd(line, *fd);
+}
+
 static int	ft_readline(int *fd_tmphere, char *delimiter, char *filename)
 {
 	char	*line;
@@ -69,10 +77,7 @@ static int	ft_readline(int *fd_tmphere, char *delimiter, char *filename)
 			break ;
 		}
 		len += ft_strlen(line) + 1;
-		if (*line == '\0')
-			ft_putstr_fd("\n", *fd_tmphere);
-		else
-			ft_putendl_fd(line, *fd_tmphere);
+		putstr_to_fd(line, fd_tmphere);
 		free(line);
 	}
 	if (here_doc_expand(filename, len) != 0)
