@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 20:57:27 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/23 13:37:14 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/27 20:04:57 by sotanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	main(int argc, char *argv[], char *envp[])
 	if (sig_interactive_mode() != 0)
 		return (print_error(SIGACTION_ERROR));
 	if (init_env(envp) != 0)
-		return (MALLOC_ERROR);
+		return (print_error(MALLOC_ERROR));
 	minishell_loop();
 	printf("exit\n");
 	clear_env();

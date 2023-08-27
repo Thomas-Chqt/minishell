@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_do.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hotph <hotph@student.42.fr>                +#+  +:+       +#+        */
+/*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/30 13:32:49 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/08/24 10:47:14 by hotph            ###   ########.fr       */
+/*   Updated: 2023/08/27 20:03:23 by sotanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 
 static int	is_standard(char *cmd_path, char **cmd_opts, char **envp)
 {
+	if (envp == NULL)
+		exit(print_error(MALLOC_ERROR));
 	if (execve(cmd_path, cmd_opts, envp) == -1)
 	{
 		free_splited_str(envp);

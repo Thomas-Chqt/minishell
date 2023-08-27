@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_prog.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/13 15:01:43 by hotph             #+#    #+#             */
-/*   Updated: 2023/08/23 13:17:45 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/27 20:01:42 by sotanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ static int	get_fullpath(char *path, char *prog, t_exe *exe)
 	int	status;
 
 	status = path_is_builtin(path, prog, exe);
-	if (status == 0)
+	if (status == 0 || status == MALLOC_ERROR)
 		return (status);
 	else if (path != NULL)
 		status = joint_path(path, prog, exe);
