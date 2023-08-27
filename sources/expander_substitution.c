@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander_substitution.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/26 14:17:04 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/27 16:01:04 by sotanaka         ###   ########.fr       */
+/*   Updated: 2023/08/27 12:17:03 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

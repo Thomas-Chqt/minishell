@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander_add_pre_token.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/26 14:16:02 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/27 16:00:33 by sotanaka         ###   ########.fr       */
+/*   Updated: 2023/08/27 13:15:24 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
