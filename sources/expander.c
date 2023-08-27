@@ -6,7 +6,7 @@
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 17:06:42 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/27 11:56:27 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/27 13:15:44 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,12 @@ int	expand_toklist(t_toklist **token_list)
 		watched = watched->next;
 	}
 	if (error != 0)
-		ft_lstclear((t_list **)&expanded_toklist, &free_token);		
+		ft_lstclear((t_list **)&expanded_toklist, &free_token);
 	if (error == 0)
 		ft_lstclear((t_list **)token_list, &free_token);
 	if (error == 0)
 		*token_list = expanded_toklist;
-	if (error != -69)
+	if (error != 1)
 		return (print_error(error));
 	return (error);
 }

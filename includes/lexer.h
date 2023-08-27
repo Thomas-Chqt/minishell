@@ -6,7 +6,7 @@
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 14:51:42 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/26 17:28:04 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/27 13:15:22 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,5 @@ struct s_toklist
 t_toklist	*toklist_new(t_token_type type, char *data);
 t_toklist	*make_toklist(const char *cmd);
 void		free_token(void *token);
-
 
 #endif // LEXER_H

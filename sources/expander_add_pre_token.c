@@ -6,7 +6,7 @@
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/26 14:16:02 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/27 11:11:32 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/27 13:15:24 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,12 +55,14 @@ int	add_pre_token_dquote(char *str, t_uint64 *i, t_pre_toklist **list)
 	tmp_token.data = subed_str;
 	tmp_token.type = DQUOTED;
 	new_nodes = make_pre_toklist(tmp_token, &error);
+	free(subed_str);
 	if (error == 0)
 	{
 		*i += 1 + token_len + 1;
 		ft_lstadd_back((t_list **)list, (t_list *)new_nodes);
 	}
-	free(subed_str);
+	else
+		ft_lstclear((t_list **)&new_nodes, &free_token);
 	return (error);
 }
 

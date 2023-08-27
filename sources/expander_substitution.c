@@ -6,7 +6,7 @@
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/26 14:17:04 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/27 10:56:37 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/27 12:17:03 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@ static int	substitute_string(char **dst, char *src, size_t len)
 		return (MALLOC_ERROR);
 	*dst = get_env(key, &error);
 	free(key);
+	if (error == BAD_ENVIRONMENT_KEY)
+		return (BAD_SUBSTITUTION);
 	if (error != 0)
 		return (error);
 	if (*dst == NULL)

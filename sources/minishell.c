@@ -6,7 +6,7 @@
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/06 22:20:59 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/27 09:20:41 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/27 13:13:35 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,21 +47,26 @@ t_ast	*parse_cmd(const char *cmd)
 {
 	t_ast		*ast;
 	t_toklist	*token_list;
+	int			error;
 
 	token_list = make_toklist(cmd);
-	if (token_list != NULL && expand_toklist(&token_list) == 0)
+	if (token_list != NULL)
 	{
-		ast = make_ast(token_list);
-		if (ast != NULL)
+		error = expand_toklist(&token_list);
+		if (error == 0)
 		{
-			ft_lstclear((t_list **)&token_list, NULL);
-			return (ast);
+			ast = make_ast(token_list);
+			if (ast != NULL)
+			{
+				ft_lstclear((t_list **)&token_list, NULL);
+				return (ast);
+			}
+			else
+				set_last_error(print_error(MALLOC_ERROR));
 		}
 		else
-		{
-			ft_lstclear((t_list **)token_list, &free_token);
-			set_last_error(print_error(MALLOC_ERROR));
-		}
+			set_last_error(error);
+		ft_lstclear((t_list **)&token_list, &free_token);
 	}
 	return (NULL);
 }
