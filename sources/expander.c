@@ -59,11 +59,10 @@ int	put_expanded_file_fd(int fd_in, size_t len, int fd_out)
 	if (temp_token == NULL)
 		return (MALLOC_ERROR);
 	error = expand_toklist(&temp_token);
-	if (error != 0)
-		return (error);
-	ft_putstr_fd(temp_token->data->data, fd_out);
+	if (error == 0)
+		ft_putstr_fd(temp_token->data->data, fd_out);
 	ft_lstclear((t_list **)&temp_token, &free_token);
-	return (0);
+	return (error);
 }
 
 static int	add_expanded_token(t_token token, t_toklist **token_list)
