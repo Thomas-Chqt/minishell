@@ -6,14 +6,14 @@
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/26 14:16:02 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/26 17:07:30 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/27 11:11:32 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "expander.h"
 #include "environment.h"
 
-int				add_pre_token_subst(char *str, t_uint64 i, size_t len,
+int				add_pre_token_subst(char *str, size_t len,
 					t_pre_toklist **list);
 
 t_pre_toklist	*make_pre_toklist(t_token token, int *error);
@@ -79,7 +79,7 @@ int	add_pre_token_brace(char *str, t_uint64 *i, t_pre_toklist **list)
 		return (PARSING_ERROR);
 	key_len = close_brace - (str + *i + 2);
 	added_len += key_len;
-	error = add_pre_token_subst(str, *i + 2, key_len, list);
+	error = add_pre_token_subst(str + *i + 2, key_len, list);
 	if (error == 0)
 		*i += added_len;
 	return (error);
@@ -92,13 +92,15 @@ int	add_pre_token_no_brace(char *str, t_uint64 *i, t_pre_toklist **list)
 	char	*close_brace;
 	int		error;
 
-	if (str[*i] != '$' || (!ft_isalnum(str[*i + 1]) && str[*i + 1] != '_'))
+	if (str[*i] != '$')
+		return (PARSING_ERROR);
+	if (!ft_isalnum(str[*i + 1]) && str[*i + 1] != '_' && str[*i + 1] != '?')
 		return (PARSING_ERROR);
 	added_len = 1;
 	key_len = 1;
 	key_len += valid_key_len(str + *i + 2);
 	added_len += key_len;
-	error = add_pre_token_subst(str, *i + 1, key_len, list);
+	error = add_pre_token_subst(str + *i + 1, key_len, list);
 	if (error == 0)
 		*i += added_len;
 	return (error);
@@ -106,7 +108,14 @@ int	add_pre_token_no_brace(char *str, t_uint64 *i, t_pre_toklist **list)
 
 int	add_pre_token_tilde(char *str, t_uint64 *i, t_pre_toklist **list)
 {
-	if (i != 0 || str[*i] != '~' || (str[*i + 1] != '\0' && str[*i + 1] != '/'))
+	int		error;
+
+	if (*i != 0)
 		return (PARSING_ERROR);
-	return (add_pre_token_subst(str, *i + 1, 1, list));
+	if (ft_memcmp(str, "~\0", 2) != 0 && ft_memcmp(str, "~/", 2) != 0)
+		return (PARSING_ERROR);
+	error = add_pre_token_subst("HOME", 4, list);
+	if (error == 0)
+		(*i)++;
+	return (error);
 }

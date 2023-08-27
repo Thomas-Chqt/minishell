@@ -6,7 +6,7 @@
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/26 14:17:04 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/26 17:01:45 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/27 10:56:37 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,22 +17,18 @@ static int	substitute_string(char **dst, char *src, size_t len);
 static int	substitute_last_error(char **dst);
 static int	substitute_empty(char **dst);
 
-int	add_pre_token_subst(char *str, t_uint64 i, size_t len,
-		t_pre_toklist **list)
+int	add_pre_token_subst(char *str, size_t len, t_pre_toklist **list)
 {
 	int				error;
 	char			*substitued_str;
 	t_pre_toklist	*new_node;
 
-	if (len == 1 && ft_isdigit(str[i]))
+	if (len == 1 && ft_isdigit(str[0]))
 		error = substitute_empty(&substitued_str);
-	else if (len == 1 && str[i] == '?')
+	else if (len == 1 && str[0] == '?')
 		error = substitute_last_error(&substitued_str);
-	else if (len == 1 && i == 0 && str[i] == '~'
-		&& (str[i + 1] == '\0' || str[i + 1] == '/'))
-		error = substitute_string(&substitued_str, "HOME", 4);
 	else
-		error = substitute_string(&substitued_str, str + i, len);
+		error = substitute_string(&substitued_str, str, len);
 	if (error != 0)
 		return (error);
 	new_node = toklist_new(TEXT, substitued_str);

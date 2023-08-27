@@ -6,7 +6,7 @@
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 15:12:11 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/26 17:28:39 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/27 10:40:37 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,10 @@ t_toklist	*make_toklist(const char *cmd)
 
 	i = 0;
 	new_lst = NULL;
+	while (is_whitespace(cmd[i]))
+		i++;
+	if (cmd[i] == '\0')
+		return (NULL);
 	error_code = recurse_full_cmd(cmd, &i, &new_lst);
 	if (error_code == 0)
 		return (new_lst);
