@@ -6,18 +6,12 @@
 /*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 18:16:36 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/08/24 20:13:26 by sotanaka         ###   ########.fr       */
+/*   Updated: 2023/08/27 15:59:39 by sotanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 #include "environment.h"
-
-void	init_intr(t_intr *intr, int flag_pipe)
-{
-	intr->flag_pipe = flag_pipe;
-	intr->pipe = NULL;
-}
 
 void	init_exe(int fd_in, int fd_out, t_exe *exe, t_intr *intr)
 {
@@ -39,14 +33,43 @@ int	end_with_fd_close(t_exe *exe, int status)
 	return (status);
 }
 
-int	scan_environment(t_ast *node)
+static int	set_env_all(t_ast **node, t_ast **current)
 {
-	if (node->data != NULL && node->data->type == TEXT)
+	int	status;
+
+	status = 0;
+	*current = *node;
+	while (*current != NULL)
 	{
-		if (is_valid_keyval(node->data->data) == 0)
-			return (1);
+		status = set_env_single_str((*current)->data->data, 0);
+		if (status == MALLOC_ERROR)
+			return (print_error(MALLOC_ERROR));
+		*current = (*current)->right;
 	}
-	return (0);
+	return (status);
+}
+
+int	skip_if_environment(t_ast **node)
+{
+	int		status;
+	t_ast	*current;
+
+	status = 1;
+	current = *node;
+	while (current != NULL)
+	{
+		status = is_valid_keyval(current->data->data);
+		if (status != 0)
+		{
+			status = 1;
+			break ;
+		}
+		current = current->right;
+	}
+	if (status == 0)
+		status = set_env_all(node, &current);
+	*node = current;
+	return (status);
 }
 
 void	minishell_unlink(void)

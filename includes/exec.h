@@ -6,7 +6,7 @@
 /*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/06 21:58:21 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/24 17:46:32 by sotanaka         ###   ########.fr       */
+/*   Updated: 2023/08/27 14:33:54 by sotanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,10 +75,9 @@ char	*get_cmd_prog(t_ast *node, int *error);
 char	**get_argv(t_ast *node);
 int		get_argc(t_ast *node);
 //exec_utils2
-void	init_intr(t_intr *intr, int flag_pipe);
 void	init_exe(int fd_in, int fd_out, t_exe *exe, t_intr *intr);
 int		end_with_fd_close(t_exe *exe, int status);
-int		scan_environment(t_ast *node);
+int		skip_if_environment(t_ast **node);
 void	minishell_unlink(void);
 //do
 int		exec_do(t_exe *exe, t_ast *node, int flag);

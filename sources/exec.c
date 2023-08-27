@@ -6,11 +6,17 @@
 /*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 18:17:56 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/08/24 17:37:55 by sotanaka         ###   ########.fr       */
+/*   Updated: 2023/08/27 14:33:44 by sotanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
+
+static void	init_intr(t_intr *intr, int flag_pipe)
+{
+	intr->flag_pipe = flag_pipe;
+	intr->pipe = NULL;
+}
 
 static int	make_pipe(int *fd_pipe, t_intr *intr, int *fd_in, int *fd_out)
 {
@@ -36,11 +42,9 @@ static int	scan_simple_cmd(int fd_in, int fd_out, t_ast *node, t_intr intr)
 		return (end_with_fd_close(&exe, status));
 	if (fd_out == exe.fd_out && fd_out != STDOUT_FILENO)
 		exe.flag_pipe_close = 1;
-	status = scan_environment(node);
-	if (status == 1 && node->right != NULL)
-		node = node->right;
-	else if (status == 1)
-		return (end_with_fd_close(&exe, 0));
+	status = skip_if_environment(&node);
+	if (status != 1)
+		return (end_with_fd_close(&exe, status));
 	status = scan_path_prog(&exe, node);
 	if (status != 0)
 	{
