@@ -6,7 +6,7 @@
 /*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/06 21:58:21 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/27 14:33:54 by sotanaka         ###   ########.fr       */
+/*   Updated: 2023/08/27 17:17:59 by sotanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@
 //-------include-------
 # include "parser.h"
 # include "signals.h"
+# include "expander.h"
 
 //-------typedef-------
 typedef struct s_exe

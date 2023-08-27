@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 17:06:42 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/27 14:02:19 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/27 19:16:57 by sotanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,13 +111,13 @@ static t_toklist	*token_from_file(int fd, t_uint64 len)
 	char		*file_data;
 	char		*line;
 
-	file_data = ft_calloc(len, sizeof(char));
+	file_data = ft_calloc(len + 1, sizeof(char));
 	if (file_data == NULL)
 		return (NULL);
 	line = get_next_line(fd);
 	while (line != NULL)
 	{
-		ft_strlcat(file_data, line, len);
+		ft_strlcat(file_data, line, len + 1);
 		free(line);
 		line = get_next_line(fd);
 	}
