@@ -6,7 +6,7 @@
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 20:57:27 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/28 12:35:56 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/28 15:01:48 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,14 +46,19 @@ int	main(int argc, char *argv[], char *envp[])
 		return (print_error(SIGACTION_ERROR));
 	if (init_env(envp) != 0)
 		return (print_error(MALLOC_ERROR));
-	if (argc > 1)
+	if (isatty(STDIN_FILENO) == 0)
+		execute_file(NULL);
+	else if (argc > 1)
 	{
 		ret_val = execute_args(argc, argv);
 		clear_env();
 		return (ret_val);
 	}
-	minishell_loop();
-	printf("exit\n");
+	else
+	{
+		minishell_loop();
+		printf("exit\n");
+	}
 	clear_env();
 	return (0);
 }
@@ -87,7 +92,10 @@ static int	execute_file(char *file_name)
 	char	*line;
 	t_ast	*ast;
 
-	fd = open(file_name, O_RDONLY);
+	if (file_name == NULL)
+		fd = STDIN_FILENO;
+	else
+		fd = open(file_name, O_RDONLY);
 	if (fd == -1)
 		return (printf_error_msg("minishell: %: %",
 				(char *[2]){file_name, strerror(errno)}, errno + 125));
