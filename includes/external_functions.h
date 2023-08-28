@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   external_functions.h                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hotph <hotph@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 22:54:17 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/28 10:48:05 by hotph            ###   ########.fr       */
+/*   Updated: 2023/08/28 14:56:22 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ int		pipe(int pipefd[2]);
 
 char	*strerror(int errnum);
 void	perror(const char *s);
-// isatty
+int		isatty(int fd);
 // ttyname
 // ttyslot
 // ioctl
