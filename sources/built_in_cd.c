@@ -6,7 +6,7 @@
 /*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 12:31:07 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/08/28 17:55:41 by sotanaka         ###   ########.fr       */
+/*   Updated: 2023/08/28 17:58:19 by sotanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ valid identifier", &key, 1);
 	return (status);
 }
 
-static int	cd_to_home(char *cmd_opts, int flag_pipe)
+static int	cd_to_home(char *cmd_opts)
 {
 	char	*path;
 	int		status;
@@ -76,13 +76,12 @@ static int	cd_to_home(char *cmd_opts, int flag_pipe)
 int	built_in_cd(t_exe *exe)
 {
 	int		status;
-	char	*path;
 
 	status = cd_check_path(exe);
 	if (status != 0)
 		return (return_or_exit(status, exe->flag_pipe));
 	if (exe->cmd_opts[1] == NULL || exe->cmd_opts[1][0] == '\0')
-		status = cd_to_home(exe->cmd_opts[1], exe->flag_pipe);
+		status = cd_to_home(exe->cmd_opts[1]);
 	if (status != 0)
 		return (return_or_exit(status, exe->flag_pipe));
 	status = set_env_key("OLDPWD");
