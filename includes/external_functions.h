@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   external_functions.h                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hotph <hotph@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 22:54:17 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/24 14:39:28 by sotanaka         ###   ########.fr       */
+/*   Updated: 2023/08/28 10:48:05 by hotph            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,8 @@ pid_t	waitpid(pid_t pid, int *stat_loc, int options);
 // sigaction
 // sigemptyset
 // sigaddset
-// kill
 
+int		kill(pid_t pid, int sig);
 void	exit(int status);
 char	*getcwd(char *buf, size_t size);
 int		chdir(const char *path);
