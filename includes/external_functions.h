@@ -6,7 +6,7 @@
 /*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 22:54:17 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/28 16:22:45 by sotanaka         ###   ########.fr       */
+/*   Updated: 2023/08/28 18:48:01 by sotanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ int		pipe(int pipefd[2]);
 
 char	*strerror(int errnum);
 void	perror(const char *s);
-// isatty
+int		isatty(int fd);
 // ttyname
 // ttyslot
 // ioctl
