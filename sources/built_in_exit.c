@@ -6,7 +6,7 @@
 /*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/18 14:38:58 by hotph             #+#    #+#             */
-/*   Updated: 2023/08/26 11:08:55 by sotanaka         ###   ########.fr       */
+/*   Updated: 2023/08/28 16:23:06 by sotanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,28 @@ static int	str_isdigit(char *str)
 	return (0);
 }
 
+static t_bool	str_within_long(char *str)
+{
+	long	num;
+
+	num = atoi_long(str);
+	if (num == LONG_MAX || num == LONG_MIN)
+	{
+		if (str_cmp(str, "9223372036854775807") == 0)
+			return (true);
+		if (str_cmp(str, "-9223372036854775808") == 0)
+			return (true);
+		return (false);
+	}
+	return (true);
+}
+
 static int	check_arg(char *str, int argc, int flag_pipe)
 {
 	int	status;
 
 	status = 0;
-	if (str != NULL && str_isdigit(str) == -1)
+	if (str != NULL && (str_isdigit(str) == -1 || str_within_long(str) == false))
 	{
 		if (flag_pipe == 0)
 			ft_putstr_fd("exit\n", 1);
@@ -70,7 +86,7 @@ int	built_in_exit(t_exe *exe, t_ast *node)
 			exit_parent ((t_uint8)ft_atoi(exe->cmd_opts[1]), node, exe);
 		else if (status == 2)
 			exit_parent (2, node, exe);
-		return (-1);
+		return (1);
 	}
 	else
 	{

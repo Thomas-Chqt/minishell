@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   external_functions.h                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 22:54:17 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/28 14:56:22 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/28 18:48:01 by sotanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@
 # include <sys/wait.h>
 # include <fcntl.h>
 # include <signal.h>
+# include <limits.h>
 
 # ifdef MEMCHECK
 
