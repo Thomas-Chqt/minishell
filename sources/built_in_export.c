@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_in_export.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 14:04:08 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/23 13:31:00 by sotanaka         ###   ########.fr       */
+/*   Updated: 2023/08/28 11:49:35 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,28 +20,29 @@ int	built_in_export(int argc, char *argv[])
 {
 	t_uint64	i;
 	int			temp_ret;
+	int			error;
 
+	error = 0;
 	if (argc <= 1)
 		ft_lstiter((t_list *)*(get_lstenv()), &print_entry);
 	else
 	{
 		if (check_args(argv) != 0)
 			return (2);
-		i = 1;
-		while (i < (t_uint64)argc)
+		i = 0;
+		while (++i < (t_uint64)argc)
 		{
 			temp_ret = set_env_single_str(argv[i], true);
 			if (temp_ret == NULL_ENVIRONMENT_VAL)
 				temp_ret = export_env(argv[i]);
-			else if (temp_ret == BAD_ENVIRONMENT_KEY)
-				printf_error_msg("minshell: export: `%': not a\
-valid identifier", argv + i, 1);
+			if (temp_ret == BAD_ENVIRONMENT_KEY)
+				error = printf_error_msg("minshell: export: `%': \
+not a valid identifier", argv + i, 1);
 			else if (temp_ret != 0)
 				return (temp_ret);
-			i++;
 		}
 	}
-	return (0);
+	return (error);
 }
 
 static int	check_args(char *argv[])

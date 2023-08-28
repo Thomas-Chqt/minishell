@@ -6,7 +6,7 @@
 /*   By: hotph <hotph@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 12:31:07 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/08/28 11:41:07 by hotph            ###   ########.fr       */
+/*   Updated: 2023/08/28 13:19:11 by hotph            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static int	return_or_exit(int val, int flag)
 
 static int	cd_check_path(t_exe *exe)
 {
-	if (exe->cmd_opts[1] == NULL)
+	if (exe->cmd_opts[1] == NULL || exe->cmd_opts[1][0] == '\0')
 		return (0);
 	if (ft_access_wrap(exe->cmd_opts[1], ACCESS_FOK) == false)
 		return (printf_error_msg("minishell: cd: %: No such file or directory",
@@ -54,20 +54,25 @@ valid identifier", &key, 1);
 	return (status);
 }
 
-static int	cd_to_home(void)
+static int	cd_to_home(char *cmd_opts, int flag_pipe)
 {
 	char	*path;
 	int		status;
 
-	path = get_env("HOME", NULL);
+	if (cmd_opts != NULL && *cmd_opts == '\0')
+		return (0);
 	status = 0;
+	path = get_env("HOME", NULL);
 	if (path == NULL)
-		status = printf_error_msg("minishell: cd: HOME not set", NULL, 1);
+		return (printf_error_msg("minishell: cd: HOME not set", NULL, 1));
 	else if (*path == '\0')
 		status = 0;
 	else if (chdir(path) != 0)
 		status = perror_wrap("minishell: cd: ", 1);
 	free(path);
+	status = set_env_key("OLDPWD");
+	if (status != 0)
+		return (return_or_exit(status, flag_pipe));
 	return (status);
 }
 
@@ -79,11 +84,8 @@ int	built_in_cd(t_exe *exe)
 	status = cd_check_path(exe);
 	if (status != 0)
 		return (return_or_exit(status, exe->flag_pipe));
-	status = set_env_key("OLDPWD");
-	if (status != 0)
-		return (return_or_exit(status, exe->flag_pipe));
-	if (exe->cmd_opts[1] == NULL)
-		status = cd_to_home();
+	if (exe->cmd_opts[1] == NULL || exe->cmd_opts[1][0] == '\0')
+		status = cd_to_home(exe->cmd_opts[1], exe->flag_pipe);
 	else if (chdir(exe->cmd_opts[1]) != 0)
 		status = perror_wrap("minishell: cd: ", 1);
 	if (status != 0)

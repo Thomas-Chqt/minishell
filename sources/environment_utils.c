@@ -6,7 +6,7 @@
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 17:24:55 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/24 23:43:55 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/28 11:47:42 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,9 @@ int	is_valid_keyval(const char *str)
 	size_t	key_len;
 
 	key_len = valid_key_len(str);
-	if (key_len == 0 || str[key_len] != '=')
-		return (BAD_ENVIRONMENT_KEY);
 	if (str[key_len] == '\0')
 		return (NULL_ENVIRONMENT_VAL);
+	if (key_len == 0 || str[key_len] != '=')
+		return (BAD_ENVIRONMENT_KEY);
 	return (0);
 }
