@@ -6,7 +6,7 @@
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 20:57:27 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/28 15:01:48 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/28 18:43:14 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ static void	destructor(void)
 
 static int	execute_args(int argc, char *argv[]);
 static int	execute_file(char *file_name);
+static int	get_fd(char *file_name);
 
 int	main(int argc, char *argv[], char *envp[])
 {
@@ -46,19 +47,17 @@ int	main(int argc, char *argv[], char *envp[])
 		return (print_error(SIGACTION_ERROR));
 	if (init_env(envp) != 0)
 		return (print_error(MALLOC_ERROR));
-	if (isatty(STDIN_FILENO) == 0)
-		execute_file(NULL);
-	else if (argc > 1)
+	if (isatty(STDIN_FILENO) == 0 || argc > 1)
 	{
-		ret_val = execute_args(argc, argv);
+		if (isatty(STDIN_FILENO) == 0)
+			ret_val = execute_file(NULL);
+		else
+			ret_val = execute_args(argc, argv);
 		clear_env();
 		return (ret_val);
 	}
-	else
-	{
-		minishell_loop();
-		printf("exit\n");
-	}
+	minishell_loop();
+	printf("exit\n");
 	clear_env();
 	return (0);
 }
@@ -69,11 +68,11 @@ static int	execute_args(int argc, char *argv[])
 	int		ret_val;
 
 	if (argv[1][0] == '-' && argv[1][1] != 'c')
-		return (printf_error_msg("minishell: %: invalid option", argv + 1, 2));
+		return (printf_error_msg("%s: invalid option", argv + 1, 2));
 	if (str_cmp(argv[1], "-c") == 0)
 	{
 		if (argc < 3)
-			return (print_error_msg("minishell: -c: option requires an \
+			return (print_error_msg("-c: option requires an \
 argument", 2));
 		ast = parse_cmd(argv[2]);
 		if (ast != NULL)
@@ -91,17 +90,17 @@ static int	execute_file(char *file_name)
 	int		fd;
 	char	*line;
 	t_ast	*ast;
+	int		line_nbr;
 
-	if (file_name == NULL)
-		fd = STDIN_FILENO;
-	else
-		fd = open(file_name, O_RDONLY);
+	fd = get_fd(file_name);
 	if (fd == -1)
-		return (printf_error_msg("minishell: %: %",
-				(char *[2]){file_name, strerror(errno)}, errno + 125));
+		return (printf_error_msg("%s: %s", (char *[2]){file_name,
+				strerror(errno)}, errno + 125));
 	line = get_next_line(fd);
+	line_nbr = 1;
 	while (line != NULL)
 	{
+		set_current_line(line_nbr++);
 		ast = parse_cmd(line);
 		if (ast != NULL)
 		{
@@ -112,4 +111,15 @@ static int	execute_file(char *file_name)
 		line = get_next_line(fd);
 	}
 	return (get_last_error());
+}
+
+static int	get_fd(char *file_name)
+{
+	int	fd;
+
+	if (file_name == NULL)
+		return (STDIN_FILENO);
+	fd = open(file_name, O_RDONLY);
+	set_running_file(file_name);
+	return (fd);
 }

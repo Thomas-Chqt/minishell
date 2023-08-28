@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_prog.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/13 15:01:43 by hotph             #+#    #+#             */
-/*   Updated: 2023/08/27 20:01:42 by sotanaka         ###   ########.fr       */
+/*   Updated: 2023/08/28 16:39:07 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ static int	get_fullpath(char *path, char *prog, t_exe *exe)
 		status = path_is_envp(prog, exe);
 		free_splited_str(exe->matrix_envpath);
 		if (status == CMD_NOTFOUND)
-			printf_error_msg("minishell: %: command not found",
+			printf_error_msg("%s: command not found",
 				&prog, CMD_NOTFOUND);
 	}
 	if (status != 0)

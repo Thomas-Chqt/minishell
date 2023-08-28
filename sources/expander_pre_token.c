@@ -6,7 +6,7 @@
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/26 14:13:43 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/27 14:04:26 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/28 16:39:16 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ t_pre_toklist	*make_pre_toklist(t_token token, int *error)
 	if (*error != 0)
 		ft_lstclear((t_list **)&token_list, &free_token);
 	if (*error == BAD_SUBSTITUTION)
-		*error = printf_error_msg("minishell: %: bad substitution",
+		*error = printf_error_msg("%s: bad substitution",
 				&token.data, 1);
 	return (token_list);
 }

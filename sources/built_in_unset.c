@@ -6,7 +6,7 @@
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 14:09:39 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/23 13:13:02 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/28 16:44:11 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	built_in_unset(int argc, char *argv[])
 		{
 			if (delete_env(argv[i]) != 0)
 				return (
-					printf_error_msg("minshell: unset: `%': not a\
+					printf_error_msg("unset: `%s': not a\
 valid identifier", argv + i, 1));
 			i++;
 		}
@@ -41,12 +41,7 @@ valid identifier", argv + i, 1));
 static int	check_args(char *argv[])
 {
 	if (argv[1][0] == '-' && argv[1][1] != '\0')
-	{
-		ft_putstr_fd("minshell: unset: -", STDERR_FILENO);
-		ft_putchar_fd(argv[1][1], STDERR_FILENO);
-		ft_putstr_fd(": invalid option\n", STDERR_FILENO);
-		ft_putendl_fd("unset: usage: unset [name ...]", STDERR_FILENO);
-		return (1);
-	}
+		return (printf_error_msg("unset: -%c: invalid option\nunset:  \
+usage: unset [name ...]", (char *[1]){argv[1] + 1}, 1));
 	return (0);
 }

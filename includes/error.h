@@ -6,7 +6,7 @@
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 18:31:32 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/24 17:02:42 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/28 17:32:55 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@
 # define BAD_ENVIRONMENT_KEY 9999
 # define NULL_ENVIRONMENT_VAL 1010
 
+void	set_current_line(int line_nbr);
+void	set_running_file(char *file_name);
 int		print_error_msg(char *msg, int return_val);
 int		print_error(int code);
 int		printf_error_msg(char *format, char *data[], int return_val);

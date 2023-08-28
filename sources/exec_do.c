@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_do.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/30 13:32:49 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/08/27 20:03:23 by sotanaka         ###   ########.fr       */
+/*   Updated: 2023/08/28 16:38:31 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,10 @@ static int	is_standard(char *cmd_path, char **cmd_opts, char **envp)
 	{
 		free_splited_str(envp);
 		if (errno == EISDIR)
-			return (printf_error_msg("minishell: %: %",
+			return (printf_error_msg("%s: %s",
 					(char *[2]){cmd_path, strerror(errno)}, IS_A_DIRECTORY));
 		else
-			printf_error_msg("minishell: %: %",
+			printf_error_msg("%s: %s",
 				(char *[2]){cmd_path, strerror(errno)}, 0);
 	}
 	return (1);

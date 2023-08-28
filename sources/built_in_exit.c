@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_in_exit.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/18 14:38:58 by hotph             #+#    #+#             */
-/*   Updated: 2023/08/28 16:23:06 by sotanaka         ###   ########.fr       */
+/*   Updated: 2023/08/28 18:56:20 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,10 @@ static int	check_arg(char *str, int argc, int flag_pipe)
 		if (flag_pipe == 0)
 			ft_putstr_fd("exit\n", 1);
 		status = printf_error_msg
-			("minishell: exit: %: numeric argument required", &str, 2);
+			("exit: %s: numeric argument required", &str, 2);
 	}
 	else if (argc > 2)
-		status = print_error_msg("minishell: exit: too many arguments", 1);
+		status = print_error_msg("exit: too many arguments", 1);
 	return (status);
 }
 

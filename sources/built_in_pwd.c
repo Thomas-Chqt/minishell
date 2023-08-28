@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_in_pwd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/19 13:52:27 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/08/23 13:05:54 by sotanaka         ###   ########.fr       */
+/*   Updated: 2023/08/28 16:27:32 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	built_in_pwd(t_exe *exe)
 
 	cwd = getcwd(NULL, 0);
 	if (cwd == NULL)
-		exit (perror_wrap("minishell: cd: ", 1));
+		exit (perror_wrap("cd: ", 1));
 	printf("%s\n", cwd);
 	free(cwd);
 	if (exe->flag_pipe == 0)
