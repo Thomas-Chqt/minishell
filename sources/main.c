@@ -6,7 +6,7 @@
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 20:57:27 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/28 12:28:31 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/28 12:35:56 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,8 @@ static int	execute_file(char *file_name)
 
 	fd = open(file_name, O_RDONLY);
 	if (fd == -1)
-		return (perror_wrap("minishell: ", 1));
+		return (printf_error_msg("minishell: %: %",
+				(char *[2]){file_name, strerror(errno)}, errno + 125));
 	line = get_next_line(fd);
 	while (line != NULL)
 	{
