@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals_handler.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: hotph <hotph@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 23:03:15 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/27 13:30:00 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/28 11:16:15 by hotph            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,5 +35,6 @@ void	sig_forwarding(int sig)
 void	sigint_handler_exit(int sig)
 {
 	(void)sig;
-	exit(1);
+	signal(SIGINT, SIG_DFL);
+	kill(0, SIGINT);
 }

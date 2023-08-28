@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hotph <hotph@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/06 21:58:21 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/27 17:17:59 by sotanaka         ###   ########.fr       */
+/*   Updated: 2023/08/28 11:01:54 by hotph            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,10 @@ typedef struct s_intr
 int		ft_open_file(char *file_redirect, int flag_redirect, int *fd_io);
 int		scan_btree_io(t_exe *exe, t_ast *node);
 //heredoc
-char	*get_temporary_name10(char *namespace, char *name, size_t size_space);
 int		ft_here_doc(char *delimiter, int *fd_in);
+//heredoc_utils
+char	*get_temporary_name10(char *namespace, char *name, size_t size_space);
+void	putstr_to_fd(char *line, int *fd);
 //prog
 int		scan_path_prog(t_exe *exe, t_ast *node);
 //prog util1
