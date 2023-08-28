@@ -6,7 +6,7 @@
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/04 11:26:37 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/24 14:27:59 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/28 15:28:58 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ char		*get_env_create(const char *keyval, int *error_code);
 
 void		set_last_error(int code);
 int			get_last_error(void);
+char		*get_default_home(void);
 
 t_env_list	**get_lstenv(void);
 int			is_valid_keyval(const char *str);
