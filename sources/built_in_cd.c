@@ -6,7 +6,7 @@
 /*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 12:31:07 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/08/28 17:58:19 by sotanaka         ###   ########.fr       */
+/*   Updated: 2023/08/28 18:20:02 by sotanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ valid identifier", &key, 1);
 	return (status);
 }
 
-static int	cd_to_home(char *cmd_opts)
+static int	cd_to_home(char *cmd_opts, int flag_pipe)
 {
 	char	*path;
 	int		status;
@@ -67,8 +67,14 @@ static int	cd_to_home(char *cmd_opts)
 		return (printf_error_msg("minishell: cd: HOME not set", NULL, 1));
 	else if (*path == '\0')
 		status = 0;
-	else if (chdir(path) != 0)
-		status = perror_wrap("minishell: cd: ", 1);
+	else
+	{
+		status = set_env_key("OLDPWD");
+		if (status != 0)
+			return (return_or_exit(status, flag_pipe));
+		if (chdir(path) != 0)
+			status = perror_wrap("minishell: cd: ", 1);
+	}
 	free(path);
 	return (status);
 }
@@ -81,15 +87,15 @@ int	built_in_cd(t_exe *exe)
 	if (status != 0)
 		return (return_or_exit(status, exe->flag_pipe));
 	if (exe->cmd_opts[1] == NULL || exe->cmd_opts[1][0] == '\0')
-		status = cd_to_home(exe->cmd_opts[1]);
-	if (status != 0)
-		return (return_or_exit(status, exe->flag_pipe));
-	status = set_env_key("OLDPWD");
-	if (status != 0)
-		return (return_or_exit(status, exe->flag_pipe));
-	if (exe->cmd_opts[1] != NULL && exe->cmd_opts[1][0] != '\0'
-		&& chdir(exe->cmd_opts[1]) != 0)
-		status = perror_wrap("minishell: cd: ", 1);
+		status = cd_to_home(exe->cmd_opts[1], exe->flag_pipe);
+	else
+	{
+		status = set_env_key("OLDPWD");
+		if (status != 0)
+			return (return_or_exit(status, exe->flag_pipe));
+		if (chdir(exe->cmd_opts[1]) != 0)
+			status = perror_wrap("minishell: cd: ", 1);
+	}
 	if (status != 0)
 		return (return_or_exit(status, exe->flag_pipe));
 	status = set_env_key("PWD");
