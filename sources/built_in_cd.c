@@ -6,7 +6,7 @@
 /*   By: hotph <hotph@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 12:31:07 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/08/23 10:26:38 by hotph            ###   ########.fr       */
+/*   Updated: 2023/08/28 11:41:07 by hotph            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,23 @@ valid identifier", &key, 1);
 	return (status);
 }
 
+static int	cd_to_home(void)
+{
+	char	*path;
+	int		status;
+
+	path = get_env("HOME", NULL);
+	status = 0;
+	if (path == NULL)
+		status = printf_error_msg("minishell: cd: HOME not set", NULL, 1);
+	else if (*path == '\0')
+		status = 0;
+	else if (chdir(path) != 0)
+		status = perror_wrap("minishell: cd: ", 1);
+	free(path);
+	return (status);
+}
+
 int	built_in_cd(t_exe *exe)
 {
 	int		status;
@@ -66,12 +83,7 @@ int	built_in_cd(t_exe *exe)
 	if (status != 0)
 		return (return_or_exit(status, exe->flag_pipe));
 	if (exe->cmd_opts[1] == NULL)
-	{
-		path = get_env("HOME", NULL);
-		if (chdir(path) != 0)
-			status = perror_wrap("minishell: cd: ", 1);
-		free(path);
-	}
+		status = cd_to_home();
 	else if (chdir(exe->cmd_opts[1]) != 0)
 		status = perror_wrap("minishell: cd: ", 1);
 	if (status != 0)
