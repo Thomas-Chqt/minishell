@@ -3,17 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 20:57:27 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/27 20:04:57 by sotanaka         ###   ########.fr       */
+/*   Updated: 2023/08/28 12:35:56 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include "signals.h"
+#include "error.h"
 
+#include "signals.h"
 #include "environment.h"
+#include "parser.h"
 
 #ifdef MEMCHECK
 
@@ -33,16 +35,73 @@ static void	destructor(void)
 
 #endif // MEMCHECK
 
+static int	execute_args(int argc, char *argv[]);
+static int	execute_file(char *file_name);
+
 int	main(int argc, char *argv[], char *envp[])
 {
-	(void)argc;
-	(void)argv;
+	int	ret_val;
+
 	if (sig_interactive_mode() != 0)
 		return (print_error(SIGACTION_ERROR));
 	if (init_env(envp) != 0)
 		return (print_error(MALLOC_ERROR));
+	if (argc > 1)
+	{
+		ret_val = execute_args(argc, argv);
+		clear_env();
+		return (ret_val);
+	}
 	minishell_loop();
 	printf("exit\n");
 	clear_env();
 	return (0);
+}
+
+static int	execute_args(int argc, char *argv[])
+{
+	t_ast	*ast;
+	int		ret_val;
+
+	if (argv[1][0] == '-' && argv[1][1] != 'c')
+		return (printf_error_msg("minishell: %: invalid option", argv + 1, 2));
+	if (str_cmp(argv[1], "-c") == 0)
+	{
+		if (argc < 3)
+			return (print_error_msg("minishell: -c: option requires an \
+argument", 2));
+		ast = parse_cmd(argv[2]);
+		if (ast != NULL)
+		{
+			ret_val = execute_ast(ast);
+			clean_ast(ast);
+			return (ret_val);
+		}
+	}
+	return (execute_file(argv[1]));
+}
+
+static int	execute_file(char *file_name)
+{
+	int		fd;
+	char	*line;
+	t_ast	*ast;
+
+	fd = open(file_name, O_RDONLY);
+	if (fd == -1)
+		return (printf_error_msg("minishell: %: %",
+				(char *[2]){file_name, strerror(errno)}, errno + 125));
+	line = get_next_line(fd);
+	while (line != NULL)
+	{
+		ast = parse_cmd(line);
+		if (ast != NULL)
+		{
+			set_last_error(execute_ast(ast));
+			clean_ast(ast);
+		}
+		free(line);
+		line = get_next_line(fd);
+	}
+	return (get_last_error());
 }
