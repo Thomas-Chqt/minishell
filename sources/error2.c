@@ -6,7 +6,7 @@
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 16:16:27 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/28 17:34:09 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/29 11:04:37 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void	set_current_line(int line_nbr)
 {
 	*(current_line_ptr()) = line_nbr;
 }
+
 void	set_running_file(char *file_name)
 {
 	*(running_file_ptr()) = file_name;
