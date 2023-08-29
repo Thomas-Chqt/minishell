@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_in_cd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 12:31:07 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/08/28 19:03:03 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/29 18:06:47 by sotanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,10 @@ static int	cd_to_home(char *cmd_opts, int flag_pipe)
 	{
 		status = set_env_key("OLDPWD");
 		if (status != 0)
+		{
+			free(path);
 			return (return_or_exit(status, flag_pipe));
+		}
 		if (chdir(path) != 0)
 			status = perror_wrap("cd: ", 1);
 	}
