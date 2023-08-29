@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_prog_utils2.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hotph <hotph@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/04 17:42:46 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/08/24 10:50:16 by hotph            ###   ########.fr       */
+/*   Updated: 2023/08/28 16:38:59 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ int	check_cmdpath(char *cmd_path, int flag)
 	{
 		err = ft_access_wrap(cmd_path, ACCESS_FOK);
 		if (err == false)
-			printf_error_msg("minishell: %: %",
+			printf_error_msg("%s: %s",
 				(char *[2]){cmd_path, strerror(errno)}, CMD_SIMPLE);
 		else
 			return (0);
@@ -86,13 +86,13 @@ int	check_cmdpath(char *cmd_path, int flag)
 int	check_cmdpath_hub(t_exe *exe)
 {
 	if (check_cmdpath(exe->cmd_path, ACCESS_FOK) == 1)
-		return (printf_error_msg("minishell: %: No such file or directory",
+		return (printf_error_msg("%s: No such file or directory",
 				&exe->cmd_path, CMD_NOTFOUND));
 	if (ft_stat_wrap(exe->cmd_path, STAT_ISDIR) == true)
-		return (printf_error_msg("minishell: %: Is a directory",
+		return (printf_error_msg("%s: Is a directory",
 				&exe->cmd_path, CMD_CANT_EXEC));
 	if (check_cmdpath(exe->cmd_path, ACCESS_XOK) == 1)
-		return (printf_error_msg("minishell: %: %",
+		return (printf_error_msg("%s: %s",
 				(char *[2]){exe->cmd_path, strerror(errno)}, CMD_CANT_EXEC));
 	return (0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_prog_utils1.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hotph <hotph@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 14:50:40 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/08/24 10:50:00 by hotph            ###   ########.fr       */
+/*   Updated: 2023/08/28 16:38:42 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,13 +92,13 @@ int	directory_is(char *path)
 		return (print_error(MALLOC_ERROR));
 	path[ft_strlen(path) - 1] = '\0';
 	if (check_cmdpath(path, ACCESS_FOK) == 1)
-		status = printf_error_msg("minishell: %: %",
+		status = printf_error_msg("%s: %s",
 				(char *[2]){cpy, strerror(errno)}, CMD_NOTFOUND);
 	else if (ft_stat_wrap(path, STAT_ISDIR) == true)
-		status = printf_error_msg("minishell: %: %",
+		status = printf_error_msg("%s: %s",
 				(char *[2]){cpy, "Is a directory"}, CMD_CANT_EXEC);
 	else if (ft_stat_wrap(path, STAT_ISREG) == true)
-		status = printf_error_msg("minishell: %: %",
+		status = printf_error_msg("%s: %s",
 				(char *[2]){cpy, "Not a directory"}, CMD_CANT_EXEC);
 	else if (ft_stat_wrap(path, 0) == 1)
 		status = 1;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_redirect.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/13 12:21:58 by hotph             #+#    #+#             */
-/*   Updated: 2023/08/24 20:05:44 by sotanaka         ###   ########.fr       */
+/*   Updated: 2023/08/28 16:39:11 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	ft_open_file(char *file_redirect, int flag_redirect, int *fd_io)
 	else
 		fd = open(file_redirect, O_RDONLY);
 	if (fd == -1)
-		return (printf_error_msg("minishell: %: %",
+		return (printf_error_msg("%s: %s",
 				(char *[2]){file_redirect, strerror(errno)}, EX_FILE_OPEN_ERR));
 	else
 	{

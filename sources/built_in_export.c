@@ -6,7 +6,7 @@
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 14:04:08 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/28 11:49:35 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/28 16:44:03 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	built_in_export(int argc, char *argv[])
 			if (temp_ret == NULL_ENVIRONMENT_VAL)
 				temp_ret = export_env(argv[i]);
 			if (temp_ret == BAD_ENVIRONMENT_KEY)
-				error = printf_error_msg("minshell: export: `%': \
+				error = printf_error_msg("export: `%s': \
 not a valid identifier", argv + i, 1);
 			else if (temp_ret != 0)
 				return (temp_ret);
@@ -48,14 +48,8 @@ not a valid identifier", argv + i, 1);
 static int	check_args(char *argv[])
 {
 	if (argv[1][0] == '-' && argv[1][1] != '\0')
-	{
-		ft_putstr_fd("minshell: export: -", STDERR_FILENO);
-		ft_putchar_fd(argv[1][1], STDERR_FILENO);
-		ft_putstr_fd(": invalid option\n", STDERR_FILENO);
-		ft_putendl_fd("export: usage: export [name[=value] ...]",
-			STDERR_FILENO);
-		return (1);
-	}
+		return (printf_error_msg("export: -%c: invalid option\nexport: \
+usage: export [name[=value] ...]", (char *[1]){argv[1] + 1}, 1));
 	return (0);
 }
 
