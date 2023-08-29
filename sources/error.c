@@ -6,7 +6,7 @@
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 18:32:01 by tchoquet          #+#    #+#             */
-/*   Updated: 2023/08/28 17:55:01 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/29 11:27:14 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	print_pre_error_msg(void);
 
 int	print_error_msg(char *msg, int return_val)
-{		
+{
 	print_pre_error_msg();
 	ft_putendl_fd(msg, STDIN_FILENO);
 	return (return_val);

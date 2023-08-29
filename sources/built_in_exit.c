@@ -6,7 +6,7 @@
 /*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/18 14:38:58 by hotph             #+#    #+#             */
-/*   Updated: 2023/08/28 18:56:20 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/29 11:04:45 by tchoquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,8 @@ static int	check_arg(char *str, int argc, int flag_pipe)
 	int	status;
 
 	status = 0;
-	if (str != NULL && (str_isdigit(str) == -1 || str_within_long(str) == false))
+	if (str != NULL && (str_isdigit(str) == -1
+			|| str_within_long(str) == false))
 	{
 		if (flag_pipe == 0)
 			ft_putstr_fd("exit\n", 1);
