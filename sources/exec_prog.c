@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_prog.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/13 15:01:43 by hotph             #+#    #+#             */
-/*   Updated: 2023/08/28 16:39:07 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/29 18:18:17 by sotanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,10 @@ int	scan_path_prog(t_exe *exe, t_ast *node)
 			return (print_error(MALLOC_ERROR));
 		prog = get_cmd_prog(node, &error);
 		if (prog == NULL && error == MALLOC_ERROR)
+		{
+			free_null((void **)&(path));
 			return (print_error(MALLOC_ERROR));
+		}
 		status = get_fullpath(path, prog, exe);
 		free_null((void **)&(path));
 		free_null((void **)&(prog));
