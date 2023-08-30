@@ -6,7 +6,7 @@
 /*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 12:31:07 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/08/29 18:06:47 by sotanaka         ###   ########.fr       */
+/*   Updated: 2023/08/30 21:03:00 by sotanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static int	cd_check_path(t_exe *exe)
 	return (0);
 }
 
-static int	set_env_key(char *key)
+int	set_env_key(char *key)
 {
 	char	*cwd;
 	int		status;
@@ -53,7 +53,7 @@ static int	set_env_key(char *key)
 	return (status);
 }
 
-static int	cd_to_home(char *cmd_opts, int flag_pipe)
+static int	cd_to_home(char *cmd_opts)
 {
 	char	*path;
 	int		status;
@@ -72,7 +72,7 @@ static int	cd_to_home(char *cmd_opts, int flag_pipe)
 		if (status != 0)
 		{
 			free(path);
-			return (return_or_exit(status, flag_pipe));
+			return (status);
 		}
 		if (chdir(path) != 0)
 			status = perror_wrap("cd: ", 1);
@@ -89,7 +89,12 @@ int	built_in_cd(t_exe *exe)
 	if (status != 0)
 		return (return_or_exit(status, exe->flag_pipe));
 	if (exe->cmd_opts[1] == NULL || exe->cmd_opts[1][0] == '\0')
-		status = cd_to_home(exe->cmd_opts[1], exe->flag_pipe);
+		status = cd_to_home(exe->cmd_opts[1]);
+	else if (str_cmp(exe->cmd_opts[1], "..") == 0
+		|| str_cmp(exe->cmd_opts[1], "../") == 0)
+		status = cd_to_upper();
+	else if (ft_strncmp("../", exe->cmd_opts[1], 3) == 0)
+		status = cd_via_upper(exe->cmd_opts[1]);
 	else
 	{
 		status = set_env_key("OLDPWD");
