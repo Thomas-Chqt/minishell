@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_in_cd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hotph <hotph@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 12:31:07 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/08/29 18:06:47 by sotanaka         ###   ########.fr       */
+/*   Updated: 2023/08/30 10:57:25 by hotph            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,10 @@ static int	set_env_key(char *key)
 	char	*cwd;
 	int		status;
 
-	cwd = getcwd(NULL, 0);
+	if (str_cmp(key, "OLDPWD") == 0)
+		cwd = get_env("PWD", NULL);
+	else
+		cwd = getcwd(NULL, 0);
 	if (cwd == NULL)
 		return (perror_wrap("cd: ", 1));
 	status = set_env(key, cwd, true);
