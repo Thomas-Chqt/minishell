@@ -6,7 +6,7 @@
 /*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/13 15:01:43 by hotph             #+#    #+#             */
-/*   Updated: 2023/08/29 18:18:17 by sotanaka         ###   ########.fr       */
+/*   Updated: 2023/08/31 13:12:06 by sotanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,12 @@ static int	get_fullpath(char *path, char *prog, t_exe *exe)
 	return (status);
 }
 
+static void	free_null2(char *ptr1, char *ptr2)
+{
+	free_null((void **)&(ptr1));
+	free_null((void **)&(ptr2));
+}
+
 int	scan_path_prog(t_exe *exe, t_ast *node)
 {
 	char	*path;
@@ -99,8 +105,7 @@ int	scan_path_prog(t_exe *exe, t_ast *node)
 			return (print_error(MALLOC_ERROR));
 		}
 		status = get_fullpath(path, prog, exe);
-		free_null((void **)&(path));
-		free_null((void **)&(prog));
+		free_null2(path, prog);
 		if (status != 0)
 			return (status);
 		exe->cmd_opts = get_argv(node);

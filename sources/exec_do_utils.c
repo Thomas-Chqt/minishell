@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_do_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hotph <hotph@student.42.fr>                +#+  +:+       +#+        */
+/*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 15:00:18 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/08/30 12:37:36 by hotph            ###   ########.fr       */
+/*   Updated: 2023/08/31 15:05:42 by sotanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	is_builtin(t_exe *exe, t_ast *node)
 		|| exe->flag_builtin == BUILTIN_EXPORT)
 		return (with_redirect(exe));
 	else if (exe->flag_builtin == BUILTIN_CD)
-		return (built_in_cd(exe));
+		return (built_in_cd(exe->cmd_opts[1], exe->flag_pipe, 0));
 	if (exe->flag_builtin == BUILTIN_UNSET)
 		return (built_in_unset(arrstr_len(exe->cmd_opts), exe->cmd_opts));
 	else if (exe->flag_builtin == BUILTIN_EXIT)

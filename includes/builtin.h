@@ -6,7 +6,7 @@
 /*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 13:23:23 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/08/31 11:19:25 by sotanaka         ###   ########.fr       */
+/*   Updated: 2023/08/31 17:36:44 by sotanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,12 @@
 
 //-------prototype-------
 int		built_in_echo(t_exe *exe);
-void	curtail_str_by_char(char *str, char delim, int repeat);
-int		cd_via_upper(char *path);
-int		cd_to_upper();
 int		set_env_key(char *key);
-int		built_in_cd(t_exe *exe);
+int		cd_via_upper(char *path, int flag_oldpwd);
+int		cd_to_path(char *path, int flag_oldpwd);
+int		cd_to_current(int flag_oldpwd);
+int		cd_to_upper(int oldpwd);
+int		built_in_cd(char *path, int flag_pipe, int flag_oldpwd);
 int		built_in_pwd(void);
 int		built_in_export(int argc, char *argv[]);
 int		built_in_unset(int argc, char *argv[]);
