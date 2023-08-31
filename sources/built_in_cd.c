@@ -6,7 +6,7 @@
 /*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 12:31:07 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/08/31 17:33:42 by sotanaka         ###   ########.fr       */
+/*   Updated: 2023/08/31 17:41:13 by sotanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int	set_env_key(char *key)
 	return (status);
 }
 
-static int	cd_to_home(char *cmd_opts)
+static int	cd_to_home(void)
 {
 	char	*path;
 	int		status;
@@ -90,7 +90,7 @@ int	built_in_cd(char *path, int flag_pipe, int flag_oldpwd)
 	if (path != NULL && *path == '\0')
 		return (0);
 	if (path == NULL || path[0] == '\0')
-		status = cd_to_home(path);
+		status = cd_to_home();
 	else if (str_cmp(path, ".") == 0)
 		status = cd_to_current(flag_oldpwd);
 	else if (str_cmp(path, "..") == 0 || str_cmp(path, "../") == 0)
