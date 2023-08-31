@@ -6,7 +6,7 @@
 /*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 13:23:23 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/08/30 20:49:30 by sotanaka         ###   ########.fr       */
+/*   Updated: 2023/08/31 11:19:25 by sotanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int		cd_via_upper(char *path);
 int		cd_to_upper();
 int		set_env_key(char *key);
 int		built_in_cd(t_exe *exe);
-int		built_in_pwd(t_exe *exe);
+int		built_in_pwd(void);
 int		built_in_export(int argc, char *argv[]);
 int		built_in_unset(int argc, char *argv[]);
 int		built_in_env(int argc, char *argv[]);

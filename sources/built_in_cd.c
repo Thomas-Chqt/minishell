@@ -6,7 +6,7 @@
 /*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 12:31:07 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/08/30 21:03:00 by sotanaka         ###   ########.fr       */
+/*   Updated: 2023/08/31 11:17:55 by sotanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,10 @@ int	set_env_key(char *key)
 	char	*cwd;
 	int		status;
 
-	cwd = getcwd(NULL, 0);
+	if (str_cmp(key, "OLDPWD") == 0)
+		cwd = get_env("PWD", NULL);
+	else
+		cwd = getcwd(NULL, 0);
 	if (cwd == NULL)
 		return (perror_wrap("cd: ", 1));
 	status = set_env(key, cwd, true);
