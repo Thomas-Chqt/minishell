@@ -6,28 +6,19 @@
 /*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 14:50:39 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/08/31 17:36:39 by sotanaka         ###   ########.fr       */
+/*   Updated: 2023/09/02 12:04:59 by sotanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtin.h"
-
-static void	curtail_str_by_char(char *str, char delim)
-{
-	if (ft_strrchr(str, delim) == str)
-		str[1] = '\0';
-	else
-		*(ft_strrchr(str, delim)) = '\0';
-}
 
 int	cd_to_current(int flag_oldpwd)
 {
 	int		status;
 	char	*cwd;
 
-	cwd = get_env("PWD", NULL);
-	if (cwd == NULL)
-		return (print_error(MALLOC_ERROR));
+	if (get_env_wrap("PWD", &cwd) == MALLOC_ERROR)
+		return (MALLOC_ERROR);
 	status = 0;
 	if (flag_oldpwd == 0)
 		status = set_env_key("OLDPWD");
@@ -37,7 +28,7 @@ int	cd_to_current(int flag_oldpwd)
 		if (status != 0)
 		{
 			free(cwd);
-			return (perror_wrap("cd: ", 1));
+			return (perror_wrap("cd: .", 1));
 		}
 	}
 	free(cwd);
@@ -59,9 +50,15 @@ int	cd_to_upper(int flag_oldpwd)
 	char	*cwd;
 	int		status;
 
-	cwd = get_env("PWD", NULL);
-	if (cwd == NULL)
-		return (print_error(MALLOC_ERROR));
+	if (get_env_wrap("PWD", &cwd) == MALLOC_ERROR)
+		return (MALLOC_ERROR);
+	else if (cwd[0] == '\0')
+	{
+		free(cwd);
+		cwd = getcwd(NULL, 0);
+		if (cwd == NULL)
+			return (perror_wrap("cd: ", 1));
+	}
 	status = 0;
 	if (flag_oldpwd == 0)
 		status = set_env_key("OLDPWD");
