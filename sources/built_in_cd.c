@@ -6,7 +6,7 @@
 /*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 12:31:07 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/08/31 17:41:13 by sotanaka         ###   ########.fr       */
+/*   Updated: 2023/09/02 13:29:47 by sotanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,15 @@ int	set_env_key(char *key)
 	char	*cwd;
 	int		status;
 
+	status = 0;
 	if (str_cmp(key, "OLDPWD") == 0)
-		cwd = get_env("PWD", NULL);
+		status = get_pwd_wrap(&cwd);
 	else
 		cwd = getcwd(NULL, 0);
-	if (cwd == NULL)
+	if (cwd == NULL && status == 0)
 		return (perror_wrap("cd: ", 1));
+	else if (status != 0)
+		return (status);
 	status = set_env(key, cwd, true);
 	free(cwd);
 	if (status == MALLOC_ERROR)

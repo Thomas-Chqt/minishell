@@ -6,7 +6,7 @@
 /*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 14:50:39 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/09/02 12:04:59 by sotanaka         ###   ########.fr       */
+/*   Updated: 2023/09/02 13:23:41 by sotanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@ int	cd_to_current(int flag_oldpwd)
 	int		status;
 	char	*cwd;
 
-	if (get_env_wrap("PWD", &cwd) == MALLOC_ERROR)
-		return (MALLOC_ERROR);
-	status = 0;
+	status = get_pwd_wrap(&cwd);
+	if (status != 0)
+		return (status);
 	if (flag_oldpwd == 0)
 		status = set_env_key("OLDPWD");
 	if (status == 0)
@@ -50,23 +50,16 @@ int	cd_to_upper(int flag_oldpwd)
 	char	*cwd;
 	int		status;
 
-	if (get_env_wrap("PWD", &cwd) == MALLOC_ERROR)
-		return (MALLOC_ERROR);
-	else if (cwd[0] == '\0')
-	{
-		free(cwd);
-		cwd = getcwd(NULL, 0);
-		if (cwd == NULL)
-			return (perror_wrap("cd: ", 1));
-	}
-	status = 0;
+	status = get_pwd_wrap(&cwd);
+	if (status != 0)
+		return (status);
 	if (flag_oldpwd == 0)
 		status = set_env_key("OLDPWD");
 	if (status == 0)
 	{
 		curtail_str_by_char(cwd, '/');
 		if (chdir(cwd) != 0)
-			status = perror_wrap("cd: ", 1);
+			status = perror_wrap("cd: ..", 1);
 	}
 	free(cwd);
 	if (status != 0)
