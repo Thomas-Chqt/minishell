@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_do_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 15:00:18 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/08/23 13:14:18 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/31 15:05:42 by sotanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static int	with_redirect(t_exe *exe)
 	if (exe->flag_builtin == BUILTIN_ECHO)
 		status = built_in_echo(exe);
 	else if (exe->flag_builtin == BUILTIN_PWD)
-		status = built_in_pwd(exe);
+		status = built_in_pwd();
 	else if (exe->flag_builtin == BUILTIN_EXPORT)
 		status = built_in_export(arrstr_len(exe->cmd_opts), exe->cmd_opts);
 	else if (exe->flag_builtin == BUILTIN_ENV)
@@ -49,7 +49,7 @@ int	is_builtin(t_exe *exe, t_ast *node)
 		|| exe->flag_builtin == BUILTIN_EXPORT)
 		return (with_redirect(exe));
 	else if (exe->flag_builtin == BUILTIN_CD)
-		return (built_in_cd(exe));
+		return (built_in_cd(exe->cmd_opts[1], exe->flag_pipe, 0));
 	if (exe->flag_builtin == BUILTIN_UNSET)
 		return (built_in_unset(arrstr_len(exe->cmd_opts), exe->cmd_opts));
 	else if (exe->flag_builtin == BUILTIN_EXIT)

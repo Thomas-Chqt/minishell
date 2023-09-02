@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   built_in_cd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 12:31:07 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/08/28 19:03:03 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/09/02 13:29:47 by sotanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtin.h"
-#include "environment.h"
 
 static int	return_or_exit(int val, int flag)
 {
@@ -20,30 +19,36 @@ static int	return_or_exit(int val, int flag)
 	exit(val);
 }
 
-static int	cd_check_path(t_exe *exe)
+static int	cd_check_path(char *path, char *origin_path)
 {
-	if (exe->cmd_opts[1] == NULL || exe->cmd_opts[1][0] == '\0')
+	if (path == NULL || path[0] == '\0')
 		return (0);
-	if (ft_access_wrap(exe->cmd_opts[1], ACCESS_FOK) == false)
+	if (ft_access_wrap(path, ACCESS_FOK) == false)
 		return (printf_error_msg("cd: %s: No such file or directory",
-				(exe->cmd_opts + 1), EX_FILE_OPEN_ERR));
-	else if (ft_stat_wrap(exe->cmd_opts[1], STAT_ISDIR) == false)
-		return (printf_error_msg("cd: %s: Not a directory",
-				(exe->cmd_opts + 1), EX_FILE_OPEN_ERR));
-	else if (ft_access_wrap(exe->cmd_opts[1], ACCESS_XOK) == false)
+				&origin_path, EX_FILE_OPEN_ERR));
+	else if (ft_access_wrap(path, ACCESS_XOK) == false)
 		return (printf_error_msg("cd: %s: Permission denied",
-				(exe->cmd_opts + 1), EX_FILE_OPEN_ERR));
+				&origin_path, EX_FILE_OPEN_ERR));
+	else if (ft_stat_wrap(path, STAT_ISDIR) == false)
+		return (printf_error_msg("cd: %s: Not a directory",
+				&origin_path, EX_FILE_OPEN_ERR));
 	return (0);
 }
 
-static int	set_env_key(char *key)
+int	set_env_key(char *key)
 {
 	char	*cwd;
 	int		status;
 
-	cwd = getcwd(NULL, 0);
-	if (cwd == NULL)
+	status = 0;
+	if (str_cmp(key, "OLDPWD") == 0)
+		status = get_pwd_wrap(&cwd);
+	else
+		cwd = getcwd(NULL, 0);
+	if (cwd == NULL && status == 0)
 		return (perror_wrap("cd: ", 1));
+	else if (status != 0)
+		return (status);
 	status = set_env(key, cwd, true);
 	free(cwd);
 	if (status == MALLOC_ERROR)
@@ -53,13 +58,11 @@ static int	set_env_key(char *key)
 	return (status);
 }
 
-static int	cd_to_home(char *cmd_opts, int flag_pipe)
+static int	cd_to_home(void)
 {
 	char	*path;
 	int		status;
 
-	if (cmd_opts != NULL && *cmd_opts == '\0')
-		return (0);
 	status = 0;
 	path = get_env("HOME", NULL);
 	if (path == NULL)
@@ -70,33 +73,40 @@ static int	cd_to_home(char *cmd_opts, int flag_pipe)
 	{
 		status = set_env_key("OLDPWD");
 		if (status != 0)
-			return (return_or_exit(status, flag_pipe));
+		{
+			free(path);
+			return (status);
+		}
 		if (chdir(path) != 0)
 			status = perror_wrap("cd: ", 1);
 	}
 	free(path);
-	return (status);
+	if (status != 0)
+		return (status);
+	return (set_env_key("PWD"));
 }
 
-int	built_in_cd(t_exe *exe)
+int	built_in_cd(char *path, int flag_pipe, int flag_oldpwd)
 {
 	int		status;
 
-	status = cd_check_path(exe);
-	if (status != 0)
-		return (return_or_exit(status, exe->flag_pipe));
-	if (exe->cmd_opts[1] == NULL || exe->cmd_opts[1][0] == '\0')
-		status = cd_to_home(exe->cmd_opts[1], exe->flag_pipe);
+	if (path != NULL && *path == '\0')
+		return (0);
+	if (path == NULL || path[0] == '\0')
+		status = cd_to_home();
+	else if (str_cmp(path, ".") == 0)
+		status = cd_to_current(flag_oldpwd);
+	else if (str_cmp(path, "..") == 0 || str_cmp(path, "../") == 0)
+		status = cd_to_upper(flag_oldpwd);
 	else
 	{
-		status = set_env_key("OLDPWD");
+		status = cd_check_path(path, &path[(flag_oldpwd * (-3))]);
 		if (status != 0)
-			return (return_or_exit(status, exe->flag_pipe));
-		if (chdir(exe->cmd_opts[1]) != 0)
-			status = perror_wrap("cd: ", 1);
+			return (return_or_exit(status, flag_pipe));
+		else if (ft_strncmp("../", path, 3) == 0)
+			status = cd_via_upper(path, flag_oldpwd);
+		else
+			status = cd_to_path(path, flag_oldpwd);
 	}
-	if (status != 0)
-		return (return_or_exit(status, exe->flag_pipe));
-	status = set_env_key("PWD");
-	return (return_or_exit(status, exe->flag_pipe));
+	return (return_or_exit(status, flag_pipe));
 }

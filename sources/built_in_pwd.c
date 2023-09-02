@@ -3,25 +3,31 @@
 /*                                                        :::      ::::::::   */
 /*   built_in_pwd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchoquet <tchoquet@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: sotanaka <sotanaka@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/19 13:52:27 by sotanaka          #+#    #+#             */
-/*   Updated: 2023/08/28 16:27:32 by tchoquet         ###   ########.fr       */
+/*   Updated: 2023/08/31 18:35:29 by sotanaka         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtin.h"
 
-int	built_in_pwd(t_exe *exe)
+int	built_in_pwd(void)
 {
 	char	*cwd;
 
 	cwd = getcwd(NULL, 0);
-	if (cwd == NULL)
-		exit (perror_wrap("cd: ", 1));
-	printf("%s\n", cwd);
+	if (cwd == NULL && errno == EACCES)
+	{
+		cwd = get_env("PWD", NULL);
+		if (cwd == NULL)
+			return (perror_wrap("pwd: ", 1));
+		ft_putendl_fd(cwd, STDOUT_FILENO);
+	}
+	else if (cwd == NULL)
+		return (perror_wrap("pwd: ", 1));
+	else
+		ft_putendl_fd(cwd, STDOUT_FILENO);
 	free(cwd);
-	if (exe->flag_pipe == 0)
-		return (0);
-	exit (0);
+	return (0);
 }
