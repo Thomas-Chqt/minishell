@@ -4,3 +4,6 @@
 minishell
 minishell_debug
 Libft/libft.h
+build/
+build.nosync/
+.vscode/
