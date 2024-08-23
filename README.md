@@ -83,9 +83,9 @@ Only a limited set of functions were allowed, including required ones like `pipe
 Learning
 --------
 
-minishell was a very interesting project to work on. It allowed me to gain a deep understanding of how a shell works and how interprocess communication is done in a UNIX environment.
-minishell was also a great opportunity to improve my git and GitHub skills as it was a group project. We heavily used GitHub to synchronize our work and manage any bugs we encountered through issues and pull requests.
-Since I focused more on the lexer, parser, and expander parts, that's where I faced the most difficulties.
+minishell was a very interesting project to work on. It allowed me to gain a deep understanding of how a shell works and how interprocess communication is done in a UNIX environment.  
+minishell was also a great opportunity to improve my git and GitHub skills as it was a group project. We heavily used GitHub to synchronize our work and manage any bugs we encountered through issues and pull requests.  
+Since I focused more on the lexer, parser, and expander parts, that's where I faced the most difficulties.  
 Because it is required to implement a lot of functionalities, minishell is a project that could easily go wrong during evaluation. The subject is very vague on the requirements, so everything that is not mentioned must be exactly like bash. This was the most challenging aspect for me. For example, executing the following command:
 
 ```sh
@@ -111,7 +111,7 @@ This becomes even more complicated considering that bash throws parsing errors b
 ✔︎ minishell > | echo ${.}
 ```
 
-should throw a parsing error and not a bad substitution error.
+should throw a parsing error and not a bad substitution error.  
 To handle these cases, I ended up doing 2 passes on the lexer, one on the command string and one on the expanded token after substituting the variables. So, the whole workflow looks something like this:
 
 ```txt
