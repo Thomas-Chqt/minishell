@@ -34,7 +34,7 @@ Command history and autocompletions are also supported, but this is done automat
 Requirements
 ------------
 
-minishell can only be built on macOS with either clang or gcc.
+minishell can only be built on macOS and Linux with either clang or gcc.
 
 The readline library is required to build. The version of readline installed on macOS is not enough; it must be installed with Homebrew (`brew install readline`) or any other way.
 
